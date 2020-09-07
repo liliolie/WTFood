@@ -35,7 +35,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/query"
-        app:srcCompat="@drawable/icons8_go_50" />
+        app:srcCompat="@drawable/go_50" />
 
     <ImageButton
         android:id="@+id/tutorial"
@@ -46,6 +46,6 @@
         android:background="#00000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/icons8_question_mark_30" />
+        app:srcCompat="@drawable/question_mark_30" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
