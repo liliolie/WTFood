@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Yellow -->
     <color name="colorPrimary">#f4b71f</color>
+    <!-- Black -->
     <color name="colorPrimaryDark">#000000</color>
+    <!-- White -->
     <color name="colorAccent">#fffefd</color>
 </resources>

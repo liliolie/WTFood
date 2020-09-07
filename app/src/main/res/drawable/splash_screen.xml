@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Set the background color of the splash screen. Charlie Xu-->
     <item android:drawable="@color/colorPrimary"/>
+    <!-- Set our logo image as the display item and put it to the center of the screen. Charlie Xu-->
     <item>
         <bitmap
             android:gravity="center"
