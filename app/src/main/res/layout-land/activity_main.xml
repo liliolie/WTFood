@@ -9,8 +9,8 @@
 
     <EditText
         android:id="@+id/query"
-        android:layout_width="310dp"
-        android:layout_height="40dp"
+        android:layout_width="307dp"
+        android:layout_height="39dp"
         android:ems="10"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
@@ -42,9 +42,8 @@
         android:id="@+id/logoButton"
         android:layout_width="211dp"
         android:layout_height="201dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="50dp"
         android:background="#00000000"
-        android:onClick="logoButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
