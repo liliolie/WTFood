@@ -15,7 +15,6 @@ public class InfoPage extends AppCompatActivity {
     }
 
     public void infoBackButton(View view){
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+        finish();
     }
 }
