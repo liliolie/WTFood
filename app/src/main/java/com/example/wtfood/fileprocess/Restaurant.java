@@ -65,4 +65,47 @@ public class Restaurant {
         this.address = String.valueOf(random.nextInt(99) + 1);
         this.address += " " + preDefinedStreets[random.nextInt(preDefinedStreets.length)] + " St.";
     }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDeliveryService(boolean deliveryService) {
+        this.deliveryService = deliveryService;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public Restaurant(int rating, String name, boolean deliveryService, Location location, Type type, int price, String address, String phone) {
+        this.rating = rating;
+        this.name = name;
+        this.deliveryService = deliveryService;
+        this.location = location;
+        this.type = type;
+        this.price = price;
+        this.address = address;
+        this.phone = phone;
+    }
 }
