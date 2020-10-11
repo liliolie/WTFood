@@ -1,46 +1,38 @@
 package com.example.wtfood.fileprocess;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.List;
 
 public class FileProcess {
 
-    public void fileRead() throws IOException {
+    public List<Restaurant> fileRead(InputStream inputStream) throws IOException {
 
-        File json = new File("assets/list.json");
-
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(json));
-
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+        StringBuilder json = new StringBuilder();
         String str;
-        String string = "";
-
         while ((str = bufferedReader.readLine()) != null) {
-            string += str;
+            json.append(str);
         }
-
         bufferedReader.close();
-
-        JSONObject jsonObject = JSONObject.fromObject(string);
-        System.out.println(jsonObject);
-
-        JSONArray jsonArray = jsonObject.getJSONArray("restaurants");
-
-        for (int i = 0; i < jsonArray.size(); i++) {
-            JSONObject jsonObject1 = jsonArray.getJSONObject(i);
-            Boolean deliveryService = jsonObject1.getBoolean("deliveryService");
-            String address = jsonObject1.getString("address");
-            String phone = jsonObject1.getString("phone");
-            int price = jsonObject1.getInt("price");
-            System.out.println(jsonObject1);
-        }
+//        JSONArray jsonArray = JSONObject.fromObject(json).getJSONArray("restaurants");
+        Gson gson = new Gson();
+        List<Restaurant> restaurants = gson.fromJson(json.toString(), new TypeToken<List<Restaurant>>() {}.getType());
+        return restaurants;
     }
 
     public void fileCreate() throws IOException {
@@ -97,10 +89,10 @@ public class FileProcess {
 
         // method2: for clearer coding
         JSONArray jsonArray = JSONArray.fromObject(restaurants);
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("restaurants", jsonArray);
+//        JSONObject jsonObject = new JSONObject();
+//        jsonObject.put("restaurants", jsonArray);
 
-        bufferedWriter.write(jsonObject.toString());
+        bufferedWriter.write(jsonArray.toString());
 
         bufferedWriter.close();
         bufferedReader.close();
