@@ -12,57 +12,20 @@ import com.example.wtfood.fileprocess.Type;
 public class Node implements Comparable<Node> {
 
 	Colour colour;			// Node colour
-	int rating;
-	String name;
-	boolean deliveryService;
-	Location location;
-	Type type;
-	int price;
-	String address;
-	String phone;
+	Restaurant restaurant;
 	String comparingAttribute;
 	Node parent; 		// Parent node
 	Node left, right; 	// Children nodes
 
 
-	public Node(String name, boolean deliveryService, Location location, Type type, String address,
-				int rating, int price, String phone, String comparingAttribute) {
-		this.name = name;
-		this.deliveryService = deliveryService;
-		this.address = address;
-		this.location = location;
-		this.type = type;
-		this.rating = rating;
-		this.price = price;
-		this.phone = phone;
-		this.comparingAttribute = comparingAttribute;
-		this.colour = Colour.RED; //property 3 (if a node is red, both children are black) may be violated if parent is red
-
-		this.parent = null;
-
-		// Initialise children leaf nodes
-		this.left 			= new Node();  //leaf node
-		this.right 			= new Node();  //leaf node
-		this.left.parent 	= this; //reference to parent
-		this.right.parent 	= this; //reference to parent
-	}
-
 	// Leaf node
 	public Node() {
-		this.name = null;
-		this.address = null;
+		this.restaurant = null;
 		this.colour = Colour.BLACK; //leaf nodes are always black
 	}
 
 	public Node(Restaurant restaurant, String comparingAttribute) {
-		this.name = restaurant.getName();
-		this.deliveryService = restaurant.isDeliveryService();
-		this.address = restaurant.getAddress();
-		this.location = restaurant.getLocation();
-		this.type = restaurant.getType();
-		this.rating = restaurant.getRating();
-		this.price = restaurant.getPrice();
-		this.phone = restaurant.getPhone();
+		this.restaurant = restaurant;
 		this.comparingAttribute = comparingAttribute;
 		this.colour = Colour.RED; //property 3 (if a node is red, both children are black) may be violated if parent is red
 
@@ -78,16 +41,17 @@ public class Node implements Comparable<Node> {
 
 	@Override
 	public String toString() {
-		return "price: " + price + " rating: " + rating + " address: " + address;
+		return "name: " + restaurant.getName() + " price: " + restaurant.getPrice() + " rating: " +
+				restaurant.getRating() + " address: " + restaurant.getAddress();
 	}
 
 	@Override
 	public int compareTo(Node o) {
 		switch (comparingAttribute) {
 			case "price":
-				return this.price - o.price;
+				return this.restaurant.getPrice() - o.restaurant.getPrice();
 			case "rating":
-				return this.rating - o.rating;
+				return this.restaurant.getRating() - o.restaurant.getRating();
 		}
 
 		return 0;
@@ -97,9 +61,10 @@ public class Node implements Comparable<Node> {
 	public boolean equals(Object obj) {
 		if (obj.getClass() == getClass()) {
 			Node node = (Node) obj;
-			return node.rating == this.rating && node.price == this.price && this.phone.equals(node.phone)
-					&& node.address.equals(this.address) && this.type.equals(node.type) && this.name.equals(node.name)
-					&& this.location.equals(node.location) && this.deliveryService == node.deliveryService;
+			if (node.restaurant == null) {
+				return this.restaurant == null;
+			}
+			return this.restaurant.equals(node.restaurant);
 		}
 
 		return false;
@@ -119,15 +84,15 @@ public class Node implements Comparable<Node> {
 	public boolean satisfyPrice(String sign, int requirement) {
 		switch (sign) {
 			case "=":
-				return this.price == requirement;
+				return this.restaurant.getPrice() == requirement;
 			case "<":
-				return this.price < requirement;
+				return this.restaurant.getPrice() < requirement;
 			case ">":
-				return this.price > requirement;
+				return this.restaurant.getPrice() > requirement;
 			case "<=":
-				return this.price <= requirement;
+				return this.restaurant.getPrice() <= requirement;
 			case ">=":
-				return this.price >= requirement;
+				return this.restaurant.getPrice() >= requirement;
 		}
 
 		return false;
@@ -136,15 +101,15 @@ public class Node implements Comparable<Node> {
 	public boolean satisfyRating(String sign, int requirement) {
 		switch (sign) {
 			case "=":
-				return this.rating == requirement;
+				return this.restaurant.getRating() == requirement;
 			case "<":
-				return this.rating < requirement;
+				return this.restaurant.getRating() < requirement;
 			case ">":
-				return this.rating > requirement;
+				return this.restaurant.getRating() > requirement;
 			case "<=":
-				return this.rating <= requirement;
+				return this.restaurant.getRating() <= requirement;
 			case ">=":
-				return this.rating >= requirement;
+				return this.restaurant.getRating() >= requirement;
 		}
 
 		return false;
