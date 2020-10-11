@@ -2,6 +2,7 @@ package com.example.wtfood.rbtree;
 
 
 import com.example.wtfood.fileprocess.Location;
+import com.example.wtfood.fileprocess.Restaurant;
 import com.example.wtfood.fileprocess.Type;
 
 /**
@@ -48,10 +49,33 @@ public class Node implements Comparable<Node> {
 
 	// Leaf node
 	public Node() {
+		this.name = null;
 		this.address = null;
 		this.rating = 0;
 		this.price = 0;
 		this.colour = Colour.BLACK; //leaf nodes are always black
+	}
+
+	public Node(Restaurant restaurant, String comparingAttribute) {
+		this.name = restaurant.getName();
+		this.deliveryService = restaurant.isDeliveryService();
+		this.address = restaurant.getAddress();
+		this.location = restaurant.getLocation();
+		this.type = restaurant.getType();
+		this.rating = restaurant.getRating();
+		this.price = restaurant.getPrice();
+		this.phone = restaurant.getPhone();
+		this.comparingAttribute = comparingAttribute;
+		this.colour = Colour.RED; //property 3 (if a node is red, both children are black) may be violated if parent is red
+
+		this.parent = null;
+
+		// Initialise children leaf nodes
+		this.left 			= new Node();  //leaf node
+		this.right 			= new Node();  //leaf node
+		this.left.parent 	= this; //reference to parent
+		this.right.parent 	= this; //reference to parent
+
 	}
 
 	@Override

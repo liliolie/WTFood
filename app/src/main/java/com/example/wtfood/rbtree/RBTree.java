@@ -2,6 +2,7 @@ package com.example.wtfood.rbtree;
 
 
 import com.example.wtfood.fileprocess.Location;
+import com.example.wtfood.fileprocess.Restaurant;
 import com.example.wtfood.fileprocess.Type;
 
 import java.util.ArrayList;
@@ -12,11 +13,13 @@ import java.util.List;
  * 
  * @author dongwookim
  * @author Bernardo Pereira Nunes fixed small bug
+ * @author Junliang Liu modify the method to suit the APP
  */
 public class RBTree {
 	
 	Node root; // The root node of the tree
 	String comparingAttribute;
+	int size;
 
 	/**
 	 * Initialize empty RBTree
@@ -25,6 +28,7 @@ public class RBTree {
 	public RBTree(String comparingAttribute) {
 		root = null;
 		this.comparingAttribute = comparingAttribute;
+		size = 0;
 	}
 
 	/**
@@ -66,7 +70,10 @@ public class RBTree {
 		if (root == null) {
 			root = x;
 		} else {
-			if(search(x) != null) return;
+			if(search(x) != null) {
+				System.out.println("find");
+				return;
+			}
 			insertRecurse(root, x);
 		}
 
@@ -130,6 +137,8 @@ public class RBTree {
 			}
 		}
 
+		System.out.println("success");
+		size++;
 		// Ensure property 2 (root and leaves are black) holds
 		root.colour = Colour.BLACK;
 	}
@@ -204,10 +213,8 @@ public class RBTree {
 	 * Demo functions (Safely) insert a value into the tree
 	 *
 	 */
-	public void insert(String name, boolean deliveryService, Location location, Type type, String address,
-					   int rating, int price, String phone) {
-		Node node = new Node( name, deliveryService, location, type, address,
-				rating, price, phone, comparingAttribute);
+	public void insert(Restaurant restaurant) {
+		Node node = new Node(restaurant, comparingAttribute);
 		insert(node);
 	}
 
@@ -298,4 +305,7 @@ public class RBTree {
 		dfs(node.right, sign, requirement);
 	}
 
+	public int getSize() {
+		return size;
+	}
 }
