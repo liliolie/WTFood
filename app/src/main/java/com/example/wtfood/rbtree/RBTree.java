@@ -1,6 +1,9 @@
 package com.example.wtfood.rbtree;
 
 
+import com.example.wtfood.fileprocess.Location;
+import com.example.wtfood.fileprocess.Type;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,7 +60,6 @@ public class RBTree {
 	 * @param x Node<T> The new node being inserted into the tree.
 	 */
 	private void insert(Node x) {
-		// TODO: Complete this function
 		// You need to finish cases 1, 2 and 3; the rest has been done for you
 
 		// Insert node into tree
@@ -75,7 +77,6 @@ public class RBTree {
 
 			if (uncle.colour == Colour.RED) {
 				// Case 1: Recolour
-				// TODO: Implement this part
 				// ########## YOUR CODE STARTS HERE ##########
 				x.parent.colour = Colour.BLACK;
 				x.parent.parent.colour = Colour.RED;
@@ -95,7 +96,6 @@ public class RBTree {
 					} else {
 						// This is part of the "then" clause where left and right are swapped
 						// Perform right rotation
-						// TODO: Implement this part
 						// ########## YOUR CODE STARTS HERE ##########
 						if (x.equals(root)) {
 							root = x.left;
@@ -110,7 +110,6 @@ public class RBTree {
 				x.parent.parent.colour = Colour.RED;
 
 				// Case 3 : Right Rotation, uncle is right node, x is on the left / Left Rotation, uncle is left node, x is on the right
-				// TODO: Complete this part
 				if (left) {
 					// Perform right rotation
 					// ########## YOUR CODE STARTS HERE ##########
@@ -178,7 +177,6 @@ public class RBTree {
                                           e   f
     */
 	public void rotateRight(Node x) {
-		// TODO: Implement this function
 		// HINT: It is the mirrored version of rotateLeft()
 		// ########## YOUR CODE STARTS HERE ##########
 		// Make parent (if it exists) and left branch point to each other
@@ -206,8 +204,10 @@ public class RBTree {
 	 * Demo functions (Safely) insert a value into the tree
 	 *
 	 */
-	public void insert(int price, int rating, String address) {
-		Node node = new Node(address, rating, price, comparingAttribute);
+	public void insert(String name, boolean deliveryService, Location location, Type type, String address,
+					   int rating, int price, String phone) {
+		Node node = new Node( name, deliveryService, location, type, address,
+				rating, price, phone, comparingAttribute);
 		insert(node);
 	}
 
@@ -218,7 +218,7 @@ public class RBTree {
 	 * @return pre-order traversed tree
 	 */
 	private String preOrder(Node tree) {
-		if (tree != null && tree.address != null) {
+		if (tree != null && tree.name != null) {
 			String leftStr = preOrder(tree.left);
 			String rightStr = preOrder(tree.right);
 			return tree.toString() + (leftStr.isEmpty() ? leftStr : " " + leftStr)

@@ -1,6 +1,9 @@
 package com.example.wtfood.rbtree;
 
 
+import com.example.wtfood.fileprocess.Location;
+import com.example.wtfood.fileprocess.Type;
+
 /**
  * Base class for node
  *
@@ -8,18 +11,29 @@ package com.example.wtfood.rbtree;
 public class Node implements Comparable<Node> {
 
 	Colour colour;			// Node colour
+	int rating;
+	String name;
+	boolean deliveryService;
+	Location location;
+	Type type;
 	int price;
 	String address;
-	int rating;
+	String phone;
 	String comparingAttribute;
 	Node parent; 		// Parent node
 	Node left, right; 	// Children nodes
 
 
-	public Node(String address, int rating, int price, String comparingAttribute) {
+	public Node(String name, boolean deliveryService, Location location, Type type, String address,
+				int rating, int price, String phone, String comparingAttribute) {
+		this.name = name;
+		this.deliveryService = deliveryService;
 		this.address = address;
+		this.location = location;
+		this.type = type;
 		this.rating = rating;
 		this.price = price;
+		this.phone = phone;
 		this.comparingAttribute = comparingAttribute;
 		this.colour = Colour.RED; //property 3 (if a node is red, both children are black) may be violated if parent is red
 
@@ -61,7 +75,9 @@ public class Node implements Comparable<Node> {
 	public boolean equals(Object obj) {
 		if (obj.getClass() == Node.class) {
 			Node node = (Node) obj;
-			return node.rating == this.rating && node.price == this.price && node.address.equals(this.address);
+			return node.rating == this.rating && node.price == this.price && this.phone.equals(node.phone)
+					&& node.address.equals(this.address) && this.type.equals(node.type) && this.name.equals(node.name)
+					&& this.location.equals(node.location) && this.deliveryService == node.deliveryService;
 		}
 
 		return false;
