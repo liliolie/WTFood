@@ -51,8 +51,6 @@ public class Node implements Comparable<Node> {
 	public Node() {
 		this.name = null;
 		this.address = null;
-		this.rating = 0;
-		this.price = 0;
 		this.colour = Colour.BLACK; //leaf nodes are always black
 	}
 
@@ -97,7 +95,7 @@ public class Node implements Comparable<Node> {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj.getClass() == Node.class) {
+		if (obj.getClass() == getClass()) {
 			Node node = (Node) obj;
 			return node.rating == this.rating && node.price == this.price && this.phone.equals(node.phone)
 					&& node.address.equals(this.address) && this.type.equals(node.type) && this.name.equals(node.name)

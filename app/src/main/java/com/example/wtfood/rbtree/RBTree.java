@@ -41,14 +41,14 @@ public class RBTree {
 		int cmp = root.compareTo(x);
 		
 		if (cmp >= 0) {
-			if (root.left.address == null) {
+			if (root.left.name == null) {
 				root.left = x;
 				x.parent = root;
 			} else {
 				insertRecurse(root.left, x);
 			}
 		} else {
-			if (root.right.address == null) {
+			if (root.right.name == null) {
 				root.right = x;
 				x.parent = root;
 			} else {
@@ -247,24 +247,23 @@ public class RBTree {
 	 * @return the node equals node in the tree.
 	 */
 	private Node find(Node x, Node node) {
-		if (x.address == null)
+		if (x.name == null)
 			return null;
 
-		int cmp = x.compareTo(node);
-		if (cmp < 0)
-			return find(x.left, node);
-		else if (cmp > 0)
-			return find(x.right, node);
-		else if (x.equals(node)) {
+		if (x.equals(node)) {
 			return x;
+		}
+		System.out.println(x.price + " " + node.price);
+		int cmp = x.compareTo(node);
+		if (cmp < 0) {
+			return find(x.right, node);
+		} else if (cmp > 0) {
+			return find(x.left, node);
 		} else {
-			Node left = find(x.left, node);
-			Node right = find(x.right, node);
-
-			if (left == null) {
-				return right;
+			if (find(x.left, node) == null) {
+				return find(x.right, node);
 			} else {
-				return left;
+				return find(x.left, node);
 			}
 		}
 	}
@@ -276,6 +275,7 @@ public class RBTree {
 	 * @return the node fount in the tree;
 	 */
 	public Node search(Node node) {
+		System.out.println(root.price);
 		return find(root, node);
 	}
 
