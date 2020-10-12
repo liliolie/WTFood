@@ -31,10 +31,12 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.2'
     implementation 'commons-beanutils:commons-beanutils:1.9.3'
     implementation ('net.sf.json-lib:json-lib:2.4:jdk15') {
-        exclude group: 'commons-beanutils'
+//        exclude group: 'commons-beanutils'
     }
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation "com.googlecode.json-simple:json-simple:1.1"
+    implementation "net.sf.json-lib:json-lib:2.4:jdk15"
+    implementation 'com.google.android.material:material:1.2.0'
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'

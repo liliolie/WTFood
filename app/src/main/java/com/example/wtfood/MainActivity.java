@@ -7,12 +7,19 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ListView;
 
 import com.example.wtfood.fileprocess.FileProcess;
 import com.example.wtfood.fileprocess.Restaurant;
+import com.example.wtfood.rbtree.Node;
 import com.example.wtfood.rbtree.RBTree;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -40,7 +47,10 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
+
+
 
     public void logoButton(View view){
         Intent intent = new Intent(this, InfoPage.class);
@@ -51,4 +61,10 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, TutorialPage.class);
         startActivity(intent);
     }
+    public void goButton(View view){
+        Intent intent = new Intent(this, List_Activity.class);
+        startActivity(intent);
+    }
+
+
 }
