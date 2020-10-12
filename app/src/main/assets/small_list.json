@@ -1,0 +1,10 @@
+[{"deliveryService":true,"address":"11 A St.","phone":"0425178853","price":73,"name":"Recovery Unplugged","rating":5,"location":{"latitude":34.87561589988981,"longitude":37.88451900409018},"type":"chinesefood"},
+  {"deliveryService":true,"address":"65 B St.","phone":"0414349240","price":141,"name":"Treat Monger, The","rating":5,"location":{"latitude":25.9732784898018,"longitude":26.364328634605524},"type":"chinesefood"},
+  {"deliveryService":true,"address":"68 A St.","phone":"0476598263","price":17,"name":"Taco Cabana","rating":3,"location":{"latitude":43.66878208993334,"longitude":39.505972652695945},"type":"chinesefood"},
+  {"deliveryService":false,"address":"44 B St.","phone":"0436925971","price":120,"name":"Paleface Grocery","rating":5,"location":{"latitude":37.53945690444593,"longitude":42.81803849574948},"type":"fastfood"},
+  {"deliveryService":false,"address":"45 A St.","phone":"0452075339","price":196,"name":"Ola Poke","rating":4,"location":{"latitude":30.86906444126427,"longitude":32.85872594271849},"type":"chinesefood"},
+  {"deliveryService":true,"address":"60 A St.","phone":"0440221760","price":173,"name":"Thundercloud Subs","rating":5,"location":{"latitude":36.72312679342198,"longitude":41.81979628843753},"type":"fastfood"},
+  {"deliveryService":true,"address":"35 A St.","phone":"0442073017","price":247,"name":"BC - Snack Max","rating":3,"location":{"latitude":35.447009090499435,"longitude":35.98745173019214},"type":"fastfood"},
+  {"deliveryService":true,"address":"19 B St.","phone":"0400185181","price":177,"name":"Jet Stop","rating":2,"location":{"latitude":42.45107053677065,"longitude":35.9488753158341},"type":"chinesefood"},
+  {"deliveryService":true,"address":"35 B St.","phone":"0436479655","price":185,"name":"LW - Metro Food Mart","rating":4,"location":{"latitude":34.40046683141456,"longitude":28.425330516793434},"type":"chinesefood"},
+  {"deliveryService":true,"address":"62 A St.","phone":"0477055585","price":109,"name":"LW - Merito Food Mart","rating":4,"location":{"latitude":34.62924882293845,"longitude":27.516109807389455},"type":"fastfood"}]

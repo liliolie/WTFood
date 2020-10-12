@@ -41,14 +41,14 @@ public class RBTree {
 		int cmp = root.compareTo(x);
 		
 		if (cmp >= 0) {
-			if (root.left.name == null) {
+			if (root.left.restaurant == null) {
 				root.left = x;
 				x.parent = root;
 			} else {
 				insertRecurse(root.left, x);
 			}
 		} else {
-			if (root.right.name == null) {
+			if (root.right.restaurant == null) {
 				root.right = x;
 				x.parent = root;
 			} else {
@@ -71,7 +71,6 @@ public class RBTree {
 			root = x;
 		} else {
 			if(search(x) != null) {
-				System.out.println("find");
 				return;
 			}
 			insertRecurse(root, x);
@@ -137,7 +136,6 @@ public class RBTree {
 			}
 		}
 
-		System.out.println("success");
 		size++;
 		// Ensure property 2 (root and leaves are black) holds
 		root.colour = Colour.BLACK;
@@ -225,7 +223,7 @@ public class RBTree {
 	 * @return pre-order traversed tree
 	 */
 	private String preOrder(Node tree) {
-		if (tree != null && tree.name != null) {
+		if (tree != null && tree.restaurant != null) {
 			String leftStr = preOrder(tree.left);
 			String rightStr = preOrder(tree.right);
 			return tree.toString() + (leftStr.isEmpty() ? leftStr : " " + leftStr)
@@ -247,24 +245,17 @@ public class RBTree {
 	 * @return the node equals node in the tree.
 	 */
 	private Node find(Node x, Node node) {
-		if (x.name == null)
+		if (x.restaurant == null)
 			return null;
 
 		if (x.equals(node)) {
 			return x;
 		}
-		System.out.println(x.price + " " + node.price);
 		int cmp = x.compareTo(node);
 		if (cmp < 0) {
 			return find(x.right, node);
-		} else if (cmp > 0) {
-			return find(x.left, node);
 		} else {
-			if (find(x.left, node) == null) {
-				return find(x.right, node);
-			} else {
-				return find(x.left, node);
-			}
+			return find(x.left, node);
 		}
 	}
 
@@ -275,7 +266,6 @@ public class RBTree {
 	 * @return the node fount in the tree;
 	 */
 	public Node search(Node node) {
-		System.out.println(root.price);
 		return find(root, node);
 	}
 
@@ -293,7 +283,7 @@ public class RBTree {
 	}
 
 	private void dfs(Node node, String sign, int requirement) {
-		if (node.address == null) {
+		if (node.restaurant == null) {
 			return;
 		}
 
@@ -301,11 +291,48 @@ public class RBTree {
 			result.add(node);
 		}
 		//TODO: cutting branch
-		dfs(node.left, sign, requirement);
-		dfs(node.right, sign, requirement);
+		int cmp = node.restaurant.getPrice() - requirement;
+		if ((sign.equals("<") || sign.equals("<=") || sign.equals("=")) && cmp > 0) {
+			dfs(node.left, sign, requirement);
+		} else if ((sign.equals(">") || sign.equals(">=") || sign.equals("=")) && cmp < 0) {
+			dfs(node.right, sign, requirement);
+		} else {
+			dfs(node.left, sign, requirement);
+			dfs(node.right, sign, requirement);
+		}
 	}
 
-	public int getSize() {
+	public int size() {
 		return size;
+	}
+
+	public String priceInOrder() {
+		return priceInOrder(root);
+	}
+
+	private String priceInOrder(Node root) {
+		if (root != null && root.restaurant != null) {
+			String leftStr = priceInOrder(root.left);
+			String rightStr = priceInOrder(root.right);
+			return  (leftStr.isEmpty() ? leftStr : leftStr + " ") + root.restaurant.getPrice()
+					+ (rightStr.isEmpty() ? rightStr : " " + rightStr);
+		}
+
+		return "";
+	}
+
+	public String ratingInOrder() {
+		return ratingInOrder(root);
+	}
+
+	private String ratingInOrder(Node root) {
+		if (root != null && root.restaurant != null) {
+			String leftStr = ratingInOrder(root.left);
+			String rightStr = ratingInOrder(root.right);
+			return  (leftStr.isEmpty() ? leftStr : leftStr + " ") + root.restaurant.getRating()
+					+ (rightStr.isEmpty() ? rightStr : " " + rightStr);
+		}
+
+		return "";
 	}
 }

@@ -1,5 +1,7 @@
 package com.example.wtfood.fileprocess;
 
+import androidx.annotation.Nullable;
+
 import java.util.Random;
 
 public class Restaurant {
@@ -109,4 +111,17 @@ public class Restaurant {
         this.phone = phone;
     }
 
+    @Override
+    public boolean equals( Object obj) {
+        if (obj == this) {
+            return true;
+        }
+
+        if (getClass() == obj.getClass()) {
+            Restaurant restaurant = (Restaurant) obj;
+            return restaurant.name.equals(this.name) && restaurant.location.equals(this.location)
+                    && restaurant.address.equals(this.address);
+        }
+        return false;
+    }
 }
