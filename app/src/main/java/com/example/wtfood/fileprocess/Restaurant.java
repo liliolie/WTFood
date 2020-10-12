@@ -1,10 +1,12 @@
 package com.example.wtfood.fileprocess;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.io.Serializable;
 import java.util.Random;
 
-public class Restaurant {
+public class Restaurant implements Serializable {
     private final String[] preDefinedStreets = {
             "A",
             "B"
@@ -123,5 +125,26 @@ public class Restaurant {
                     && restaurant.address.equals(this.address);
         }
         return false;
+    }
+
+    @Override
+    public String toString() {
+        String delivery;
+        String type = "";
+        if (isDeliveryService()) {
+            delivery = "Deliverable.";
+        } else {
+            delivery = "Unable to for delivery.";
+        }
+
+        if (getType().equals(Type.chinesefood)) {
+            type = "Chinese Food!";
+        }
+        if (getType().equals(Type.fastfood)) {
+            type = "Fast Food!";
+        }
+
+        return name + " \n " + address + " | " + phone + " \n " + "Rating: " + rating + " \n " + "Price: " +
+                price + " \n " + delivery + " \n " + "FoodType: " + type;
     }
 }
