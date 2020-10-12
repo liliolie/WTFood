@@ -10,7 +10,7 @@
         android:roundIcon="@mipmap/logo_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".List_Activity"></activity>
+        <activity android:name=".ResultActivity"/>
         <activity android:name=".TutorialPage" />
         <activity android:name=".InfoPage" /> <!-- Set the launch activity to the SplashScreen activity. Charlie Xu -->
         <activity
