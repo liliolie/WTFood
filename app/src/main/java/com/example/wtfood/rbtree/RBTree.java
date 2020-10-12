@@ -40,7 +40,7 @@ public class RBTree {
 	public void insertRecurse(Node root, Node x) {
 		int cmp = root.compareTo(x);
 		
-		if (cmp >= 0) {
+		if (cmp > 0) {
 			if (root.left.restaurant == null) {
 				root.left = x;
 				x.parent = root;
@@ -252,7 +252,7 @@ public class RBTree {
 			return x;
 		}
 		int cmp = x.compareTo(node);
-		if (cmp < 0) {
+		if (cmp <= 0) {
 			return find(x.right, node);
 		} else {
 			return find(x.left, node);
@@ -306,6 +306,21 @@ public class RBTree {
 		return size;
 	}
 
+	public String pricePreOrder() {
+		return pricePreOrder(root);
+	}
+
+	private String pricePreOrder(Node root) {
+		if (root != null && root.restaurant != null) {
+			String leftStr = pricePreOrder(root.left);
+			String rightStr = pricePreOrder(root.right);
+			return  root.restaurant.getPrice() + (leftStr.isEmpty() ? leftStr : " " + leftStr)
+					+ (rightStr.isEmpty() ? rightStr : " " + rightStr);
+		}
+
+		return "";
+	}
+
 	public String priceInOrder() {
 		return priceInOrder(root);
 	}
@@ -330,6 +345,21 @@ public class RBTree {
 			String leftStr = ratingInOrder(root.left);
 			String rightStr = ratingInOrder(root.right);
 			return  (leftStr.isEmpty() ? leftStr : leftStr + " ") + root.restaurant.getRating()
+					+ (rightStr.isEmpty() ? rightStr : " " + rightStr);
+		}
+
+		return "";
+	}
+
+	public String ratingPreOrder() {
+		return ratingPreOrder(root);
+	}
+
+	private String ratingPreOrder(Node root) {
+		if (root != null && root.restaurant != null) {
+			String leftStr = ratingPreOrder(root.left);
+			String rightStr = ratingPreOrder(root.right);
+			return  root.restaurant.getRating() + (leftStr.isEmpty() ? leftStr : " " + leftStr)
 					+ (rightStr.isEmpty() ? rightStr : " " + rightStr);
 		}
 

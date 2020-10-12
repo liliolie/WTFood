@@ -72,12 +72,14 @@ public class RBTreeTest {
         }
 
         assertEquals(smallPriceTree.priceInOrder(), "17 73 109 120 141 173 177 185 196 247");
+        assertEquals(smallPriceTree.pricePreOrder(), "141 73 17 120 109 196 177 173 185 247");
 
 
         for (Restaurant r : smallRestaurants) {
             smallRatingTree.insert(r);
         }
         assertEquals(smallRatingTree.ratingInOrder(), "2 3 3 4 4 4 5 5 5 5");
+        assertEquals(smallRatingTree.ratingPreOrder(), "5 3 3 2 4 4 4 5 5 5");
     }
 
     @Test
