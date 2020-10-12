@@ -108,4 +108,5 @@ public class Restaurant {
         this.address = address;
         this.phone = phone;
     }
+
 }
