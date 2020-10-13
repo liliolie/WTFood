@@ -2,21 +2,21 @@ package com.example.wtfood;
 
 public class Token {
 
-    public enum Attribute {UNKNOWN, NAME, TYPE, PRICE, RATING, DELIVERY, LOCATION, VALUE, EQUAL, GREATER, LESS, GOE, LOE}
-    private String token = "";
-    private Attribute attribute = Attribute.UNKNOWN;
+    public enum Attribute {UNKNOWN, PRICE, DELIVERY, Rating, VALUE, EQUAL, GREATER, LESS, GOE, LOE, END}
+    private String _token = "";
+    private Attribute _attribute = Attribute.UNKNOWN;
 
     public Token(String token, Attribute attribute){
-        this.token = token;
-        this.attribute = attribute;
+        _token = token;
+        _attribute = attribute;
     }
 
     public String getToken(){
-        return this.token;
+        return _token;
     }
 
     public Attribute getAttribute(){
-        return this.attribute;
+        return _attribute;
     }
 
 }

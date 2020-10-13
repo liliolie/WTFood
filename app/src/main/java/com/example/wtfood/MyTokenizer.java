@@ -9,57 +9,66 @@ public class MyTokenizer extends Tokenizer{
 
 
     public MyTokenizer(String text){
-        this.buffer = text;
+        buffer = text;
         next();
     }
 
     @Override
     public void next() {
-        this.buffer = this.buffer.trim();
+        buffer = buffer.replaceAll("\\s+","");
 
-        if (this.buffer.isEmpty()){
+        if (buffer.isEmpty()){
             currentToken = null;
             return;
         }
 
-        if (this.buffer.toLowerCase().substring(0, 4).equals("name") && (this.buffer.charAt(4) == '=' || this.buffer.charAt(4) == '>' || this.buffer.charAt(4) == '<' )){
-            currentToken = new Token("name", Token.Attribute.NAME);
+        String current = "";
+        if(buffer.charAt(0) != '<' && buffer.charAt(0) != '>' && buffer.charAt(0) != '=' && buffer.charAt(0) != ';'){
+            current = getAttribute(buffer);
         }
-        if (this.buffer.toLowerCase().substring(0, 4).equals("type") && (this.buffer.charAt(4) == '=' || this.buffer.charAt(4) == '>' || this.buffer.charAt(4) == '<' )){
-            currentToken = new Token("type", Token.Attribute.TYPE);
+        else if(buffer.charAt(0) == '<' || buffer.charAt(0) == '>' || buffer.charAt(0) == '='){
+            current = getComparator(buffer);
         }
-//        String currentAttribute = getAttribute(this.buffer);
-//        if (currentAttribute.toLowerCase().equals("name")){
-//            currentToken = new Token("name", Token.Attribute.NAME);
-//        }
-//        if (currentAttribute.toLowerCase().equals("type")){
-//            currentToken = new Token("type", Token.Attribute.TYPE);
-//        }
-//        if (currentAttribute.toLowerCase().equals("price")){
-//            currentToken = new Token("price", Token.Attribute.PRICE);
-//        }
-//        if (currentAttribute.toLowerCase().equals("rating")){
-//            currentToken = new Token("rating", Token.Attribute.RATING);
-//        }
-//        if (currentAttribute.toLowerCase().equals("delivery")){
-//            currentToken = new Token("delivery", Token.Attribute.DELIVERY);
-//        }
-//        if (currentAttribute.toLowerCase().equals("location")){
-//            currentToken = new Token("location", Token.Attribute.LOCATION);
-//        }
-//        this.buffer = this.buffer.substring(currentAttribute.length());
-//
-//        String currentComparator = getComparator(this.buffer);
-//        if (currentComparator.equals(">")){
-//            currentToken = new Token(">", Token.Attribute.GREATER);
-//        }
+        else {
+            current = getEND(buffer);
+        }
 
+        if(current.equals("Price")){
+            currentToken = new Token("Price", Token.Attribute.PRICE);
+        }
+        if(current.equals("Rating")){
+            currentToken = new Token("Rating", Token.Attribute.Rating);
+        }
+        if(current.equals("=")){
+            currentToken = new Token("=", Token.Attribute.EQUAL);
+        }
+        if(current.equals("<")){
+            currentToken = new Token("<", Token.Attribute.LESS);
+        }
+        if(current.equals(">")){
+            currentToken = new Token(">", Token.Attribute.GREATER);
+        }
+        if(current.equals(">=")){
+            currentToken = new Token(">=", Token.Attribute.GOE);
+        }
+        if(current.equals("<=")){
+            currentToken = new Token("<=", Token.Attribute.LOE);
+        }
+        if(Character.isDigit(current.charAt(0))){
+            currentToken = new Token(getValue(current), Token.Attribute.VALUE);
+        }
+        if(current.equals(";")){
+            currentToken = new Token(";", Token.Attribute.END);
+        }
+
+
+        buffer = buffer.substring(current.length());
 
     }
 
     public String getAttribute(String currentBuffer){
         int i = 0;
-        while (currentBuffer.charAt(i) != '=' && currentBuffer.charAt(i) != '>' && currentBuffer.charAt(i) != '<'){
+        while (currentBuffer.charAt(i) != '=' && currentBuffer.charAt(i) != '>' && currentBuffer.charAt(i) != '<' && currentBuffer.charAt(i) != ';'){
             i++;
             if (i == currentBuffer.length()){
                 return currentBuffer.substring(0, i);
@@ -74,14 +83,28 @@ public class MyTokenizer extends Tokenizer{
             i++;
             if (i == currentBuffer.length()){
                 return currentBuffer.substring(0, i);
+
             }
         }
+
         return currentBuffer.substring(0, i);
     }
 
     public String getValue(String currentBuffer){
         int i = 0;
-        while (currentBuffer.charAt(i) != ';'){
+        while (Character.isDigit(currentBuffer.charAt(0))){
+            i++;
+            if (i == currentBuffer.length()){
+                return currentBuffer.substring(0, i);
+            }
+        }
+        return currentBuffer.substring(0, i);
+
+    }
+
+    public String getEND(String currentBuffer){
+        int i = 0;
+        while (currentBuffer.charAt(i) == ';'){
             i++;
             if (i == currentBuffer.length()){
                 return currentBuffer.substring(0, i);
