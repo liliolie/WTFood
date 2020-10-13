@@ -16,7 +16,9 @@ import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -74,6 +76,28 @@ public class MainActivity extends AppCompatActivity {
     private View.OnClickListener l1 = new View.OnClickListener() {
         public void onClick(View v) {
             // Passing the array to List_Activity.
+
+            // an example to doing querying
+            /**
+            Set<Restaurant> restaurants = null;
+            // if a query on price
+            restaurants = priceTree.searchForNodes("<", 100);
+            // if a query on rating
+            if (restaurants == null) {
+                restaurants = raringTree.searchForNodes(">", 3);
+            } else {
+                restaurants.retainAll(raringTree.searchForNodes(">", 3));
+            }
+            // if a query on deliver (just an example)
+            Iterator<Restaurant> iterator = restaurants.iterator();
+            while (iterator.hasNext()) {
+                Restaurant r = iterator.next();
+                if (!r.isDeliveryService()) {
+                    iterator.remove();
+                }
+            }
+             **/
+
             Intent intent = new Intent(getApplicationContext(), ResultActivity.class);
             System.out.println(restaurants.size());
             intent.putExtra("Restaurants", new Gson().toJson(restaurants));
