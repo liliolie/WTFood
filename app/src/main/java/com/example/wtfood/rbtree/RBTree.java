@@ -6,7 +6,9 @@ import com.example.wtfood.fileprocess.Restaurant;
 import com.example.wtfood.fileprocess.Type;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Skeleton code for Red Black Tree
@@ -269,15 +271,15 @@ public class RBTree {
 		return find(root, node);
 	}
 
-	private List<Node> result;
+	private Set<Restaurant> result;
 	/**
-	 * Return the List of Node satisfy the requirement in the comparing attribute.
+	 * Return the List of Restaurants satisfy the requirement in the comparing attribute.
 	 *
 	 * @param sign the sign of equal, less, greater, less or equal, or greater or equal
 	 * @param requirement the number of the requirement
 	 */
-	public List<Node> searchForNodes(String sign, int requirement) {
-		result = new ArrayList<>();
+	public Set<Restaurant> searchForNodes(String sign, int requirement) {
+		result = new HashSet<>();
 		dfs(root, sign, requirement);
 		return result;
 	}
@@ -288,7 +290,7 @@ public class RBTree {
 		}
 
 		if (node.satisfy(sign, requirement)) {
-			result.add(node);
+			result.add(node.restaurant);
 		}
 		//TODO: cutting branch
 		int cmp = node.restaurant.getPrice() - requirement;
