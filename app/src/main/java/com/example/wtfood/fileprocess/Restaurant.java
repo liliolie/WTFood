@@ -128,6 +128,11 @@ public class Restaurant implements Serializable {
     }
 
     @Override
+    public int hashCode() {
+        return name.hashCode() & address.hashCode() + (int) (location.getLatitude() + location.getLongitude());
+    }
+
+    @Override
     public String toString() {
         String delivery;
         String type = "";
@@ -147,4 +152,5 @@ public class Restaurant implements Serializable {
         return name + " \n " + address + " | " + phone + " \n " + "Rating: " + rating + " \n " + "Price: " +
                 price + " \n " + delivery + " \n " + "FoodType: " + type;
     }
+
 }
