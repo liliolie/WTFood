@@ -19,17 +19,22 @@ public class RBTreeTest {
 
     private static List<Restaurant> restaurants;
     private static List<Restaurant> smallRestaurants;
+    private static List<Restaurant> cRestaurants;
     RBTree priceTree;
     RBTree smallPriceTree;
     RBTree ratingTree;
     RBTree smallRatingTree;
+    RBTree cPriceTree;
 
     @BeforeClass
     public static void readFile() throws IOException {
-        restaurants = new FileProcess().fileRead(new FileInputStream(new File("src/main/assets/list.json")));
-        smallRestaurants = new FileProcess().fileRead(new FileInputStream(new File("src/main/assets/small_list.json")));
+        FileProcess fileProcess = new FileProcess();
+        restaurants = fileProcess.jsonFileRead(new FileInputStream(new File("src/main/assets/list.json")));
+        smallRestaurants = fileProcess.jsonFileRead(new FileInputStream(new File("src/main/assets/small_list.json")));
         assertEquals(restaurants.size(), 1000);
         assertEquals(smallRestaurants.size(), 10);
+
+        cRestaurants = fileProcess.csvFileRead(new FileInputStream(new File("src/main/assets/list.csv")));
     }
 
     @Before
@@ -38,6 +43,7 @@ public class RBTreeTest {
         smallPriceTree = new RBTree("price");
         ratingTree = new RBTree("rating");
         smallRatingTree = new RBTree("rating");
+        cPriceTree = new RBTree("price");
     }
 
     @Test
@@ -63,6 +69,11 @@ public class RBTreeTest {
             smallRatingTree.insert(r);
         }
         assertEquals(smallRatingTree.size(), 10);
+
+        for (Restaurant r : cRestaurants) {
+            cPriceTree.insert(r);
+        }
+        assertEquals(cPriceTree.size(), 1000);
     }
 
     @Test

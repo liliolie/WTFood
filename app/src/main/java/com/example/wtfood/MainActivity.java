@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         raringTree = new RBTree("rating");
 
         try {
-            List<Restaurant> restaurants = new FileProcess().fileRead(getAssets().open("list.json"));
+            List<Restaurant> restaurants = new FileProcess().jsonFileRead(getAssets().open("list.json"));
             for (Restaurant r : restaurants) {
                 priceTree.insert(r);
                 raringTree.insert(r);
