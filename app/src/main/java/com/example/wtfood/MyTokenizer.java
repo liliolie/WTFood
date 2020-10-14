@@ -33,7 +33,6 @@ public class MyTokenizer extends Tokenizer{
             current = getEND(buffer);
         }
 
-        System.out.println(current);
 
         if(current.equals("Price")){
             currentToken = new Token("Price", Token.Attribute.PRICE);

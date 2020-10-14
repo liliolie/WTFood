@@ -9,7 +9,7 @@ public class TokenizerTest {
     private static Tokenizer tokenizer;
     private static final String twoCase = "Rating <= 2; Price > 50" ;
     private static final String oneCase = "Price >= 10";
-    private static final String threeCase = "Delivery = Y; Rating < 5";
+    private static final String threeCase = "Delivery = Y; Rating < 5; Price <= 100";
 
     @Test(timeout=1000)
     public void testPriceToken() {
@@ -119,39 +119,58 @@ public class TokenizerTest {
     @Test(timeout=1000)
     public void testDelivery(){
         tokenizer = new MyTokenizer(threeCase);
-
-        // test first token (
+        //Delivery = Y; Rating < 5; Price <= 100
+        //Delivery
         assertEquals(Token.Attribute.DELIVERY, tokenizer.current().getAttribute());
 
-        // test second token 100
+        // =
         tokenizer.next();
         assertEquals(Token.Attribute.EQUAL, tokenizer.current().getAttribute());
         assertEquals("=", tokenizer.current().getToken());
 
-        // test third token +
+        // Y
         tokenizer.next();
         assertEquals(Token.Attribute.DELIVERYValue, tokenizer.current().getAttribute());
         assertEquals("Y", tokenizer.current().getToken());
 
-        // test fourth token 2
+        //;
         tokenizer.next();
         assertEquals(Token.Attribute.END, tokenizer.current().getAttribute());
         assertEquals(";", tokenizer.current().getToken());
 
-        // test fourth token -
+        // Rating
         tokenizer.next();
         assertEquals(Token.Attribute.RATING, tokenizer.current().getAttribute());
         assertEquals("Rating", tokenizer.current().getToken());
 
-        //we skip token 5
+        // <
         tokenizer.next();
         assertEquals(Token.Attribute.LESS, tokenizer.current().getAttribute());
         assertEquals("<", tokenizer.current().getToken());
 
-        // test sixth token ), note that we call next twice.
-        // Correct implementation of tokenizer.current() should return ')' this case (not 40)
+        // 5
         tokenizer.next();
         assertEquals(Token.Attribute.VALUE, tokenizer.current().getAttribute());
         assertEquals("5", tokenizer.current().getToken());
+
+        //;
+        tokenizer.next();
+        assertEquals(Token.Attribute.END, tokenizer.current().getAttribute());
+        assertEquals(";", tokenizer.current().getToken());
+
+        // Price
+        tokenizer.next();
+        assertEquals(Token.Attribute.PRICE, tokenizer.current().getAttribute());
+        assertEquals("Price", tokenizer.current().getToken());
+
+        // <=
+        tokenizer.next();
+        assertEquals(Token.Attribute.LOE, tokenizer.current().getAttribute());
+        assertEquals("<=", tokenizer.current().getToken());
+
+        // 100
+        tokenizer.next();
+        assertEquals(Token.Attribute.VALUE, tokenizer.current().getAttribute());
+        assertEquals("100", tokenizer.current().getToken());
     }
 }

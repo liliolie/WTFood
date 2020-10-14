@@ -3,7 +3,7 @@ package com.example.wtfood;
 public class Query {
     String CompareAttribute;
     String sign;
-    int Value;
+    String Value;
 
     public void setCompareAttribute(String compareAttribute) {
         CompareAttribute = compareAttribute;
@@ -13,7 +13,7 @@ public class Query {
         this.sign = sign;
     }
 
-    public void setValue(int value) {
+    public void setValue(String value) {
         Value = value;
     }
 
@@ -22,7 +22,7 @@ public class Query {
         return CompareAttribute + sign + Value;
     }
 
-    public Query(String compareAttribute, String sign, int value) {
+    public Query(String compareAttribute, String sign, String value) {
         CompareAttribute = compareAttribute;
         this.sign = sign;
         Value = value;

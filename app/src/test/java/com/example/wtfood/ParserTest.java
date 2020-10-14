@@ -9,76 +9,45 @@ public class ParserTest {
 
     private static MyTokenizer tokenizer;
 
-    private static final String SIMPLECASE = "1+2";
-    private static final String MIDCASE = "12 * 5 - 3";
-    private static final String COMPLEXCASE = "(10 - 2) * (10 / 2) + 1";
 
-    private static final String[] testExample = new String[]{"Price = 10", "2-1", "2*1", "2/1"};
-
+    private static final String[] testExample = new String[]{"Price = 10", "Rating <= 3", "Delivery = Y"};
+    private static final String testExample2 = "Price = 8; Rating <= 2; Delivery = N";
 
     @Test(timeout=1000)
-    public void testAttribute() {
-        MyTokenizer mathTokenizer = new MyTokenizer(testExample[0]);
-        Query t1 = new Parser(mathTokenizer).parseAttribute();
-        ;
-        assertEquals("Price=0", t1.toString());
+    public void testOnePrice() {
+        MyTokenizer queryTokenizer = new MyTokenizer(testExample[0]);
+        Query t1 = new Parser(queryTokenizer).parseAttribute();
+
+        assertEquals("Price=10", t1.toString());
+    }
+    @Test(timeout=1000)
+    public void testOneRating() {
+        MyTokenizer queryTokenizer = new MyTokenizer(testExample[1]);
+        Query t1 = new Parser(queryTokenizer).parseAttribute();
+        assertEquals("Rating<=3", t1.toString());
+    }
+    @Test(timeout=1000)
+    public void testOneDelivery() {
+        MyTokenizer queryTokenizer = new MyTokenizer(testExample[2]);
+        Query t1 = new Parser(queryTokenizer).parseAttribute();
+        assertEquals("Delivery=Y", t1.toString());
+    }
+
+    @Test(timeout=1000)
+    public void testMultiCondition() {
+        tokenizer = new MyTokenizer(testExample2);
+        try{
+            Query q = new Parser(tokenizer).parseAttribute();
+            assertEquals("Incorrect item", "Delivery=N", q.toString());
+            assertEquals("Incorrect size", 3, Parser.totalQuery.size());
+            assertEquals("incorrect display format", "Price=8", Parser.totalQuery.get(0).toString());
+            assertEquals("incorrect display format", "Rating<=2", Parser.totalQuery.get(1).toString());
+            assertEquals("incorrect display format", "Delivery=N", Parser.totalQuery.get(2).toString());
+
+        }catch (Exception e){
+            fail(e.getMessage());
+        }
     }
 
 
-//    @Test(timeout=1000)
-//    public void testSimleSub() {
-//        MyTokenizer mathTokenizer = new MyTokenizer(testExample[1]);
-//        Exp t1 = new Parser(mathTokenizer).parseExp();
-//        assertEquals(1, t1.evaluate());
-//    }
-//
-//    @Test(timeout=1000)
-//    public void testSimleMul() {
-//        MyTokenizer mathTokenizer = new MyTokenizer(testExample[2]);
-//        Exp t1 = new Parser(mathTokenizer).parseExp();
-//        assertEquals(2, t1.evaluate());
-//    }
-//
-//    @Test(timeout=1000)
-//    public void testSimleDiv() {
-//        MyTokenizer mathTokenizer = new MyTokenizer(testExample[3]);
-//        Exp t1 = new Parser(mathTokenizer).parseExp();
-//        assertEquals(2, t1.evaluate());
-//    }
-
-//    @Test(timeout=1000)
-//    public void testSimpleCase(){
-//        tokenizer = new MyTokenizer(SIMPLECASE);
-//        try{
-//            Exp exp = new Parser(tokenizer).parseExp();
-//            assertEquals("incorrect display format", "(1 + 2)", exp.show());
-//            assertEquals("incorrect evaluate value", 3, exp.evaluate());
-//        }catch (Exception e){
-//            fail(e.getMessage());
-//        }
-//    }
-//
-//    @Test(timeout=1000)
-//    public void testMidCase(){
-//        tokenizer = new MyTokenizer(MIDCASE);
-//        try{
-//            Exp exp = new Parser(tokenizer).parseExp();
-//            assertEquals("incorrect display format", "((12 * 5) - 3)", exp.show());
-//            assertEquals("incorrect evaluate value", 57, exp.evaluate());
-//        }catch (Exception e){
-//            fail(e.getMessage());
-//        }
-//    }
-//
-//    @Test(timeout=1000)
-//    public void testComplexCase(){
-//        tokenizer = new MyTokenizer(COMPLEXCASE);
-//        try{
-//            Exp exp = new Parser(tokenizer).parseExp();
-//            assertEquals("incorrect display format","(((10 - 2) * (10 / 2)) + 1)", exp.show());
-//            assertEquals("incorrect evaluate value", 41, exp.evaluate());
-//        }catch (Exception e){
-//            fail(e.getMessage());
-//        }
-//    }
 }
