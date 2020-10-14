@@ -2,7 +2,10 @@ package com.example.wtfood;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -32,6 +35,19 @@ public class ResultActivity extends AppCompatActivity {
 
         ArrayAdapter aa = new ArrayAdapter(this, android.R.layout.simple_list_item_1, new ArrayList(restaurants));
         result.setAdapter(aa);
+
+
+        //set the listener to the listView items [Lili]
+        result.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(getApplicationContext(), DetailsActivity.class);
+//                intent.putExtra("rname",  restaurants.get(0).toString());
+                intent.putExtra("restaurant", restaurants.get(i).toString());
+
+                startActivity(intent);
+            }
+        });
 
     }
 
