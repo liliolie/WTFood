@@ -1,8 +1,7 @@
-package com.example.wtfood;
+package com.example.wtfood.parser;
 
-import java.util.Set;
 
-public class MyTokenizer extends Tokenizer{
+public class MyTokenizer extends Tokenizer {
 
     private String buffer;
     private Token currentToken;

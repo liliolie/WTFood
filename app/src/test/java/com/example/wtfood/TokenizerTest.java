@@ -1,5 +1,9 @@
 package com.example.wtfood;
 
+import com.example.wtfood.parser.MyTokenizer;
+import com.example.wtfood.parser.Token;
+import com.example.wtfood.parser.Tokenizer;
+
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;

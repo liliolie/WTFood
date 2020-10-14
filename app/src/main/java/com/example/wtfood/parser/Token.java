@@ -1,4 +1,5 @@
-package com.example.wtfood;
+package com.example.wtfood.parser;
+
 
 public class Token {
 

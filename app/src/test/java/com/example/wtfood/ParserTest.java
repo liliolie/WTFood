@@ -2,6 +2,10 @@ package com.example.wtfood;
 
 import org.junit.Test;
 
+import com.example.wtfood.parser.MyTokenizer;
+import com.example.wtfood.parser.Parser;
+import com.example.wtfood.parser.Query;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 

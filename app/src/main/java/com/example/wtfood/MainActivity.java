@@ -5,11 +5,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.example.wtfood.fileprocess.FileProcess;
 import com.example.wtfood.fileprocess.Restaurant;
 import com.example.wtfood.fileprocess.Type;
+import com.example.wtfood.parser.MyTokenizer;
+import com.example.wtfood.parser.Parser;
+import com.example.wtfood.parser.Query;
 import com.example.wtfood.rbtree.RBTree;
 import com.google.gson.Gson;
 
@@ -24,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
     private RBTree priceTree;
     private RBTree raringTree;
-    private List<Restaurant> restaurants;
+    private Set<Restaurant> restaurants = null;
 
 
 
@@ -49,14 +53,6 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        // Here can add our data in the array list.
-        restaurants = new ArrayList<>();
-        restaurants.add(new Restaurant("Hero burger"));
-        restaurants.add(new Restaurant("KFC"));
-        restaurants.add(new Restaurant("Subway"));
-        restaurants.add(new Restaurant("Tacobell"));
-        restaurants.add(new Restaurant("BurgerKing"));
-        restaurants.add(new Restaurant("Raku"));
 
         ImageButton go = (ImageButton) findViewById(R.id.goButton);
         go.setOnClickListener(l1);
@@ -78,6 +74,28 @@ public class MainActivity extends AppCompatActivity {
             // Passing the array to List_Activity.
 
             // an example to doing querying
+
+            EditText et = (EditText) findViewById(R.id.query);
+            String query = et.getText().toString();
+            System.out.println("Hi " + Parser.totalQuery.size());
+
+            if(et != null) {
+                MyTokenizer t = new MyTokenizer(query);
+                Query q = new Parser(t).parseAttribute();
+                for(int i = 0; i < Parser.totalQuery.size(); i++){
+                    if(Parser.totalQuery.get(i).getCompareAttribute().equals("Price")){
+                        restaurants = priceTree.searchForNodes(Parser.totalQuery.get(i).getSign(), Integer.parseInt(Parser.totalQuery.get(i).getValue()));
+                    }
+                    if(Parser.totalQuery.get(i).getCompareAttribute().equals("Rating")){
+                        restaurants = priceTree.searchForNodes(Parser.totalQuery.get(i).getSign(), Integer.parseInt(Parser.totalQuery.get(i).getValue()));
+                    }
+                    else {
+                        restaurants.retainAll(raringTree.searchForNodes(Parser.totalQuery.get(i).getSign(), Integer.parseInt(Parser.totalQuery.get(i).getValue())));
+                    }
+                }
+            }
+            et.setText("");
+
             /**
             Set<Restaurant> restaurants = null;
             // if a query on price

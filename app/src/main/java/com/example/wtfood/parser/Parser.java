@@ -1,8 +1,6 @@
-package com.example.wtfood;
+package com.example.wtfood.parser;
 
-import java.security.PublicKey;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Parser {
 

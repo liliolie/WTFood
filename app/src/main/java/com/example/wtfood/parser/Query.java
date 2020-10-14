@@ -1,4 +1,4 @@
-package com.example.wtfood;
+package com.example.wtfood.parser;
 
 public class Query {
     String CompareAttribute;
@@ -11,6 +11,18 @@ public class Query {
 
     public void setSign(String sign) {
         this.sign = sign;
+    }
+
+    public String getCompareAttribute() {
+        return CompareAttribute;
+    }
+
+    public String getSign() {
+        return sign;
+    }
+
+    public String getValue() {
+        return Value;
     }
 
     public void setValue(String value) {
