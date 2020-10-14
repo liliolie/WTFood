@@ -15,7 +15,7 @@ public class ParserTest {
 
 
     private static final String[] testExample = new String[]{"Price = 10", "Rating <= 3", "Delivery = Y"};
-    private static final String testExample2 = "Price = 8; Rating <= 2; Delivery = N";
+    private static final String testExample2 = "Price >= 100; Rating <= 2; Delivery = N";
 
     @Test(timeout=1000)
     public void testOnePrice() {
@@ -44,7 +44,7 @@ public class ParserTest {
             Query q = new Parser(tokenizer).parseAttribute();
             assertEquals("Incorrect item", "Delivery=N", q.toString());
             assertEquals("Incorrect size", 3, Parser.totalQuery.size());
-            assertEquals("incorrect display format", "Price=8", Parser.totalQuery.get(0).toString());
+            assertEquals("incorrect display format", "Price>=100", Parser.totalQuery.get(0).toString());
             assertEquals("incorrect display format", "Rating<=2", Parser.totalQuery.get(1).toString());
             assertEquals("incorrect display format", "Delivery=N", Parser.totalQuery.get(2).toString());
 
