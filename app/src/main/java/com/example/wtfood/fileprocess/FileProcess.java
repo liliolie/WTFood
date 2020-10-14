@@ -29,7 +29,6 @@ public class FileProcess {
             json.append(str);
         }
         bufferedReader.close();
-//        JSONArray jsonArray = JSONObject.fromObject(json).getJSONArray("restaurants");
         Gson gson = new Gson();
         List<Restaurant> restaurants = gson.fromJson(json.toString(), new TypeToken<List<Restaurant>>() {}.getType());
         return restaurants;
@@ -66,10 +65,11 @@ public class FileProcess {
         return restaurants;
     }
 
+    // the create method below are just showing, not creating files here
     public void JSONFileCreate() throws IOException {
 
         ArrayList<Restaurant> restaurants = new ArrayList<>();
-        int totalNumber = 1000;
+        int totalNumber = 500;
 
         File csv = new File("assets/Food_Establishment_Inspection_Scores.csv");
         File json = new File("assets/list.json");
@@ -142,6 +142,9 @@ public class FileProcess {
         bufferedReader.readLine();
 
         for (int i = 0; i < totalNumber; i++) {
+            if (i < 500) {
+                continue;
+            }
 
             String str = bufferedReader.readLine();
 
