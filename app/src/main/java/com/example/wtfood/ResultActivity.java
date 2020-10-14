@@ -20,6 +20,7 @@ import java.util.Set;
 
 public class ResultActivity extends AppCompatActivity {
     ListView result;
+    List<Restaurant> restaurants;
 
 
     @Override
@@ -29,11 +30,12 @@ public class ResultActivity extends AppCompatActivity {
 
         result = (ListView) findViewById(R.id.result_lv);
         String bookJson =  getIntent().getStringExtra("Restaurants");
-        Set<Restaurant> restaurants = new Gson().fromJson(bookJson, new TypeToken<Set<Restaurant>>() {}.getType());
+        Set<Restaurant> r = new Gson().fromJson(bookJson, new TypeToken<Set<Restaurant>>() {}.getType());
+        restaurants = new ArrayList<>(r);
         System.out.println(restaurants.size());
 
 
-        ArrayAdapter aa = new ArrayAdapter(this, android.R.layout.simple_list_item_1, new ArrayList(restaurants));
+        ArrayAdapter aa = new ArrayAdapter(this, android.R.layout.simple_list_item_1, restaurants);
         result.setAdapter(aa);
 
 
