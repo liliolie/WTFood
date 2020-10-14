@@ -2,7 +2,7 @@ package com.example.wtfood;
 
 public class Token {
 
-    public enum Attribute {UNKNOWN, PRICE, DELIVERY, Rating, VALUE, EQUAL, GREATER, LESS, GOE, LOE, END}
+    public enum Attribute {UNKNOWN, PRICE, DELIVERY, RATING, VALUE, EQUAL, GREATER, LESS, GOE, LOE, END, DELIVERYValue}
     private String _token = "";
     private Attribute _attribute = Attribute.UNKNOWN;
 

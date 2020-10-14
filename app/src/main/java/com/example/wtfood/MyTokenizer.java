@@ -33,11 +33,13 @@ public class MyTokenizer extends Tokenizer{
             current = getEND(buffer);
         }
 
+        System.out.println(current);
+
         if(current.equals("Price")){
             currentToken = new Token("Price", Token.Attribute.PRICE);
         }
         if(current.equals("Rating")){
-            currentToken = new Token("Rating", Token.Attribute.Rating);
+            currentToken = new Token("Rating", Token.Attribute.RATING);
         }
         if(current.equals("=")){
             currentToken = new Token("=", Token.Attribute.EQUAL);
@@ -59,6 +61,13 @@ public class MyTokenizer extends Tokenizer{
         }
         if(current.equals(";")){
             currentToken = new Token(";", Token.Attribute.END);
+        }
+        if(current.equals("Delivery")){
+            currentToken = new Token("Delivery", Token.Attribute.DELIVERY);
+        }
+        if(current.equals("Y") || current.equals("N")){
+
+            currentToken = new Token(current, Token.Attribute.DELIVERYValue);
         }
 
 
