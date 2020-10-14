@@ -33,11 +33,11 @@ public class MyTokenizer extends Tokenizer {
         }
 
 
-        if(current.equals("Price")){
-            currentToken = new Token("Price", Token.Attribute.PRICE);
+        if(current.equals("price")){
+            currentToken = new Token("price", Token.Attribute.PRICE);
         }
-        if(current.equals("Rating")){
-            currentToken = new Token("Rating", Token.Attribute.RATING);
+        if(current.equals("rating")){
+            currentToken = new Token("rating", Token.Attribute.RATING);
         }
         if(current.equals("=")){
             currentToken = new Token("=", Token.Attribute.EQUAL);
@@ -60,8 +60,8 @@ public class MyTokenizer extends Tokenizer {
         if(current.equals(";")){
             currentToken = new Token(";", Token.Attribute.END);
         }
-        if(current.equals("Delivery")){
-            currentToken = new Token("Delivery", Token.Attribute.DELIVERY);
+        if(current.equals("delivery")){
+            currentToken = new Token("delivery", Token.Attribute.DELIVERY);
         }
         if(current.equals("Y") || current.equals("N")){
 

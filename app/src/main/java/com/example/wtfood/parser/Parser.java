@@ -23,18 +23,18 @@ public class Parser {
         }
 
         count++;
-        if (_tokenizer.hasNext() && _tokenizer.current().getToken().equals("Price")) {
+        if (_tokenizer.hasNext() && _tokenizer.current().getToken().equals("price")) {
             _tokenizer.next();
-            q.setCompareAttribute("Price");
+            q.setCompareAttribute("price");
             return parseOperator();
 
-        } else if (_tokenizer.hasNext() && _tokenizer.current().getToken().equals("Rating")) {
+        } else if (_tokenizer.hasNext() && _tokenizer.current().getToken().equals("rating")) {
             _tokenizer.next();
-            q.setCompareAttribute("Rating");
+            q.setCompareAttribute("rating");
             return parseOperator();
         } else {
             _tokenizer.next();
-            q.setCompareAttribute("Delivery");
+            q.setCompareAttribute("delivery");
             return parseOperator();
         }
 
@@ -68,12 +68,12 @@ public class Parser {
 
 
     public Query parseValue() {
-        if (q.CompareAttribute.equals("Price") || q.CompareAttribute.equals("Rating")) {
+        if (q.CompareAttribute.equals("price") || q.CompareAttribute.equals("rating")) {
             String value = _tokenizer.current().getToken();
             q.setValue(value);
             _tokenizer.next();
         }
-        if (q.CompareAttribute.equals("Delivery")) {
+        if (q.CompareAttribute.equals("delivery")) {
             String value = _tokenizer.current().getToken();
             q.setValue(value);
             _tokenizer.next();
