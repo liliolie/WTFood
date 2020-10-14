@@ -20,6 +20,7 @@ import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -51,6 +52,14 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        // Here can add our data in the array list.
+        restaurants = new HashSet<>();
+        restaurants.add(new Restaurant("Hero burger"));
+        restaurants.add(new Restaurant("KFC"));
+        restaurants.add(new Restaurant("Subway"));
+        restaurants.add(new Restaurant("Tacobell"));
+        restaurants.add(new Restaurant("BurgerKing"));
+        restaurants.add(new Restaurant("Raku"));
 
 
         ImageButton go = (ImageButton) findViewById(R.id.goButton);
@@ -78,31 +87,31 @@ public class MainActivity extends AppCompatActivity {
             String query = et.getText().toString();
 
 
-            if (et != null) {
-                MyTokenizer t = new MyTokenizer(query);
-                Query q = new Parser(t).parseAttribute();
-                for (int i = 0; i < Parser.totalQuery.size(); i++) {
-                    if (Parser.totalQuery.get(i).getCompareAttribute().equals("Price")) {
-                        System.out.println("Pricing " + Parser.totalQuery.get(i).getSign());
-                        System.out.println("Pricing " + Integer.parseInt(Parser.totalQuery.get(i).getValue()));
-                        restaurants = priceTree.searchForNodes(Parser.totalQuery.get(i).getSign(), Integer.parseInt(Parser.totalQuery.get(i).getValue()));
-                    }
-
-                    System.out.println("Rating " + Parser.totalQuery.get(i).getSign());
-                    System.out.println("Rating " + Integer.parseInt(Parser.totalQuery.get(i).getValue()));
-                    if (Parser.totalQuery.get(i).getCompareAttribute().equals("Rating")) {
-                        if (restaurants == null) {
-                            restaurants = raringTree.searchForNodes(Parser.totalQuery.get(i).getSign(), Integer.parseInt(Parser.totalQuery.get(i).getValue()));
-                        } else {
-                            restaurants.retainAll(raringTree.searchForNodes(Parser.totalQuery.get(i).getSign(), Integer.parseInt(Parser.totalQuery.get(i).getValue())));
-                        }
-                    }
-
-                }
-            }
-            System.out.println("Hi " + Parser.totalQuery.size());
-            System.out.println("R " + restaurants.size());
-            et.setText("");
+//            if (et != null) {
+//                MyTokenizer t = new MyTokenizer(query);
+//                Query q = new Parser(t).parseAttribute();
+//                for (int i = 0; i < Parser.totalQuery.size(); i++) {
+//                    if (Parser.totalQuery.get(i).getCompareAttribute().equals("Price")) {
+//                        System.out.println("Pricing " + Parser.totalQuery.get(i).getSign());
+//                        System.out.println("Pricing " + Integer.parseInt(Parser.totalQuery.get(i).getValue()));
+//                        restaurants = priceTree.searchForNodes(Parser.totalQuery.get(i).getSign(), Integer.parseInt(Parser.totalQuery.get(i).getValue()));
+//                    }
+//
+//                    System.out.println("Rating " + Parser.totalQuery.get(i).getSign());
+//                    System.out.println("Rating " + Integer.parseInt(Parser.totalQuery.get(i).getValue()));
+//                    if (Parser.totalQuery.get(i).getCompareAttribute().equals("Rating")) {
+//                        if (restaurants == null) {
+//                            restaurants = raringTree.searchForNodes(Parser.totalQuery.get(i).getSign(), Integer.parseInt(Parser.totalQuery.get(i).getValue()));
+//                        } else {
+//                            restaurants.retainAll(raringTree.searchForNodes(Parser.totalQuery.get(i).getSign(), Integer.parseInt(Parser.totalQuery.get(i).getValue())));
+//                        }
+//                    }
+//
+//                }
+//            }
+//            System.out.println("Hi " + Parser.totalQuery.size());
+//            System.out.println("R " + restaurants.size());
+//            et.setText("");
 
 
             /**

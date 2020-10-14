@@ -13,6 +13,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class ResultActivity extends AppCompatActivity {
     ListView result;
@@ -25,11 +26,11 @@ public class ResultActivity extends AppCompatActivity {
 
         result = (ListView) findViewById(R.id.result_lv);
         String bookJson =  getIntent().getStringExtra("Restaurants");
-        List<Restaurant> restaurants = new Gson().fromJson(bookJson, new TypeToken<List<Restaurant>>() {}.getType());
+        Set<Restaurant> restaurants = new Gson().fromJson(bookJson, new TypeToken<Set<Restaurant>>() {}.getType());
         System.out.println(restaurants.size());
 
 
-        ArrayAdapter aa = new ArrayAdapter(this, android.R.layout.simple_list_item_1, restaurants);
+        ArrayAdapter aa = new ArrayAdapter(this, android.R.layout.simple_list_item_1, new ArrayList(restaurants));
         result.setAdapter(aa);
 
     }
