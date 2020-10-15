@@ -68,18 +68,18 @@ public class Parser {
 
 
     public Query parseValue() {
-        if (q.CompareAttribute.equals("price") || q.CompareAttribute.equals("rating")) {
+        if (q.compareAttribute.equals("price") || q.compareAttribute.equals("rating")) {
             String value = _tokenizer.current().getToken();
             q.setValue(value);
             _tokenizer.next();
         }
-        if (q.CompareAttribute.equals("delivery")) {
+        if (q.compareAttribute.equals("delivery")) {
             String value = _tokenizer.current().getToken();
             q.setValue(value);
             _tokenizer.next();
         }
 
-        totalQuery.add(new Query(q.CompareAttribute, q.sign, q.Value));
+        totalQuery.add(new Query(q.compareAttribute, q.sign, q.value));
 
         if (!_tokenizer.hasNext()) {
             count = 0;

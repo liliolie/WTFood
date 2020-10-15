@@ -1,12 +1,12 @@
 package com.example.wtfood.parser;
 
 public class Query {
-    String CompareAttribute;
+    String compareAttribute;
     String sign;
-    String Value;
+    String value;
 
     public void setCompareAttribute(String compareAttribute) {
-        CompareAttribute = compareAttribute;
+        this.compareAttribute = compareAttribute;
     }
 
     public void setSign(String sign) {
@@ -14,7 +14,7 @@ public class Query {
     }
 
     public String getCompareAttribute() {
-        return CompareAttribute;
+        return compareAttribute;
     }
 
     public String getSign() {
@@ -22,21 +22,21 @@ public class Query {
     }
 
     public String getValue() {
-        return Value;
+        return value;
     }
 
     public void setValue(String value) {
-        Value = value;
+        this.value = value;
     }
 
     @Override
     public String toString() {
-        return CompareAttribute + sign + Value;
+        return compareAttribute + sign + value;
     }
 
     public Query(String compareAttribute, String sign, String value) {
-        CompareAttribute = compareAttribute;
+        this.compareAttribute = compareAttribute;
         this.sign = sign;
-        Value = value;
+        this.value = value;
     }
 }
