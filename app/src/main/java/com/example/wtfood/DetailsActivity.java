@@ -37,6 +37,8 @@ public class DetailsActivity extends AppCompatActivity {
             imageResource = getResources().getIdentifier("@drawable/turkey", null, this.getPackageName());
         }if (details.contains("Fine Dinning")) {
             imageResource = getResources().getIdentifier("@drawable/finedining", null, this.getPackageName());
+        }if (details.contains("French")) {
+            imageResource = getResources().getIdentifier("@drawable/brunch", null, this.getPackageName());
         }
         image1.setImageResource(imageResource);
 
