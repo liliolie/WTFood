@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
 
     private RBTree priceTree;
     private RBTree raringTree;
-    private Set<Restaurant> restaurants = null;
 
 
     @Override
@@ -62,7 +61,6 @@ public class MainActivity extends AppCompatActivity {
 //        restaurants.add(new Restaurant("BurgerKing"));
 //        restaurants.add(new Restaurant("Raku"));
 
-
         ImageButton go = (ImageButton) findViewById(R.id.goButton);
         go.setOnClickListener(l1);
     }
@@ -87,49 +85,26 @@ public class MainActivity extends AppCompatActivity {
             EditText et = (EditText) findViewById(R.id.query);
             String query = et.getText().toString();
 
-
-            if (et != null) {
+            Set<Restaurant> restaurants = null;
+            if (!query.equals("")) {
                 MyTokenizer t = new MyTokenizer(query);
                 Query q = new Parser(t).parseAttribute();
+                System.out.println(Parser.totalQuery.size());
                 for (int i = 0; i < Parser.totalQuery.size(); i++) {
                     if (Parser.totalQuery.get(i).getCompareAttribute().equals("price")) {
                         System.out.println("Pricing " + Parser.totalQuery.get(i).getSign());
                         System.out.println("Pricing " + Integer.parseInt(Parser.totalQuery.get(i).getValue()));
-                        restaurants = priceTree.searchForNodes(Parser.totalQuery.get(i).getSign(), Integer.parseInt(Parser.totalQuery.get(i).getValue()));
-                    }
-
-                    System.out.println("Rating " + Parser.totalQuery.get(i).getSign());
-                    System.out.println("Rating " + Integer.parseInt(Parser.totalQuery.get(i).getValue()));
-                    if (Parser.totalQuery.get(i).getCompareAttribute().equals("rating")) {
-                        if (restaurants == null) {
-                            restaurants = raringTree.searchForNodes(Parser.totalQuery.get(i).getSign(), Integer.parseInt(Parser.totalQuery.get(i).getValue()));
-                        } else {
-                            restaurants.retainAll(raringTree.searchForNodes(Parser.totalQuery.get(i).getSign(), Integer.parseInt(Parser.totalQuery.get(i).getValue())));
-                        }
-                    }
-
-                }
-            }
-            System.out.println("Hi " + Parser.totalQuery.size());
-            System.out.println("R " + restaurants.size());
-            et.setText("");
-            if (et != null) {
-                MyTokenizer t = new MyTokenizer(query);
-                Query q = new Parser(t).parseAttribute();
-                for (int i = 0; i < Parser.totalQuery.size(); i++) {
-                    if (Parser.totalQuery.get(i).getCompareAttribute().equals("Price")) {
-                        System.out.println("Pricing " + Parser.totalQuery.get(i).getSign());
-                        System.out.println("Pricing " + Integer.parseInt(Parser.totalQuery.get(i).getValue()));
                         if (restaurants == null) {
                             restaurants = priceTree.searchForNodes(Parser.totalQuery.get(i).getSign(), Integer.parseInt(Parser.totalQuery.get(i).getValue()));
+                            System.out.println(restaurants.size());
                         } else {
                             restaurants.retainAll(priceTree.searchForNodes(Parser.totalQuery.get(i).getSign(), Integer.parseInt(Parser.totalQuery.get(i).getValue())));
                         }
                     }
 
-                    System.out.println("Rating " + Parser.totalQuery.get(i).getSign());
-                    System.out.println("Rating " + Integer.parseInt(Parser.totalQuery.get(i).getValue()));
-                    if (Parser.totalQuery.get(i).getCompareAttribute().equals("Rating")) {
+                    if (Parser.totalQuery.get(i).getCompareAttribute().equals("rating")) {
+                        System.out.println("Rating " + Parser.totalQuery.get(i).getSign());
+                        System.out.println("Rating " + Integer.parseInt(Parser.totalQuery.get(i).getValue()));
                         if (restaurants == null) {
                             restaurants = raringTree.searchForNodes(Parser.totalQuery.get(i).getSign(), Integer.parseInt(Parser.totalQuery.get(i).getValue()));
                         } else {
@@ -137,6 +112,22 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
 
+                    if (Parser.totalQuery.get(i).getCompareAttribute().equals("delivery")) {
+                        System.out.println("Delivery " + Parser.totalQuery.get(i).getSign());
+                        System.out.println("Delivery " + Parser.totalQuery.get(i).getValue());
+                        boolean delivery = Parser.totalQuery.get(i).getValue().equals("Y");
+                        if (restaurants == null) {
+                            restaurants = raringTree.getAllNodes();
+                        }
+                        Iterator<Restaurant> iterator = restaurants.iterator();
+
+                        while (iterator.hasNext()) {
+                            if (iterator.next().isDeliveryService() != delivery) {
+                                iterator.remove();
+                            }
+                        }
+
+                    }
                 }
             }
             System.out.println("Hi " + Parser.totalQuery.size());
@@ -144,29 +135,8 @@ public class MainActivity extends AppCompatActivity {
             et.setText("");
 
 
-            /**
-             Set<Restaurant> restaurants = null;
-             // if a query on price
-             restaurants = priceTree.searchForNodes("<", 100);
-             // if a query on rating
-             if (restaurants == null) {
-             restaurants = raringTree.searchForNodes(">", 3);
-             } else {
-             restaurants.retainAll(raringTree.searchForNodes(">", 3));
-             }
-             // if a query on deliver (just an example)
-             Iterator<Restaurant> iterator = restaurants.iterator();
-             while (iterator.hasNext()) {
-             Restaurant r = iterator.next();
-             if (!r.isDeliveryService()) {
-             iterator.remove();
-             }
-             }
-             **/
-
             Intent intent = new Intent(getApplicationContext(), ResultActivity.class);
             intent.putExtra("Restaurants", new Gson().toJson(restaurants));
-            restaurants = null;
             startActivity(intent);
         }
     };
