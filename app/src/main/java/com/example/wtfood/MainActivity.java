@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
         try {
             List<Restaurant> restaurants = new FileProcess().jsonFileRead(getAssets().open("list.json"));
+            restaurants.addAll(new FileProcess().csvFileRead(getAssets().open("list.csv")));
             for (Restaurant r : restaurants) {
                 priceTree.insert(r);
                 raringTree.insert(r);
@@ -53,13 +54,13 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         // Here can add our data in the array list.
-        restaurants = new HashSet<>();
-        restaurants.add(new Restaurant("Hero burger"));
-        restaurants.add(new Restaurant("KFC"));
-        restaurants.add(new Restaurant("Subway"));
-        restaurants.add(new Restaurant("Tacobell"));
-        restaurants.add(new Restaurant("BurgerKing"));
-        restaurants.add(new Restaurant("Raku"));
+//        restaurants = new HashSet<>();
+//        restaurants.add(new Restaurant("Hero burger"));
+//        restaurants.add(new Restaurant("KFC"));
+//        restaurants.add(new Restaurant("Subway"));
+//        restaurants.add(new Restaurant("Tacobell"));
+//        restaurants.add(new Restaurant("BurgerKing"));
+//        restaurants.add(new Restaurant("Raku"));
 
 
         ImageButton go = (ImageButton) findViewById(R.id.goButton);
@@ -87,31 +88,35 @@ public class MainActivity extends AppCompatActivity {
             String query = et.getText().toString();
 
 
-//            if (et != null) {
-//                MyTokenizer t = new MyTokenizer(query);
-//                Query q = new Parser(t).parseAttribute();
-//                for (int i = 0; i < Parser.totalQuery.size(); i++) {
-//                    if (Parser.totalQuery.get(i).getCompareAttribute().equals("Price")) {
-//                        System.out.println("Pricing " + Parser.totalQuery.get(i).getSign());
-//                        System.out.println("Pricing " + Integer.parseInt(Parser.totalQuery.get(i).getValue()));
-//                        restaurants = priceTree.searchForNodes(Parser.totalQuery.get(i).getSign(), Integer.parseInt(Parser.totalQuery.get(i).getValue()));
-//                    }
-//
-//                    System.out.println("Rating " + Parser.totalQuery.get(i).getSign());
-//                    System.out.println("Rating " + Integer.parseInt(Parser.totalQuery.get(i).getValue()));
-//                    if (Parser.totalQuery.get(i).getCompareAttribute().equals("Rating")) {
-//                        if (restaurants == null) {
-//                            restaurants = raringTree.searchForNodes(Parser.totalQuery.get(i).getSign(), Integer.parseInt(Parser.totalQuery.get(i).getValue()));
-//                        } else {
-//                            restaurants.retainAll(raringTree.searchForNodes(Parser.totalQuery.get(i).getSign(), Integer.parseInt(Parser.totalQuery.get(i).getValue())));
-//                        }
-//                    }
-//
-//                }
-//            }
-//            System.out.println("Hi " + Parser.totalQuery.size());
-//            System.out.println("R " + restaurants.size());
-//            et.setText("");
+            if (et != null) {
+                MyTokenizer t = new MyTokenizer(query);
+                Query q = new Parser(t).parseAttribute();
+                for (int i = 0; i < Parser.totalQuery.size(); i++) {
+                    if (Parser.totalQuery.get(i).getCompareAttribute().equals("Price")) {
+                        System.out.println("Pricing " + Parser.totalQuery.get(i).getSign());
+                        System.out.println("Pricing " + Integer.parseInt(Parser.totalQuery.get(i).getValue()));
+                        if (restaurants == null) {
+                            restaurants = priceTree.searchForNodes(Parser.totalQuery.get(i).getSign(), Integer.parseInt(Parser.totalQuery.get(i).getValue()));
+                        } else {
+                            restaurants.retainAll(priceTree.searchForNodes(Parser.totalQuery.get(i).getSign(), Integer.parseInt(Parser.totalQuery.get(i).getValue())));
+                        }
+                    }
+
+                    System.out.println("Rating " + Parser.totalQuery.get(i).getSign());
+                    System.out.println("Rating " + Integer.parseInt(Parser.totalQuery.get(i).getValue()));
+                    if (Parser.totalQuery.get(i).getCompareAttribute().equals("Rating")) {
+                        if (restaurants == null) {
+                            restaurants = raringTree.searchForNodes(Parser.totalQuery.get(i).getSign(), Integer.parseInt(Parser.totalQuery.get(i).getValue()));
+                        } else {
+                            restaurants.retainAll(raringTree.searchForNodes(Parser.totalQuery.get(i).getSign(), Integer.parseInt(Parser.totalQuery.get(i).getValue())));
+                        }
+                    }
+
+                }
+            }
+            System.out.println("Hi " + Parser.totalQuery.size());
+            System.out.println("R " + restaurants.size());
+            et.setText("");
 
 
             /**
@@ -136,6 +141,7 @@ public class MainActivity extends AppCompatActivity {
 
             Intent intent = new Intent(getApplicationContext(), ResultActivity.class);
             intent.putExtra("Restaurants", new Gson().toJson(restaurants));
+            restaurants = null;
             startActivity(intent);
         }
     };
