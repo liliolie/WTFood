@@ -92,6 +92,31 @@ public class MainActivity extends AppCompatActivity {
                 MyTokenizer t = new MyTokenizer(query);
                 Query q = new Parser(t).parseAttribute();
                 for (int i = 0; i < Parser.totalQuery.size(); i++) {
+                    if (Parser.totalQuery.get(i).getCompareAttribute().equals("price")) {
+                        System.out.println("Pricing " + Parser.totalQuery.get(i).getSign());
+                        System.out.println("Pricing " + Integer.parseInt(Parser.totalQuery.get(i).getValue()));
+                        restaurants = priceTree.searchForNodes(Parser.totalQuery.get(i).getSign(), Integer.parseInt(Parser.totalQuery.get(i).getValue()));
+                    }
+
+                    System.out.println("Rating " + Parser.totalQuery.get(i).getSign());
+                    System.out.println("Rating " + Integer.parseInt(Parser.totalQuery.get(i).getValue()));
+                    if (Parser.totalQuery.get(i).getCompareAttribute().equals("rating")) {
+                        if (restaurants == null) {
+                            restaurants = raringTree.searchForNodes(Parser.totalQuery.get(i).getSign(), Integer.parseInt(Parser.totalQuery.get(i).getValue()));
+                        } else {
+                            restaurants.retainAll(raringTree.searchForNodes(Parser.totalQuery.get(i).getSign(), Integer.parseInt(Parser.totalQuery.get(i).getValue())));
+                        }
+                    }
+
+                }
+            }
+            System.out.println("Hi " + Parser.totalQuery.size());
+            System.out.println("R " + restaurants.size());
+            et.setText("");
+            if (et != null) {
+                MyTokenizer t = new MyTokenizer(query);
+                Query q = new Parser(t).parseAttribute();
+                for (int i = 0; i < Parser.totalQuery.size(); i++) {
                     if (Parser.totalQuery.get(i).getCompareAttribute().equals("Price")) {
                         System.out.println("Pricing " + Parser.totalQuery.get(i).getSign());
                         System.out.println("Pricing " + Integer.parseInt(Parser.totalQuery.get(i).getValue()));

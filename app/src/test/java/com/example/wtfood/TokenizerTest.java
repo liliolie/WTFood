@@ -11,9 +11,9 @@ import org.junit.Test;
 public class TokenizerTest {
 
     private static Tokenizer tokenizer;
-    private static final String twoCase = "Rating <= 2; Price > 50" ;
-    private static final String oneCase = "Price >= 10";
-    private static final String threeCase = "Delivery = Y; Rating < 5; Price <= 100";
+    private static final String twoCase = "rating <= 2; price > 50" ;
+    private static final String oneCase = "price >= 10";
+    private static final String threeCase = "delivery = Y; rating < 5; price <= 100";
 
     @Test(timeout=1000)
     public void testPriceToken() {
@@ -23,7 +23,7 @@ public class TokenizerTest {
         assertEquals("wrong token type", Token.Attribute.PRICE, tokenizer.current().getAttribute());
 
         //check the actual token value"
-        assertEquals("wrong token value", "Price", tokenizer.current().getToken());
+        assertEquals("wrong token value", "price", tokenizer.current().getToken());
     }
 
     @Test(timeout=1000)
@@ -78,7 +78,7 @@ public class TokenizerTest {
         //check the type of the first token
         assertEquals("wrong token type", Token.Attribute.RATING, tokenizer.current().getAttribute());
         //check the actual token value
-        assertEquals("wrong token value", "Rating", tokenizer.current().getToken());
+        assertEquals("wrong token value", "rating", tokenizer.current().getToken());
     }
 
     @Test(timeout=1000)
@@ -145,7 +145,7 @@ public class TokenizerTest {
         // Rating
         tokenizer.next();
         assertEquals(Token.Attribute.RATING, tokenizer.current().getAttribute());
-        assertEquals("Rating", tokenizer.current().getToken());
+        assertEquals("rating", tokenizer.current().getToken());
 
         // <
         tokenizer.next();
@@ -165,7 +165,7 @@ public class TokenizerTest {
         // Price
         tokenizer.next();
         assertEquals(Token.Attribute.PRICE, tokenizer.current().getAttribute());
-        assertEquals("Price", tokenizer.current().getToken());
+        assertEquals("price", tokenizer.current().getToken());
 
         // <=
         tokenizer.next();

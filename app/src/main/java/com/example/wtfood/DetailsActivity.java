@@ -25,7 +25,7 @@ public class DetailsActivity extends AppCompatActivity {
         // set the ImageView
         ImageView image1 = (ImageView) findViewById(R.id.image1);
         int imageResource = 0;
-        if (details.contains("Fast Food!")){
+        if (details.contains("Fast Food")){
             imageResource = getResources().getIdentifier("@drawable/pubfood", null, this.getPackageName());
         }if (details.contains("Chinese")) {
             imageResource = getResources().getIdentifier("@drawable/japanese", null, this.getPackageName());
@@ -33,9 +33,10 @@ public class DetailsActivity extends AppCompatActivity {
             imageResource = getResources().getIdentifier("@drawable/coffee", null, this.getPackageName());
         }if (details.contains("Bakery")) {
             imageResource = getResources().getIdentifier("@drawable/brunchtea", null, this.getPackageName());
-        }
-        if (details.contains("Janpanese")) {
-            imageResource = getResources().getIdentifier("@drawable/brunchtea", null, this.getPackageName());
+        }if (details.contains("Turkish")) {
+            imageResource = getResources().getIdentifier("@drawable/turkey", null, this.getPackageName());
+        }if (details.contains("Fine Dinning")) {
+            imageResource = getResources().getIdentifier("@drawable/finedining", null, this.getPackageName());
         }
         image1.setImageResource(imageResource);
 
