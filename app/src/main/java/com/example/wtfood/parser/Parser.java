@@ -1,101 +1,79 @@
 package com.example.wtfood.parser;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Parser {
 
     MyTokenizer _tokenizer;
-    public Query q = new Query("", "", "");
 
     public Parser(MyTokenizer tokenizer) {
         _tokenizer = tokenizer;
     }
 
-    public static ArrayList<Query> totalQuery = new ArrayList<>();
-
-    public int count = 0;
+    public List<Query> totalQuery = new ArrayList<>();
 
 
-    public Query parseAttribute() {
 
-        if (count == 0){
-            totalQuery.clear();
-        }
+    public void parseAttribute() {
+        System.out.println("Hi");
 
-        count++;
         if (_tokenizer.hasNext() && _tokenizer.current().getToken().equals("price")) {
             _tokenizer.next();
-            q.setCompareAttribute("price");
-            return parseOperator();
+            parseOperator("price");
 
         } else if (_tokenizer.hasNext() && _tokenizer.current().getToken().equals("rating")) {
             _tokenizer.next();
-            q.setCompareAttribute("rating");
-            return parseOperator();
+            parseOperator("rating");
         } else {
             _tokenizer.next();
-            q.setCompareAttribute("delivery");
-            return parseOperator();
+
+            parseOperator("delivery");
         }
 
     }
 
-    public Query parseOperator() {
-
+    public void parseOperator(String Attribute) {
+        System.out.println("Hi");
+        String A = Attribute;
         if (_tokenizer.hasNext() && _tokenizer.current().getToken().equals("=")) {
             _tokenizer.next();
-            q.setSign("=");
-            return parseValue();
+            parseValue(A, "=");
         } else if (_tokenizer.hasNext() && _tokenizer.current().getToken().equals("<")) {
             _tokenizer.next();
-            q.setSign("<");
-            return parseValue();
+            parseValue(A, "<");
         } else if (_tokenizer.hasNext() && _tokenizer.current().getToken().equals(">")) {
             _tokenizer.next();
-            q.setSign(">");
-            return parseValue();
+            parseValue(A, ">");
         } else if (_tokenizer.hasNext() && _tokenizer.current().getToken().equals(">=")) {
             _tokenizer.next();
-            q.setSign(">=");
-            return parseValue();
+            parseValue(A, ">=");
         } else {
             _tokenizer.next();
-            q.setSign("<=");
-            return parseValue();
+            parseValue(A, "<=");
         }
 
     }
 
 
-    public Query parseValue() {
-        if (q.compareAttribute.equals("price") || q.compareAttribute.equals("rating")) {
+    public void parseValue(String Attribute, String Operator) {
+        System.out.println("Hi");
+        if (Attribute.equals("price") || Attribute.equals("rating")) {
             String value = _tokenizer.current().getToken();
-            q.setValue(value);
+            totalQuery.add(new Query(Attribute,Operator,value));
+            _tokenizer.next();
             _tokenizer.next();
         }
-        if (q.compareAttribute.equals("delivery")) {
+        if (Attribute.equals("delivery")) {
             String value = _tokenizer.current().getToken();
-            q.setValue(value);
+            totalQuery.add(new Query(Attribute,Operator,value));
+            _tokenizer.next();
             _tokenizer.next();
         }
 
-        totalQuery.add(new Query(q.compareAttribute, q.sign, q.value));
 
-        if (!_tokenizer.hasNext()) {
-            count = 0;
-            return q;
-        } else {
-            _tokenizer.next();
-            return parseEnd();
-        }
-    }
-
-
-    public Query parseEnd() {
         if (_tokenizer.hasNext()) {
-            return parseAttribute();
-        } else {
-            return q;
+            parseAttribute();
         }
     }
 }

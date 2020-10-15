@@ -85,37 +85,42 @@ public class MainActivity extends AppCompatActivity {
             EditText et = (EditText) findViewById(R.id.query);
             String query = et.getText().toString();
 
+
+
+
+            MyTokenizer queryTokenizer = new MyTokenizer(query);
+            Parser p = new Parser(queryTokenizer);
+            p.parseAttribute();
+
             Set<Restaurant> restaurants = null;
             if (!query.equals("")) {
-                MyTokenizer t = new MyTokenizer(query);
-                Query q = new Parser(t).parseAttribute();
-                System.out.println(Parser.totalQuery.size());
-                for (int i = 0; i < Parser.totalQuery.size(); i++) {
-                    if (Parser.totalQuery.get(i).getCompareAttribute().equals("price")) {
-                        System.out.println("Pricing " + Parser.totalQuery.get(i).getSign());
-                        System.out.println("Pricing " + Integer.parseInt(Parser.totalQuery.get(i).getValue()));
+                System.out.println(p.totalQuery.size());
+                for (int i = 0; i < p.totalQuery.size(); i++) {
+                    if (p.totalQuery.get(i).getCompareAttribute().equals("price")) {
+                        System.out.println("Pricing " + p.totalQuery.get(i).getSign());
+                        System.out.println("Pricing " + Integer.parseInt(p.totalQuery.get(i).getValue()));
                         if (restaurants == null) {
-                            restaurants = priceTree.searchForNodes(Parser.totalQuery.get(i).getSign(), Integer.parseInt(Parser.totalQuery.get(i).getValue()));
+                            restaurants = priceTree.searchForNodes(p.totalQuery.get(i).getSign(), Integer.parseInt(p.totalQuery.get(i).getValue()));
                             System.out.println(restaurants.size());
                         } else {
-                            restaurants.retainAll(priceTree.searchForNodes(Parser.totalQuery.get(i).getSign(), Integer.parseInt(Parser.totalQuery.get(i).getValue())));
+                            restaurants.retainAll(priceTree.searchForNodes(p.totalQuery.get(i).getSign(), Integer.parseInt(p.totalQuery.get(i).getValue())));
                         }
                     }
 
-                    if (Parser.totalQuery.get(i).getCompareAttribute().equals("rating")) {
-                        System.out.println("Rating " + Parser.totalQuery.get(i).getSign());
-                        System.out.println("Rating " + Integer.parseInt(Parser.totalQuery.get(i).getValue()));
+                    if (p.totalQuery.get(i).getCompareAttribute().equals("rating")) {
+                        System.out.println("Rating " + p.totalQuery.get(i).getSign());
+                        System.out.println("Rating " + Integer.parseInt(p.totalQuery.get(i).getValue()));
                         if (restaurants == null) {
-                            restaurants = raringTree.searchForNodes(Parser.totalQuery.get(i).getSign(), Integer.parseInt(Parser.totalQuery.get(i).getValue()));
+                            restaurants = raringTree.searchForNodes(p.totalQuery.get(i).getSign(), Integer.parseInt(p.totalQuery.get(i).getValue()));
                         } else {
-                            restaurants.retainAll(raringTree.searchForNodes(Parser.totalQuery.get(i).getSign(), Integer.parseInt(Parser.totalQuery.get(i).getValue())));
+                            restaurants.retainAll(raringTree.searchForNodes(p.totalQuery.get(i).getSign(), Integer.parseInt(p.totalQuery.get(i).getValue())));
                         }
                     }
 
-                    if (Parser.totalQuery.get(i).getCompareAttribute().equals("delivery")) {
-                        System.out.println("Delivery " + Parser.totalQuery.get(i).getSign());
-                        System.out.println("Delivery " + Parser.totalQuery.get(i).getValue());
-                        boolean delivery = Parser.totalQuery.get(i).getValue().equals("Y");
+                    if (p.totalQuery.get(i).getCompareAttribute().equals("delivery")) {
+                        System.out.println("Delivery " + p.totalQuery.get(i).getSign());
+                        System.out.println("Delivery " + p.totalQuery.get(i).getValue());
+                        boolean delivery = p.totalQuery.get(i).getValue().equals("Y");
                         if (restaurants == null) {
                             restaurants = raringTree.getAllNodes();
                         }
@@ -130,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             }
-            System.out.println("Hi " + Parser.totalQuery.size());
+            System.out.println("Hi " + p.totalQuery.size());
             System.out.println("R " + restaurants.size());
             et.setText("");
 

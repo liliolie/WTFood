@@ -20,33 +20,37 @@ public class ParserTest {
     @Test(timeout=1000)
     public void testOnePrice() {
         MyTokenizer queryTokenizer = new MyTokenizer(testExample[0]);
-        Query t1 = new Parser(queryTokenizer).parseAttribute();
+        Parser p = new Parser(queryTokenizer);
+        p.parseAttribute();
 
-        assertEquals("price=10", t1.toString());
+        assertEquals("price=10", p.totalQuery.get(0).toString());
     }
     @Test(timeout=1000)
     public void testOneRating() {
         MyTokenizer queryTokenizer = new MyTokenizer(testExample[1]);
-        Query t1 = new Parser(queryTokenizer).parseAttribute();
-        assertEquals("rating<=3", t1.toString());
+        Parser p = new Parser(queryTokenizer);
+        p.parseAttribute();
+        assertEquals("rating<=3", p.totalQuery.get(0).toString());
     }
     @Test(timeout=1000)
     public void testOneDelivery() {
         MyTokenizer queryTokenizer = new MyTokenizer(testExample[2]);
-        Query t1 = new Parser(queryTokenizer).parseAttribute();
-        assertEquals("delivery=Y", t1.toString());
+        Parser p = new Parser(queryTokenizer);
+        p.parseAttribute();
+        assertEquals("delivery=Y", p.totalQuery.get(0).toString());
     }
 
     @Test(timeout=1000)
     public void testMultiCondition() {
-        tokenizer = new MyTokenizer(testExample2);
+        MyTokenizer queryTokenizer = new MyTokenizer(testExample2);
+        Parser p = new Parser(queryTokenizer);
+        p.parseAttribute();
         try{
-            Query q = new Parser(tokenizer).parseAttribute();
-            assertEquals("Incorrect item", "delivery=N", q.toString());
-            assertEquals("Incorrect size", 3, Parser.totalQuery.size());
-            assertEquals("incorrect display format", "price>=100", Parser.totalQuery.get(0).toString());
-            assertEquals("incorrect display format", "rating<=2", Parser.totalQuery.get(1).toString());
-            assertEquals("incorrect display format", "delivery=N", Parser.totalQuery.get(2).toString());
+            assertEquals("Incorrect item", "[price>=100, rating<=2, delivery=N]", p.totalQuery.toString());
+            assertEquals("Incorrect size", 3, p.totalQuery.size());
+            assertEquals("incorrect display format", "price>=100", p.totalQuery.get(0).toString());
+            assertEquals("incorrect display format", "rating<=2", p.totalQuery.get(1).toString());
+            assertEquals("incorrect display format", "delivery=N", p.totalQuery.get(2).toString());
 
         }catch (Exception e){
             fail(e.getMessage());
