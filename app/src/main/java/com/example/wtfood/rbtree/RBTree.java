@@ -284,6 +284,23 @@ public class RBTree {
 		return result;
 	}
 
+	public Set<Restaurant> getAllNodes() {
+		result = new HashSet<>();
+		dfs(root);
+		return result;
+	}
+
+	private void dfs(Node node) {
+		if (node.restaurant == null) {
+			return;
+		}
+
+		result.add(node.restaurant);
+
+		dfs(node.left);
+		dfs(node.right);
+	}
+
 	private void dfs(Node node, String sign, int requirement) {
 		if (node.restaurant == null) {
 			return;
@@ -293,8 +310,16 @@ public class RBTree {
 			result.add(node.restaurant);
 		}
 		//TODO: cutting branch
-		int cmp = node.restaurant.getPrice() - requirement;
-		if ((sign.equals("<") || sign.equals("<=") || sign.equals("=")) && cmp > 0) {
+		int cmp = 0;
+		switch (comparingAttribute) {
+			case "price":
+				cmp = node.restaurant.getPrice() - requirement;
+				break;
+			case "rating":
+				cmp = node.restaurant.getRating() - requirement;
+		}
+
+		if ((sign.equals("<") || sign.equals("<=")) && cmp > 0) {
 			dfs(node.left, sign, requirement);
 		} else if ((sign.equals(">") || sign.equals(">=") || sign.equals("=")) && cmp < 0) {
 			dfs(node.right, sign, requirement);
