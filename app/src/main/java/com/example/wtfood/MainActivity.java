@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.example.wtfood.fileprocess.FileProcess;
 import com.example.wtfood.fileprocess.Restaurant;
@@ -84,65 +85,68 @@ public class MainActivity extends AppCompatActivity {
 
             EditText et = (EditText) findViewById(R.id.query);
             String query = et.getText().toString();
-
-
-
-
+            query = query.replaceAll("\\s+","");
+            et.setText("");
+            Set<Restaurant> restaurants = null;
+            if (!query.equals("")) {
             MyTokenizer queryTokenizer = new MyTokenizer(query);
             Parser p = new Parser(queryTokenizer);
             p.parseAttribute();
-
-            Set<Restaurant> restaurants = null;
-            if (!query.equals("")) {
-                System.out.println(p.totalQuery.size());
+            int count = 0;
                 for (int i = 0; i < p.totalQuery.size(); i++) {
-                    if (p.totalQuery.get(i).getCompareAttribute().equals("price")) {
-                        System.out.println("Pricing " + p.totalQuery.get(i).getSign());
-                        System.out.println("Pricing " + Integer.parseInt(p.totalQuery.get(i).getValue()));
-                        if (restaurants == null) {
-                            restaurants = priceTree.searchForNodes(p.totalQuery.get(i).getSign(), Integer.parseInt(p.totalQuery.get(i).getValue()));
-                            System.out.println(restaurants.size());
-                        } else {
-                            restaurants.retainAll(priceTree.searchForNodes(p.totalQuery.get(i).getSign(), Integer.parseInt(p.totalQuery.get(i).getValue())));
-                        }
+                    System.out.println("Hi");
+                    if(p.totalQuery.get(i).getCompareAttribute().equals("*") || p.totalQuery.get(i).getSign().equals("*") || p.totalQuery.get(i).getValue().equals("*")){
+                        Toast.makeText(getApplicationContext(),"Wrong type query!! \nThe instruction is at the top right concern. \nGo & Check it out!!", Toast.LENGTH_SHORT).show();
+                        count++;
+                        break;
                     }
-
-                    if (p.totalQuery.get(i).getCompareAttribute().equals("rating")) {
-                        System.out.println("Rating " + p.totalQuery.get(i).getSign());
-                        System.out.println("Rating " + Integer.parseInt(p.totalQuery.get(i).getValue()));
-                        if (restaurants == null) {
-                            restaurants = raringTree.searchForNodes(p.totalQuery.get(i).getSign(), Integer.parseInt(p.totalQuery.get(i).getValue()));
-                        } else {
-                            restaurants.retainAll(raringTree.searchForNodes(p.totalQuery.get(i).getSign(), Integer.parseInt(p.totalQuery.get(i).getValue())));
-                        }
-                    }
-
-                    if (p.totalQuery.get(i).getCompareAttribute().equals("delivery")) {
-                        System.out.println("Delivery " + p.totalQuery.get(i).getSign());
-                        System.out.println("Delivery " + p.totalQuery.get(i).getValue());
-                        boolean delivery = p.totalQuery.get(i).getValue().equals("Y");
-                        if (restaurants == null) {
-                            restaurants = raringTree.getAllNodes();
-                        }
-                        Iterator<Restaurant> iterator = restaurants.iterator();
-
-                        while (iterator.hasNext()) {
-                            if (iterator.next().isDeliveryService() != delivery) {
-                                iterator.remove();
+                    else {
+                        if (p.totalQuery.get(i).getCompareAttribute().equals("price")) {
+                            if (restaurants == null) {
+                                restaurants = priceTree.searchForNodes(p.totalQuery.get(i).getSign(), Integer.parseInt(p.totalQuery.get(i).getValue()));
+                            } else {
+                                restaurants.retainAll(priceTree.searchForNodes(p.totalQuery.get(i).getSign(), Integer.parseInt(p.totalQuery.get(i).getValue())));
                             }
                         }
 
+                        if (p.totalQuery.get(i).getCompareAttribute().equals("rating")) {
+                            if (restaurants == null) {
+                                restaurants = raringTree.searchForNodes(p.totalQuery.get(i).getSign(), Integer.parseInt(p.totalQuery.get(i).getValue()));
+                            } else {
+                                restaurants.retainAll(raringTree.searchForNodes(p.totalQuery.get(i).getSign(), Integer.parseInt(p.totalQuery.get(i).getValue())));
+                            }
+                        }
+
+                        if (p.totalQuery.get(i).getCompareAttribute().equals("delivery")) {
+                            boolean delivery = p.totalQuery.get(i).getValue().equals("Y");
+                            if (restaurants == null) {
+                                restaurants = raringTree.getAllNodes();
+                            }
+                            Iterator<Restaurant> iterator = restaurants.iterator();
+
+                            while (iterator.hasNext()) {
+                                if (iterator.next().isDeliveryService() != delivery) {
+                                    iterator.remove();
+                                }
+                            }
+
+                        }
                     }
+
+                }
+
+                if(count == 0){
+                Intent intent = new Intent(getApplicationContext(), ResultActivity.class);
+                intent.putExtra("Restaurants", new Gson().toJson(restaurants));
+                startActivity(intent);
+                et.setText("");}
+                else {
+                    Toast.makeText(getApplicationContext(),"Wrong type query!! \nThe instruction is at the top right concern. \nGo & Check it out!!", Toast.LENGTH_SHORT).show();
                 }
             }
-            System.out.println("Hi " + p.totalQuery.size());
-            System.out.println("R " + restaurants.size());
-            et.setText("");
-
-
-            Intent intent = new Intent(getApplicationContext(), ResultActivity.class);
-            intent.putExtra("Restaurants", new Gson().toJson(restaurants));
-            startActivity(intent);
+            else {
+                Toast.makeText(getApplicationContext(),"Enter something!! \nWe want to know what are you looking for!\nTop right have our query instruction!", Toast.LENGTH_SHORT).show();
+            }
         }
     };
 

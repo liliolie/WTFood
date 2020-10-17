@@ -1,8 +1,10 @@
 package com.example.wtfood.parser;
 
 public class Query {
+    // This class is for storing information from input string. Create by Yen Kuo.
+
     String compareAttribute;
-    String sign;
+    String operator;
     String value;
 
     public void setCompareAttribute(String compareAttribute) {
@@ -10,7 +12,7 @@ public class Query {
     }
 
     public void setSign(String sign) {
-        this.sign = sign;
+        this.operator = sign;
     }
 
     public String getCompareAttribute() {
@@ -18,7 +20,7 @@ public class Query {
     }
 
     public String getSign() {
-        return sign;
+        return operator;
     }
 
     public String getValue() {
@@ -31,12 +33,12 @@ public class Query {
 
     @Override
     public String toString() {
-        return compareAttribute + sign + value;
+        return compareAttribute + operator + value;
     }
 
     public Query(String compareAttribute, String sign, String value) {
         this.compareAttribute = compareAttribute;
-        this.sign = sign;
+        this.operator = sign;
         this.value = value;
     }
 }

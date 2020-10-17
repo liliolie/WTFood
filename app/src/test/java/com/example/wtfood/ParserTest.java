@@ -16,6 +16,7 @@ public class ParserTest {
 
     private static final String[] testExample = new String[]{"price = 10", "rating <= 3", "delivery = Y"};
     private static final String testExample2 = "price >= 100; rating <= 2; delivery = N";
+    private static final String testWrongCase = "Y = 10";
 
     @Test(timeout=1000)
     public void testOnePrice() {
@@ -55,6 +56,14 @@ public class ParserTest {
         }catch (Exception e){
             fail(e.getMessage());
         }
+    }
+
+    @Test(timeout=1000)
+    public void wrongCase() {
+        MyTokenizer queryTokenizer = new MyTokenizer(testWrongCase);
+        Parser p = new Parser(queryTokenizer);
+        p.parseAttribute();
+        assertEquals("***", p.totalQuery.get(0).toString());
     }
 
 

@@ -3,6 +3,8 @@ package com.example.wtfood.parser;
 
 public class MyTokenizer extends Tokenizer {
 
+    // This class is crating the token from user input. Create by Yen Kuo.
+
     private String buffer;
     private Token currentToken;
 
@@ -14,7 +16,9 @@ public class MyTokenizer extends Tokenizer {
 
     @Override
     public void next() {
+        // Replace all white space.
         buffer = buffer.replaceAll("\\s+","");
+        //buffer.toLowerCase();
 
         if (buffer.isEmpty()){
             currentToken = null;
@@ -32,47 +36,58 @@ public class MyTokenizer extends Tokenizer {
             current = getEND(buffer);
         }
 
+        // Lower case the inputs.
 
+        current.toLowerCase();
+
+        // Create new Token with the respectively value and attribute.
         if(current.equals("price")){
             currentToken = new Token("price", Token.Attribute.PRICE);
         }
-        if(current.equals("rating")){
+        else if(current.equals("rating")){
             currentToken = new Token("rating", Token.Attribute.RATING);
         }
-        if(current.equals("=")){
+        else if(current.equals("=")){
             currentToken = new Token("=", Token.Attribute.EQUAL);
         }
-        if(current.equals("<")){
+        else if(current.equals("<")){
             currentToken = new Token("<", Token.Attribute.LESS);
         }
-        if(current.equals(">")){
+        else if(current.equals(">")){
             currentToken = new Token(">", Token.Attribute.GREATER);
         }
-        if(current.equals(">=")){
+        else if(current.equals(">=") || current.equals(("=>"))){
             currentToken = new Token(">=", Token.Attribute.GOE);
         }
-        if(current.equals("<=")){
+        else if(current.equals("<=") || current.equals("=<")){
             currentToken = new Token("<=", Token.Attribute.LOE);
         }
-        if(Character.isDigit(current.charAt(0))){
+        else if(Character.isDigit(current.charAt(0))){
             currentToken = new Token(getValue(current), Token.Attribute.VALUE);
         }
-        if(current.equals(";")){
+        else if(current.equals(";")){
             currentToken = new Token(";", Token.Attribute.END);
         }
-        if(current.equals("delivery")){
+        else if(current.equals("delivery")){
             currentToken = new Token("delivery", Token.Attribute.DELIVERY);
         }
-        if(current.equals("Y") || current.equals("N")){
+        else if(current.equals("y") || current.equals("n")){
 
             currentToken = new Token(current, Token.Attribute.DELIVERYValue);
         }
+        else {
+            currentToken = new Token(current, Token.Attribute.UNKNOWN);
+        }
 
-
+        // Remove the char already been tokenized.
         buffer = buffer.substring(current.length());
 
     }
 
+    /**
+     * Get the string before operator or ;.
+     * @param currentBuffer String, The string from user and didn't be tokenized yet.
+     */
     public String getAttribute(String currentBuffer){
         int i = 0;
         while (currentBuffer.charAt(i) != '=' && currentBuffer.charAt(i) != '>' && currentBuffer.charAt(i) != '<' && currentBuffer.charAt(i) != ';'){
@@ -83,7 +98,10 @@ public class MyTokenizer extends Tokenizer {
         }
         return currentBuffer.substring(0, i);
     }
-
+    /**
+     * Get the string of operator.
+     * @param currentBuffer String, The string from user and didn't be tokenized yet.
+     */
     public String getComparator(String currentBuffer){
         int i = 0;
         while (currentBuffer.charAt(i) == '=' || currentBuffer.charAt(i) == '>' || currentBuffer.charAt(i) == '<'){
@@ -96,7 +114,10 @@ public class MyTokenizer extends Tokenizer {
 
         return currentBuffer.substring(0, i);
     }
-
+    /**
+     * Get the string before the number value.
+     * @param currentBuffer String, The string from user and didn't be tokenized yet.
+     */
     public String getValue(String currentBuffer){
         int i = 0;
         while (Character.isDigit(currentBuffer.charAt(0))){
@@ -108,7 +129,10 @@ public class MyTokenizer extends Tokenizer {
         return currentBuffer.substring(0, i);
 
     }
-
+    /**
+     * Get the string of ;.
+     * @param currentBuffer String, The string from user and didn't be tokenized yet.
+     */
     public String getEND(String currentBuffer){
         int i = 0;
         while (currentBuffer.charAt(i) == ';'){
