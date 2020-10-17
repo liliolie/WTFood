@@ -44,9 +44,7 @@ public class ResultActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getApplicationContext(), DetailsActivity.class);
-//                intent.putExtra("rname",  restaurants.get(0).toString());
                 intent.putExtra("restaurant", restaurants.get(i).toString());
-
                 startActivity(intent);
             }
         });

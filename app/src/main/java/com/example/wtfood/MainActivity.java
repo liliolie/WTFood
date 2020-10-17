@@ -65,6 +65,11 @@ public class MainActivity extends AppCompatActivity {
         go.setOnClickListener(l1);
     }
 
+    public void locationButton(View v){
+        Intent intent = new Intent(MainActivity.this, LocationActivity.class);
+        startActivity(intent);
+    }
+
 
     public void logoButton(View view) {
         Intent intent = new Intent(this, InfoPage.class);
