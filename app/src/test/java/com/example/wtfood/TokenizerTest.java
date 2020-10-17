@@ -17,6 +17,32 @@ public class TokenizerTest {
     private static final String wrongCase = "pric >= abd";
     private static final String wrongOrderCase = "Y = 10";
     private static final String EndCase = "price = 10; rating = 2";
+    private static final String UpperCase = "Price = 10";
+
+    @Test(timeout=1000)
+    public void testUpperCaseToken() {
+        tokenizer = new MyTokenizer(UpperCase);
+
+        //check the type of the first token
+        assertEquals("wrong token type", Token.Attribute.PRICE, tokenizer.current().getAttribute());
+
+        //check the actual token value"
+        assertEquals("wrong token value", "price", tokenizer.current().getToken());
+
+        tokenizer.next();
+
+        assertEquals("wrong token type", Token.Attribute.EQUAL, tokenizer.current().getAttribute());
+
+        //check the actual token value"
+        assertEquals("wrong token value", "=", tokenizer.current().getToken());
+
+        tokenizer.next();
+
+        assertEquals("wrong token type", Token.Attribute.VALUE, tokenizer.current().getAttribute());
+
+        //check the actual token value"
+        assertEquals("wrong token value", "10", tokenizer.current().getToken());
+    }
 
     @Test(timeout=1000)
     public void testWrongToken() {
@@ -26,7 +52,7 @@ public class TokenizerTest {
         assertEquals("wrong token type", Token.Attribute.DELIVERYValue, tokenizer.current().getAttribute());
 
         //check the actual token value"
-        assertEquals("wrong token value", "Y", tokenizer.current().getToken());
+        assertEquals("wrong token value", "y", tokenizer.current().getToken());
 
         tokenizer.next();
 
@@ -188,7 +214,7 @@ public class TokenizerTest {
         // Y
         tokenizer.next();
         assertEquals(Token.Attribute.DELIVERYValue, tokenizer.current().getAttribute());
-        assertEquals("Y", tokenizer.current().getToken());
+        assertEquals("y", tokenizer.current().getToken());
 
         //;
         tokenizer.next();

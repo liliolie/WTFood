@@ -38,7 +38,8 @@ public class MyTokenizer extends Tokenizer {
 
         // Lower case the inputs.
 
-        current.toLowerCase();
+        current = current.toLowerCase();
+
 
         // Create new Token with the respectively value and attribute.
         if(current.equals("price")){
