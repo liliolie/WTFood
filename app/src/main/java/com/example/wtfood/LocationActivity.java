@@ -67,7 +67,7 @@ public class LocationActivity extends AppCompatActivity {
     }
 
     public void getLocation(View v){
-        locationManager.requestLocationUpdates("gps", 1000, 0, locationListener);
+//        locationManager.requestLocationUpdates("gps", 1000, 0, locationListener);
     }
 
 }
