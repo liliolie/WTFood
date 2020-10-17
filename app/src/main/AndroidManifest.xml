@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.wtfood">
 
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/logo"
@@ -10,7 +14,8 @@
         android:roundIcon="@mipmap/logo_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".DetailsActivity"></activity>
+        <activity android:name=".LocationActivity"></activity>
+        <activity android:name=".DetailsActivity" />
         <activity android:name=".ResultActivity" />
         <activity android:name=".TutorialPage" />
         <activity android:name=".InfoPage" /> <!-- Set the launch activity to the SplashScreen activity. Charlie Xu -->

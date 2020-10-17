@@ -28,7 +28,7 @@ public class DetailsActivity extends AppCompatActivity {
         if (details.contains("Fast Food")){
             imageResource = getResources().getIdentifier("@drawable/pubfood", null, this.getPackageName());
         }if (details.contains("Chinese")) {
-            imageResource = getResources().getIdentifier("@drawable/japanese", null, this.getPackageName());
+            imageResource = getResources().getIdentifier("@drawable/chinese", null, this.getPackageName());
         }if (details.contains("Cafe")) {
             imageResource = getResources().getIdentifier("@drawable/coffee", null, this.getPackageName());
         }if (details.contains("Bakery")) {
