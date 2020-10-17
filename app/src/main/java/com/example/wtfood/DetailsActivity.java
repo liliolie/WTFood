@@ -37,8 +37,14 @@ public class DetailsActivity extends AppCompatActivity {
             imageResource = getResources().getIdentifier("@drawable/turkey", null, this.getPackageName());
         }if (details.contains("Fine Dinning")) {
             imageResource = getResources().getIdentifier("@drawable/finedining", null, this.getPackageName());
-        }if (details.contains("French")) {
-            imageResource = getResources().getIdentifier("@drawable/brunch", null, this.getPackageName());
+        }if (details.contains("Italian")) {
+            imageResource = getResources().getIdentifier("@drawable/italian", null, this.getPackageName());
+        }if (details.contains("Mexico")) {
+            imageResource = getResources().getIdentifier("@drawable/mexico", null, this.getPackageName());
+        }if (details.contains("Fine Dinning")) {
+            imageResource = getResources().getIdentifier("@drawable/finedining", null, this.getPackageName());
+        }if (details.contains("Japanese")) {
+            imageResource = getResources().getIdentifier("@drawable/japanese", null, this.getPackageName());
         }
         image1.setImageResource(imageResource);
 
