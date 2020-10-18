@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -39,6 +41,14 @@ public class MainActivity extends AppCompatActivity {
     NavigationView navigationView;
 
 
+    @Override
+    public void onBackPressed(){
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)){
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
+        navigationView.bringToFront();
 
         ImageButton menu = findViewById(R.id.menuButton);
         menu.setOnClickListener(new View.OnClickListener() {
@@ -124,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
                 for (int i = 0; i < p.totalQuery.size(); i++) {
                     System.out.println("Hi");
                     if(p.totalQuery.get(i).getCompareAttribute().equals("*") || p.totalQuery.get(i).getSign().equals("*") || p.totalQuery.get(i).getValue().equals("*")){
-                        Toast.makeText(getApplicationContext(),"Wrong type query!! \nThe instruction is at the top right concern. \nGo & Check it out!!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),"Invalid query! \nThe instruction is at the top right concern. \nPlease check it out.", Toast.LENGTH_SHORT).show();
                         count++;
                         break;
                     }
@@ -169,11 +180,11 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 et.setText("");}
                 else {
-                    Toast.makeText(getApplicationContext(),"Wrong type query!! \nThe instruction is at the top right concern. \nGo & Check it out!!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"Invalid query! \nThe instruction is at the top right concern. \nPlease check it out.", Toast.LENGTH_SHORT).show();
                 }
             }
             else {
-                Toast.makeText(getApplicationContext(),"Enter something!! \nWe want to know what are you looking for!\nTop right have our query instruction!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"Empty query!! \nWe want to know what are you looking for!\nTop right have our query instruction!", Toast.LENGTH_SHORT).show();
             }
         }
     };
