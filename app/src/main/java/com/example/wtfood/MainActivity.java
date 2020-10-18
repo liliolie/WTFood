@@ -1,9 +1,13 @@
 package com.example.wtfood;
 
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -16,6 +20,7 @@ import com.example.wtfood.parser.MyTokenizer;
 import com.example.wtfood.parser.Parser;
 import com.example.wtfood.parser.Query;
 import com.example.wtfood.rbtree.RBTree;
+import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -30,6 +35,9 @@ public class MainActivity extends AppCompatActivity {
 
     private RBTree priceTree;
     private RBTree raringTree;
+    DrawerLayout drawerLayout;
+    NavigationView navigationView;
+
 
 
     @Override
@@ -39,6 +47,21 @@ public class MainActivity extends AppCompatActivity {
 //        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 //                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
+
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.nav_view);
+
+        ImageButton menu = findViewById(R.id.menuButton);
+        menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!drawerLayout.isDrawerOpen(GravityCompat.START)){
+                    drawerLayout.openDrawer(GravityCompat.START);
+                } else {
+                    drawerLayout.closeDrawer(GravityCompat.END);
+                }
+            }
+        });
 
         priceTree = new RBTree("price");
         raringTree = new RBTree("rating");

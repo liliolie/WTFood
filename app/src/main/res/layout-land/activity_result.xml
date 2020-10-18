@@ -33,7 +33,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/lv_search_button"
+        android:id="@+id/research_search_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -46,7 +46,7 @@
         app:srcCompat="@drawable/go_50" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/ResultQuery"
         android:layout_width="473dp"
         android:layout_height="51dp"
         android:layout_marginStart="10dp"
@@ -56,7 +56,7 @@
         android:fontFamily="@font/montserrat"
         android:hint="Want Something else? Search again!"
         android:inputType="textPersonName"
-        app:layout_constraintEnd_toStartOf="@+id/lv_search_button"
+        app:layout_constraintEnd_toStartOf="@+id/research_search_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
