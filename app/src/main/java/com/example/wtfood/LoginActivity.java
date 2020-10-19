@@ -82,4 +82,8 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
         });
     }
+
+    public void loginBackButton(View view){
+        finish();
+    }
 }

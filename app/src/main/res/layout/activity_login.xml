@@ -7,6 +7,18 @@
     android:background="#f4b71f"
     tools:context=".LoginActivity">
 
+    <ImageButton
+        android:id="@+id/loginBackButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:background="#00000000"
+        android:onClick="loginBackButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/back_arrow_50" />
+
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"

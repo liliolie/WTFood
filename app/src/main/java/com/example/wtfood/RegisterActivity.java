@@ -117,4 +117,8 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
     }
+
+    public void registerBackButton(View view){
+        finish();
+    }
 }

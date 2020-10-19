@@ -7,6 +7,18 @@
     android:background="#f4b71f"
     tools:context=".RegisterActivity">
 
+    <ImageButton
+        android:id="@+id/registerBackButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:background="#00000000"
+        android:onClick="registerBackButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/back_arrow_50" />
+
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
