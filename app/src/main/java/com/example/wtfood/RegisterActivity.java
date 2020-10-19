@@ -3,6 +3,7 @@ package com.example.wtfood;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -44,6 +45,11 @@ public class RegisterActivity extends AppCompatActivity {
         fAuth = FirebaseAuth.getInstance();
         progress = findViewById(R.id.progressBar);
 
+
+        goToLogin.setOnClickListener(v -> {
+            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+            startActivity(intent);
+        });
 
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,13 +1,14 @@
 package com.example.wtfood;
 
-import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -17,30 +18,27 @@ import android.widget.Toast;
 
 import com.example.wtfood.fileprocess.FileProcess;
 import com.example.wtfood.fileprocess.Restaurant;
-import com.example.wtfood.fileprocess.Type;
+
 import com.example.wtfood.parser.MyTokenizer;
 import com.example.wtfood.parser.Parser;
-import com.example.wtfood.parser.Query;
 import com.example.wtfood.rbtree.RBTree;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 
 import java.io.IOException;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private RBTree priceTree;
     private RBTree raringTree;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
 
-
+    //Override the Back button of Android system, making pressing the Back button close the
+    // navigation drawer instead of quiting the application
     @Override
     public void onBackPressed(){
         if (drawerLayout.isDrawerOpen(GravityCompat.START)){
@@ -48,6 +46,25 @@ public class MainActivity extends AppCompatActivity {
         } else {
             super.onBackPressed();
         }
+    }
+
+    //Make the items inside the navigation drawer clickable.
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()){
+            case R.id.nav_login:
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.nav_profile:
+                break;
+            case R.id.nav_logout:
+                Toast.makeText(getApplicationContext(), "Logged out.", Toast.LENGTH_SHORT).show();
+                break;
+        }
+        drawerLayout.closeDrawer(GravityCompat.START);
+        return true;
     }
 
     @Override
@@ -60,17 +77,19 @@ public class MainActivity extends AppCompatActivity {
 
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
+
+        //Hide or show items
+
+
         navigationView.bringToFront();
+        navigationView.setNavigationItemSelectedListener(this);
 
         ImageButton menu = findViewById(R.id.menuButton);
-        menu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!drawerLayout.isDrawerOpen(GravityCompat.START)){
-                    drawerLayout.openDrawer(GravityCompat.START);
-                } else {
-                    drawerLayout.closeDrawer(GravityCompat.END);
-                }
+        menu.setOnClickListener(v -> {
+            if (!drawerLayout.isDrawerOpen(GravityCompat.START)){
+                drawerLayout.openDrawer(GravityCompat.START);
+            } else {
+                drawerLayout.closeDrawer(GravityCompat.END);
             }
         });
 
@@ -135,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
                 for (int i = 0; i < p.totalQuery.size(); i++) {
                     System.out.println("Hi");
                     if(p.totalQuery.get(i).getCompareAttribute().equals("*") || p.totalQuery.get(i).getSign().equals("*") || p.totalQuery.get(i).getValue().equals("*")){
-                        Toast.makeText(getApplicationContext(),"Invalid query! \nThe instruction is at the top right concern. \nPlease check it out.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),"Invalid query! \nTCheck out our query instruction at the top right corner.", Toast.LENGTH_LONG).show();
                         count++;
                         break;
                     }
@@ -180,13 +199,12 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 et.setText("");}
                 else {
-                    Toast.makeText(getApplicationContext(),"Invalid query! \nThe instruction is at the top right concern. \nPlease check it out.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"Invalid query! \nTCheck out our query instruction at the top right corner.", Toast.LENGTH_LONG).show();
                 }
             }
             else {
-                Toast.makeText(getApplicationContext(),"Empty query!! \nWe want to know what are you looking for!\nTop right have our query instruction!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"Empty query! \nCheck out our query instruction at the top right corner.", Toast.LENGTH_LONG).show();
             }
         }
     };
-
 }
