@@ -23,6 +23,7 @@ import com.example.wtfood.parser.MyTokenizer;
 import com.example.wtfood.parser.Parser;
 import com.example.wtfood.rbtree.RBTree;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -60,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_profile:
                 break;
             case R.id.nav_logout:
+                FirebaseAuth.getInstance().signOut();
                 Toast.makeText(getApplicationContext(), "Logged out.", Toast.LENGTH_SHORT).show();
                 break;
         }
