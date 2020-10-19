@@ -30,7 +30,7 @@ public class RegisterActivity extends AppCompatActivity {
     ProgressBar progress;
     FirebaseAuth fAuth;
 
-    Pattern passwordPattern = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{6,}$");
+    Pattern passwordPattern = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&+=])(?=\\S+$).{6,}$");
     Matcher matcher;
 
     @Override
@@ -58,64 +58,59 @@ public class RegisterActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        registerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String email = rEmail.getText().toString().trim();
-                String password = rPassword.getText().toString();
-                String password2 = rPassword2.getText().toString();
-                matcher = passwordPattern.matcher(password);
+        registerButton.setOnClickListener(v -> {
+            String email = rEmail.getText().toString().trim();
+            String password = rPassword.getText().toString();
+            String password2 = rPassword2.getText().toString();
+            matcher = passwordPattern.matcher(password);
 
-                if (TextUtils.isEmpty(email)){
-                    rEmail.setError("Email cannot be empty.");
-                    return;
-                }
+            if (TextUtils.isEmpty(email)){
+                rEmail.setError("Email cannot be empty.");
+                return;
+            }
 
-                else if (TextUtils.isEmpty(password)){
-                    rPassword.setError("Password cannot be empty.");
-                    return;
-                }
+            else if (TextUtils.isEmpty(password)){
+                rPassword.setError("Password cannot be empty.");
+                return;
+            }
 
-                else if (TextUtils.isEmpty(password2)){
-                    rPassword2.setError("Please enter your password again.");
-                    return;
-                }
+            else if (TextUtils.isEmpty(password2)){
+                rPassword2.setError("Please enter your password again.");
+                return;
+            }
 
-                else if (!password.equals(password2)){
-                    rPassword2.setError("Passwords do not match.");
-                    return;
-                }
+            else if (!password.equals(password2)){
+                rPassword2.setError("Passwords do not match.");
+                return;
+            }
 
-                else if (!matcher.matches()){
-                    rPassword2.setError("Invalid password.");
-                    return;
-                }
+            else if (!matcher.matches()){
+                rPassword2.setError("Invalid password.");
+                return;
+            }
 
-                progress.setVisibility(View.VISIBLE);
+            progress.setVisibility(View.VISIBLE);
 
-                //Register the user in Firebase.
-                fAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            progress.setVisibility(View.INVISIBLE);
-                            Toast.makeText(getApplicationContext(), "Signed up successfully!", Toast.LENGTH_SHORT).show();
-                            // Sign in success, update UI with the signed-in user's information
+            //Register the user in Firebase.
+            fAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    progress.setVisibility(View.INVISIBLE);
+                    Toast.makeText(getApplicationContext(), "Signed up successfully!", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    // Sign in success, update UI with the signed-in user's information
 //                            Log.d(TAG, "createUserWithEmail:success");
 //                            FirebaseUser user = mAuth.getCurrentUser();
 //                            updateUI(user);
-                        } else {
-                            progress.setVisibility(View.INVISIBLE);
-                            Toast.makeText(getApplicationContext(), "Oops! Something went wrong.", Toast.LENGTH_SHORT).show();
-                            // If sign in fails, display a message to the user.
+                } else {
+                    progress.setVisibility(View.INVISIBLE);
+                    Toast.makeText(getApplicationContext(), "Oops! Something went wrong.", Toast.LENGTH_SHORT).show();
+                    // If sign in fails, display a message to the user.
 //                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
 //                            Toast.makeText(EmailPasswordActivity.this, "Authentication failed.",
 //                                    Toast.LENGTH_SHORT).show();
 //                            updateUI(null);
-                        }
-                    }
-                });
-            }
+                }
+            });
         });
     }
 
