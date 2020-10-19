@@ -24,6 +24,7 @@ import com.example.wtfood.parser.Parser;
 import com.example.wtfood.rbtree.RBTree;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -37,37 +38,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private RBTree raringTree;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
-
-    //Override the Back button of Android system, making pressing the Back button close the
-    // navigation drawer instead of quiting the application
-    @Override
-    public void onBackPressed(){
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)){
-            drawerLayout.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    //Make the items inside the navigation drawer clickable.
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-        switch (item.getItemId()){
-            case R.id.nav_login:
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.nav_profile:
-                break;
-            case R.id.nav_logout:
-                FirebaseAuth.getInstance().signOut();
-                Toast.makeText(getApplicationContext(), "Logged out.", Toast.LENGTH_SHORT).show();
-                break;
-        }
-        drawerLayout.closeDrawer(GravityCompat.START);
-        return true;
-    }
+    FirebaseAuth fAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,15 +50,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
-
-        //Hide or show items
-
+        fAuth = FirebaseAuth.getInstance();
+        updateUI(fAuth.getCurrentUser());
 
         navigationView.bringToFront();
         navigationView.setNavigationItemSelectedListener(this);
 
-        ImageButton menu = findViewById(R.id.menuButton);
-        menu.setOnClickListener(v -> {
+        ImageButton menuButton = findViewById(R.id.menuButton);
+        menuButton.setOnClickListener(v -> {
             if (!drawerLayout.isDrawerOpen(GravityCompat.START)){
                 drawerLayout.openDrawer(GravityCompat.START);
             } else {
@@ -119,6 +89,52 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         ImageButton go = (ImageButton) findViewById(R.id.goButton);
         go.setOnClickListener(l1);
+    }
+
+    public void updateUI(FirebaseUser user){
+        Menu drawerMenu = navigationView.getMenu();
+        if (fAuth.getCurrentUser() != null){
+            drawerMenu.findItem(R.id.nav_login).setVisible(false);
+            drawerMenu.findItem(R.id.nav_profile).setVisible(true);
+            drawerMenu.findItem(R.id.nav_logout).setVisible(true);
+        } else {
+            drawerMenu.findItem(R.id.nav_login).setVisible(true);
+            drawerMenu.findItem(R.id.nav_profile).setVisible(false);
+            drawerMenu.findItem(R.id.nav_logout).setVisible(false);
+        }
+    }
+    //Override the Back button of Android system, making pressing the Back button close the
+    // navigation drawer instead of quiting the application
+    @Override
+    public void onBackPressed(){
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)){
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    //Make the items inside the navigation drawer clickable.
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()){
+            case R.id.nav_login:
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.nav_profile:
+                break;
+            case R.id.nav_logout:
+                FirebaseAuth.getInstance().signOut();
+                Toast.makeText(getApplicationContext(), "Logged out.", Toast.LENGTH_SHORT).show();
+                Intent newIntent = getIntent();
+                finish();
+                startActivity(newIntent);
+                break;
+        }
+        drawerLayout.closeDrawer(GravityCompat.START);
+        return true;
     }
 
     public void locationButton(View v){

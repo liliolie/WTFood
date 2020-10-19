@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,8 +16,10 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -25,6 +28,7 @@ public class LoginActivity extends AppCompatActivity {
     ImageButton loginButton;
     ProgressBar progress;
     FirebaseAuth fAuth;
+    NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,9 +39,16 @@ public class LoginActivity extends AppCompatActivity {
         lPassword = findViewById(R.id.lPassword);
         goToSignUp = findViewById(R.id.goToSignUpButton);
         loginButton = findViewById(R.id.loginButton);
+        navigationView = findViewById(R.id.nav_view);
 
         fAuth = FirebaseAuth.getInstance();
         progress = findViewById(R.id.progressBar);
+
+        //If the user is already logged in, direct the user back to the main activity.
+        if (fAuth.getCurrentUser() != null){
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            finish();
+        }
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override

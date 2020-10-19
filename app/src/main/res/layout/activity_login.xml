@@ -94,7 +94,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:indeterminate="true"
-        android:indeterminateDrawable="@drawable/progress_50"
+        android:indeterminateDrawable="@drawable/rotating_progress"
         android:progressDrawable="@drawable/progress_50"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
