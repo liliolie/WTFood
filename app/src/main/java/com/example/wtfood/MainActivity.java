@@ -214,16 +214,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 }
 
-                if(count == 0){
+                if (count == 0) {
                     Intent intent = new Intent(getApplicationContext(), ResultActivity.class);
                     intent.putExtra("Restaurants", new Gson().toJson(restaurants));
                     startActivity(intent);
-                    et.setText("");}
-                else {
+                    et.setText("");
+                } else {
                     Toast.makeText(getApplicationContext(),"Invalid query! \nTCheck out our query instruction at the top right corner.", Toast.LENGTH_LONG).show();
                 }
-            }
-            else {
+            } else {
                 Toast.makeText(getApplicationContext(),"Empty query! \nCheck out our query instruction at the top right corner.", Toast.LENGTH_LONG).show();
             }
         }
