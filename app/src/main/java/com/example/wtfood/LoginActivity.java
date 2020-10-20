@@ -50,39 +50,33 @@ public class LoginActivity extends AppCompatActivity {
             finish();
         }
 
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String email = lEmail.getText().toString().trim();
-                String password = lPassword.getText().toString();
+        loginButton.setOnClickListener(v -> {
+            String email = lEmail.getText().toString().trim();
+            String password = lPassword.getText().toString();
 
-                if (TextUtils.isEmpty(email)){
-                    lEmail.setError("Email cannot be empty.");
-                    return;
-                }
-
-                else if (TextUtils.isEmpty(password)) {
-                    lPassword.setError("Password cannot be empty.");
-                    return;
-                }
-
-                progress.setVisibility(View.VISIBLE);
-
-                //Login the user.
-                fAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()){
-                            progress.setVisibility(View.INVISIBLE);
-                            Toast.makeText(getApplicationContext(), "Logged in successfully!", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                        } else {
-                            progress.setVisibility(View.INVISIBLE);
-                            Toast.makeText(getApplicationContext(), "Please check your email and password again.", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+            if (TextUtils.isEmpty(email)){
+                lEmail.setError("Email cannot be empty.");
+                return;
             }
+
+            else if (TextUtils.isEmpty(password)) {
+                lPassword.setError("Password cannot be empty.");
+                return;
+            }
+
+            progress.setVisibility(View.VISIBLE);
+
+            //Login the user.
+            fAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+                if (task.isSuccessful()){
+                    progress.setVisibility(View.INVISIBLE);
+                    Toast.makeText(getApplicationContext(), "Logged in successfully!", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                } else {
+                    progress.setVisibility(View.INVISIBLE);
+                    Toast.makeText(getApplicationContext(), "Please check your email and password again.", Toast.LENGTH_SHORT).show();
+                }
+            });
         });
 
 
