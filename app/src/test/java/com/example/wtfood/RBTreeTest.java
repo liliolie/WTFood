@@ -1,7 +1,7 @@
 package com.example.wtfood;
 
 import com.example.wtfood.fileprocess.FileProcess;
-import com.example.wtfood.fileprocess.Restaurant;
+import com.example.wtfood.model.Restaurant;
 import com.example.wtfood.rbtree.RBTree;
 
 import org.junit.Before;
@@ -47,24 +47,24 @@ public class RBTreeTest {
         for (Restaurant r : restaurants) {
             priceTree.insert(r);
         }
-        assertEquals(priceTree.size(), 1000);
+        assertEquals(1000, priceTree.size());
         priceTree.insert(restaurants.get(restaurants.size() - 1));
-        assertEquals(priceTree.size(), 1000);
+        assertEquals(1000, priceTree.size());
 
         for (Restaurant r : smallRestaurants) {
             smallPriceTree.insert(r);
         }
-        assertEquals(smallPriceTree.size(), 10);
+        assertEquals(10, smallPriceTree.size());
 
         for (Restaurant r : restaurants) {
             ratingTree.insert(r);
         }
-        assertEquals(ratingTree.size(), 1000);
+        assertEquals(1000, ratingTree.size());
 
         for (Restaurant r : smallRestaurants) {
             smallRatingTree.insert(r);
         }
-        assertEquals(smallRatingTree.size(), 10);
+        assertEquals(10, smallRatingTree.size());
     }
 
     @Test
@@ -73,15 +73,15 @@ public class RBTreeTest {
             smallPriceTree.insert(r);
         }
 
-        assertEquals(smallPriceTree.priceInOrder(), "17 73 109 120 141 173 177 185 196 247");
-        assertEquals(smallPriceTree.pricePreOrder(), "141 73 17 120 109 196 177 173 185 247");
+        assertEquals("17 73 109 120 141 173 177 185 196 247", smallPriceTree.priceInOrder());
+        assertEquals("141 73 17 120 109 196 177 173 185 247", smallPriceTree.pricePreOrder());
 
 
         for (Restaurant r : smallRestaurants) {
             smallRatingTree.insert(r);
         }
-        assertEquals(smallRatingTree.ratingInOrder(), "2 3 3 4 4 4 5 5 5 5");
-        assertEquals(smallRatingTree.ratingPreOrder(), "5 3 3 2 4 4 4 5 5 5");
+        assertEquals("2 3 3 4 4 4 5 5 5 5", smallRatingTree.ratingInOrder());
+        assertEquals("5 3 3 2 4 4 4 5 5 5", smallRatingTree.ratingPreOrder());
     }
 
     @Test
@@ -89,10 +89,11 @@ public class RBTreeTest {
         for (Restaurant r : smallRestaurants) {
             smallPriceTree.insert(r);
         }
-        assertEquals(smallPriceTree.searchForNodes("<", 141).size(), 4);
-        assertEquals(smallPriceTree.searchForNodes(">", 141).size(), 5);
-        assertEquals(smallPriceTree.searchForNodes("=", 141).size(), 1);
-        assertEquals(smallPriceTree.searchForNodes("<=", 141).size(), 5);
-        assertEquals(smallPriceTree.searchForNodes(">=", 141).size(), 6);
+        assertEquals(4, smallPriceTree.searchForNodes("<", 141).size());
+        assertEquals(5, smallPriceTree.searchForNodes(">", 141).size());
+        assertEquals(1, smallPriceTree.searchForNodes("=", 141).size());
+        assertEquals(5, smallPriceTree.searchForNodes("<=", 141).size());
+        assertEquals(6, smallPriceTree.searchForNodes(">=", 141).size());
+        assertEquals(0, smallPriceTree.searchForNodes("<", 0).size());
     }
 }
