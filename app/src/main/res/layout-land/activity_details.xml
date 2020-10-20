@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/image1"
-        android:layout_width="601dp"
-        android:layout_height="355dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginEnd="120dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -95,22 +95,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/image1"
         app:layout_constraintTop_toBottomOf="@+id/galleryB" />
-
-    <EditText
-        android:id="@+id/rnameV"
-        android:layout_width="380dp"
-        android:layout_height="60dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:textAlignment="center"
-        android:textColor="#FAF7F7"
-        android:textSize="36sp"
-        android:textStyle="bold|italic"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/image1"
-        app:layout_constraintStart_toStartOf="@+id/image1"
-        app:layout_constraintTop_toBottomOf="@+id/image1"
-        app:layout_constraintVertical_bias="0.25" />
 
     <ImageButton
         android:id="@+id/bookingB"

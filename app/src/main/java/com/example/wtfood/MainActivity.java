@@ -1,30 +1,47 @@
 package com.example.wtfood;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.example.wtfood.fileprocess.FileProcess;
 import com.example.wtfood.model.Restaurant;
 import com.example.wtfood.parser.MyTokenizer;
 import com.example.wtfood.parser.Parser;
+import com.example.wtfood.parser.Query;
 import com.example.wtfood.rbtree.RBTree;
+import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private RBTree priceTree;
     private RBTree raringTree;
-
+    DrawerLayout drawerLayout;
+    NavigationView navigationView;
+    FirebaseAuth fAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +50,23 @@ public class MainActivity extends AppCompatActivity {
 //        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 //                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
+
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.nav_view);
+        fAuth = FirebaseAuth.getInstance();
+        updateUI(fAuth.getCurrentUser());
+
+        navigationView.bringToFront();
+        navigationView.setNavigationItemSelectedListener(this);
+
+        ImageButton menuButton = findViewById(R.id.menuButton);
+        menuButton.setOnClickListener(v -> {
+            if (!drawerLayout.isDrawerOpen(GravityCompat.START)){
+                drawerLayout.openDrawer(GravityCompat.START);
+            } else {
+                drawerLayout.closeDrawer(GravityCompat.END);
+            }
+        });
 
         priceTree = new RBTree("price");
         raringTree = new RBTree("rating");
@@ -60,6 +94,52 @@ public class MainActivity extends AppCompatActivity {
         go.setOnClickListener(l1);
     }
 
+    public void updateUI(FirebaseUser user){
+        Menu drawerMenu = navigationView.getMenu();
+        if (fAuth.getCurrentUser() != null){
+            drawerMenu.findItem(R.id.nav_login).setVisible(false);
+            drawerMenu.findItem(R.id.nav_profile).setVisible(true);
+            drawerMenu.findItem(R.id.nav_logout).setVisible(true);
+        } else {
+            drawerMenu.findItem(R.id.nav_login).setVisible(true);
+            drawerMenu.findItem(R.id.nav_profile).setVisible(false);
+            drawerMenu.findItem(R.id.nav_logout).setVisible(false);
+        }
+    }
+    //Override the Back button of Android system, making pressing the Back button close the
+    // navigation drawer instead of quiting the application
+    @Override
+    public void onBackPressed(){
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)){
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    //Make the items inside the navigation drawer clickable.
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()){
+            case R.id.nav_login:
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.nav_profile:
+                break;
+            case R.id.nav_logout:
+                FirebaseAuth.getInstance().signOut();
+                Toast.makeText(getApplicationContext(), "Logged out.", Toast.LENGTH_SHORT).show();
+                Intent newIntent = getIntent();
+                finish();
+                startActivity(newIntent);
+                break;
+        }
+        drawerLayout.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
     public void locationButton(View v){
         Intent intent = new Intent(MainActivity.this, LocationActivity.class);
         startActivity(intent);
@@ -84,66 +164,68 @@ public class MainActivity extends AppCompatActivity {
 
             EditText et = (EditText) findViewById(R.id.query);
             String query = et.getText().toString();
-
-
-
-
-            MyTokenizer queryTokenizer = new MyTokenizer(query);
-            Parser p = new Parser(queryTokenizer);
-            p.parseAttribute();
-
+            query = query.replaceAll("\\s+","");
+            et.setText("");
             Set<Restaurant> restaurants = null;
             if (!query.equals("")) {
-                System.out.println(p.totalQuery.size());
+                MyTokenizer queryTokenizer = new MyTokenizer(query);
+                Parser p = new Parser(queryTokenizer);
+                p.parseAttribute();
+                int count = 0;
                 for (int i = 0; i < p.totalQuery.size(); i++) {
-                    if (p.totalQuery.get(i).getCompareAttribute().equals("price")) {
-                        System.out.println("Pricing " + p.totalQuery.get(i).getSign());
-                        System.out.println("Pricing " + Integer.parseInt(p.totalQuery.get(i).getValue()));
-                        if (restaurants == null) {
-                            restaurants = priceTree.searchForNodes(p.totalQuery.get(i).getSign(), Integer.parseInt(p.totalQuery.get(i).getValue()));
-                            System.out.println(restaurants.size());
-                        } else {
-                            restaurants.retainAll(priceTree.searchForNodes(p.totalQuery.get(i).getSign(), Integer.parseInt(p.totalQuery.get(i).getValue())));
-                        }
+                    System.out.println("Hi");
+                    if(p.totalQuery.get(i).getCompareAttribute().equals("*") || p.totalQuery.get(i).getSign().equals("*") || p.totalQuery.get(i).getValue().equals("*")){
+                        Toast.makeText(getApplicationContext(),"Invalid query! \nTCheck out our query instruction at the top right corner.", Toast.LENGTH_LONG).show();
+                        count++;
+                        break;
                     }
-
-                    if (p.totalQuery.get(i).getCompareAttribute().equals("rating")) {
-                        System.out.println("Rating " + p.totalQuery.get(i).getSign());
-                        System.out.println("Rating " + Integer.parseInt(p.totalQuery.get(i).getValue()));
-                        if (restaurants == null) {
-                            restaurants = raringTree.searchForNodes(p.totalQuery.get(i).getSign(), Integer.parseInt(p.totalQuery.get(i).getValue()));
-                        } else {
-                            restaurants.retainAll(raringTree.searchForNodes(p.totalQuery.get(i).getSign(), Integer.parseInt(p.totalQuery.get(i).getValue())));
-                        }
-                    }
-
-                    if (p.totalQuery.get(i).getCompareAttribute().equals("delivery")) {
-                        System.out.println("Delivery " + p.totalQuery.get(i).getSign());
-                        System.out.println("Delivery " + p.totalQuery.get(i).getValue());
-                        boolean delivery = p.totalQuery.get(i).getValue().equals("Y");
-                        if (restaurants == null) {
-                            restaurants = raringTree.getAllNodes();
-                        }
-                        Iterator<Restaurant> iterator = restaurants.iterator();
-
-                        while (iterator.hasNext()) {
-                            if (iterator.next().isDeliveryService() != delivery) {
-                                iterator.remove();
+                    else {
+                        if (p.totalQuery.get(i).getCompareAttribute().equals("price")) {
+                            if (restaurants == null) {
+                                restaurants = priceTree.searchForNodes(p.totalQuery.get(i).getSign(), Integer.parseInt(p.totalQuery.get(i).getValue()));
+                            } else {
+                                restaurants.retainAll(priceTree.searchForNodes(p.totalQuery.get(i).getSign(), Integer.parseInt(p.totalQuery.get(i).getValue())));
                             }
                         }
 
+                        if (p.totalQuery.get(i).getCompareAttribute().equals("rating")) {
+                            if (restaurants == null) {
+                                restaurants = raringTree.searchForNodes(p.totalQuery.get(i).getSign(), Integer.parseInt(p.totalQuery.get(i).getValue()));
+                            } else {
+                                restaurants.retainAll(raringTree.searchForNodes(p.totalQuery.get(i).getSign(), Integer.parseInt(p.totalQuery.get(i).getValue())));
+                            }
+                        }
+
+                        if (p.totalQuery.get(i).getCompareAttribute().equals("delivery")) {
+                            boolean delivery = p.totalQuery.get(i).getValue().equals("Y");
+                            if (restaurants == null) {
+                                restaurants = raringTree.getAllNodes();
+                            }
+                            Iterator<Restaurant> iterator = restaurants.iterator();
+
+                            while (iterator.hasNext()) {
+                                if (iterator.next().isDeliveryService() != delivery) {
+                                    iterator.remove();
+                                }
+                            }
+
+                        }
                     }
+
+                }
+
+                if(count == 0){
+                    Intent intent = new Intent(getApplicationContext(), ResultActivity.class);
+                    intent.putExtra("Restaurants", new Gson().toJson(restaurants));
+                    startActivity(intent);
+                    et.setText("");}
+                else {
+                    Toast.makeText(getApplicationContext(),"Invalid query! \nTCheck out our query instruction at the top right corner.", Toast.LENGTH_LONG).show();
                 }
             }
-            System.out.println("Hi " + p.totalQuery.size());
-            System.out.println("R " + restaurants.size());
-            et.setText("");
-
-
-            Intent intent = new Intent(getApplicationContext(), ResultActivity.class);
-            intent.putExtra("Restaurants", new Gson().toJson(restaurants));
-            startActivity(intent);
+            else {
+                Toast.makeText(getApplicationContext(),"Empty query! \nCheck out our query instruction at the top right corner.", Toast.LENGTH_LONG).show();
+            }
         }
     };
-
 }
