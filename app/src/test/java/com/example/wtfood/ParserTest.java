@@ -38,7 +38,7 @@ public class ParserTest {
         MyTokenizer queryTokenizer = new MyTokenizer(testExample[2]);
         Parser p = new Parser(queryTokenizer);
         p.parseAttribute();
-        assertEquals("delivery=Y", p.totalQuery.get(0).toString());
+        assertEquals("delivery=y", p.totalQuery.get(0).toString());
     }
 
     @Test(timeout=1000)
@@ -47,11 +47,11 @@ public class ParserTest {
         Parser p = new Parser(queryTokenizer);
         p.parseAttribute();
         try{
-            assertEquals("Incorrect item", "[price>=100, rating<=2, delivery=N]", p.totalQuery.toString());
+            assertEquals("Incorrect item", "[price>=100, rating<=2, delivery=n]", p.totalQuery.toString());
             assertEquals("Incorrect size", 3, p.totalQuery.size());
             assertEquals("incorrect display format", "price>=100", p.totalQuery.get(0).toString());
             assertEquals("incorrect display format", "rating<=2", p.totalQuery.get(1).toString());
-            assertEquals("incorrect display format", "delivery=N", p.totalQuery.get(2).toString());
+            assertEquals("incorrect display format", "delivery=n", p.totalQuery.get(2).toString());
 
         }catch (Exception e){
             fail(e.getMessage());

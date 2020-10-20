@@ -17,7 +17,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
+        app:layout_constraintTop_toBottomOf="@+id/ResultQuery" />
 
     <TextView
         android:id="@+id/Match_text"
@@ -41,7 +41,7 @@
         android:layout_marginEnd="10dp"
         android:background="#00000000"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/editTextTextPersonName"
+        app:layout_constraintStart_toEndOf="@+id/ResultQuery"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/go_50" />
 
