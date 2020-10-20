@@ -20,39 +20,22 @@ public class Restaurant implements Serializable {
     private int price;
     private String address;
     private String phone;
-
-    public String getAddress() {
-        return address;
+    
+    public Restaurant(int rating, String name, boolean deliveryService, Location location, Type type, int price, String address, String phone) {
+        this.rating = rating;
+        this.name = name;
+        this.deliveryService = deliveryService;
+        this.location = location;
+        this.type = type;
+        this.price = price;
+        this.address = address;
+        this.phone = phone;
     }
 
-    public String getPhone() {
-        return phone;
-    }
-
-    public int getRating() {
-        return rating;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public boolean isDeliveryService() {
-        return deliveryService;
-    }
-
-    public Location getLocation() {
-        return location;
-    }
-
-    public Type getType() {
-        return type;
-    }
-
-    public int getPrice() {
-        return price;
-    }
-
+    /**
+     * a constructor to construct a random Restaurant with given name
+     * @param name the name of a random Restaurant
+     */
     public Restaurant(String name) {
         Random random = new Random();
         this.rating = random.nextInt(5) + 1;
@@ -69,6 +52,10 @@ public class Restaurant implements Serializable {
         this.address = String.valueOf(random.nextInt(99) + 1);
         this.address += " " + preDefinedStreets[random.nextInt(preDefinedStreets.length)] + " St.";
     }
+
+    /**
+     * getters and setters for Restaurant
+     */
 
     public void setRating(int rating) {
         this.rating = rating;
@@ -102,15 +89,36 @@ public class Restaurant implements Serializable {
         this.phone = phone;
     }
 
-    public Restaurant(int rating, String name, boolean deliveryService, Location location, Type type, int price, String address, String phone) {
-        this.rating = rating;
-        this.name = name;
-        this.deliveryService = deliveryService;
-        this.location = location;
-        this.type = type;
-        this.price = price;
-        this.address = address;
-        this.phone = phone;
+    public String getAddress() {
+        return address;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public boolean isDeliveryService() {
+        return deliveryService;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public int getPrice() {
+        return price;
     }
 
     @Override
