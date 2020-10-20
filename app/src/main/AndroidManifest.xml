@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.wtfood">
 
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/logo"
@@ -10,7 +14,10 @@
         android:roundIcon="@mipmap/logo_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".DetailsActivity"></activity>
+        <activity android:name=".RegisterActivity"></activity>
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".LocationActivity" />
+        <activity android:name=".DetailsActivity" />
         <activity android:name=".ResultActivity" />
         <activity android:name=".TutorialPage" />
         <activity android:name=".InfoPage" /> <!-- Set the launch activity to the SplashScreen activity. Charlie Xu -->
@@ -33,6 +40,11 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+        <meta-data android:name="android.max_aspect" android:value="5.0"/>
     </application>
 
 </manifest>

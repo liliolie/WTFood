@@ -156,6 +156,9 @@ public class Restaurant implements Serializable {
         if (getType().equals(Type.fastfood)) {
             type = "Fast Food!";
         }
+        if (getType().equals(Type.japanesefood)) {
+            type = "Japanese Food!";
+        }
 
         return name + " \n " + address + " | " + phone + " \n " + "Rating: " + rating + " \n " + "Price: " +
                 price + " \n " + delivery + " \n " + "FoodType: " + type;

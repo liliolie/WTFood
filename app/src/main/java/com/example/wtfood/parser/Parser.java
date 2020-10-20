@@ -1,101 +1,145 @@
 package com.example.wtfood.parser;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Parser {
+    // This class is parsing the token from user input. Create by Yen Kuo.
 
     MyTokenizer _tokenizer;
-    public Query q = new Query("", "", "");
 
     public Parser(MyTokenizer tokenizer) {
         _tokenizer = tokenizer;
     }
 
-    public static ArrayList<Query> totalQuery = new ArrayList<>();
+    // The List store all query. Main Activity will base on this list's Query to show restaurant result.
+    public List<Query> totalQuery = new ArrayList<>();
 
-    public int count = 0;
-
-
-    public Query parseAttribute() {
-
-        if (count == 0){
-            totalQuery.clear();
-        }
-
-        count++;
+    // Query : Sentence ; Query | Sentence
+    // Sentence : Attribute + Operator + Value
+    // Attribute : price | rating | delivery
+    /**
+     * Parse the attribute and check whether it's right or not.
+     * If it's correct, keep parsing next token.
+     * If it's incorrect, add it as a Query, mark it's attribute, operator and value by * and stop parsing.
+     */
+    public void parseAttribute() {
+        // Check whether has next token and Attribute is valid or not.
+        // If it's valid attribute, store the Attribute type and keep going to parse next token.
         if (_tokenizer.hasNext() && _tokenizer.current().getToken().equals("price")) {
             _tokenizer.next();
-            q.setCompareAttribute("price");
-            return parseOperator();
+            parseOperator("price");
 
         } else if (_tokenizer.hasNext() && _tokenizer.current().getToken().equals("rating")) {
             _tokenizer.next();
-            q.setCompareAttribute("rating");
-            return parseOperator();
-        } else {
+            parseOperator("rating");
+        } else if (_tokenizer.hasNext() && _tokenizer.current().getToken().equals("delivery")) {
             _tokenizer.next();
-            q.setCompareAttribute("delivery");
-            return parseOperator();
+            parseOperator("delivery");
         }
-
+        // If there's no next token or attribute is invalid. Mark *.
+        else if(_tokenizer.hasNext() && (!_tokenizer.current().getAttribute().equals("price") || !_tokenizer.current().getAttribute().equals("rating") || !_tokenizer.current().getAttribute().equals("delivery"))){
+            _tokenizer.next();
+            totalQuery.add(new Query("*", "*", "*"));
+        }
+        else if(!_tokenizer.hasNext()){
+            totalQuery.add(new Query("*", "*", "*"));
+        }
     }
 
-    public Query parseOperator() {
+    /**
+     * Parse the operator and check whether it's right or not.
+     * If it's correct, keep parsing next token.
+     * If it's incorrect, add it as a Query, mark it's attribute, operator and value by * and stop parsing.
+     * @param Attribute String, The attribute we read and want to store in query.
+     */
+    // Operator : = | >= | <= | > | <
+    public void parseOperator(String Attribute) {
 
+        // A is relative attribute from last token.
+        String A = Attribute;
+        // Check whether has next token and operator is valid or not.
+        // If it's valid operator, store the Attribute type and operator, and keep going to parse next token.
         if (_tokenizer.hasNext() && _tokenizer.current().getToken().equals("=")) {
             _tokenizer.next();
-            q.setSign("=");
-            return parseValue();
+            parseValue(A, "=");
         } else if (_tokenizer.hasNext() && _tokenizer.current().getToken().equals("<")) {
             _tokenizer.next();
-            q.setSign("<");
-            return parseValue();
+            parseValue(A, "<");
         } else if (_tokenizer.hasNext() && _tokenizer.current().getToken().equals(">")) {
             _tokenizer.next();
-            q.setSign(">");
-            return parseValue();
+            parseValue(A, ">");
         } else if (_tokenizer.hasNext() && _tokenizer.current().getToken().equals(">=")) {
             _tokenizer.next();
-            q.setSign(">=");
-            return parseValue();
-        } else {
+            parseValue(A, ">=");
+        } else if (_tokenizer.hasNext() && _tokenizer.current().getToken().equals("<=")) {
             _tokenizer.next();
-            q.setSign("<=");
-            return parseValue();
+            parseValue(A, "<=");
         }
 
-    }
-
-
-    public Query parseValue() {
-        if (q.compareAttribute.equals("price") || q.compareAttribute.equals("rating")) {
-            String value = _tokenizer.current().getToken();
-            q.setValue(value);
-            _tokenizer.next();
+        // If there's no next token or operator is invalid. Mark *.
+        else if(_tokenizer.hasNext() && (!_tokenizer.current().getAttribute().equals(Token.Attribute.EQUAL) || !_tokenizer.current().getAttribute().equals(Token.Attribute.GREATER) || !_tokenizer.current().getAttribute().equals(Token.Attribute.LESS)
+        || !_tokenizer.current().getAttribute().equals(Token.Attribute.GOE) || !_tokenizer.current().getAttribute().equals(Token.Attribute.LOE))){
+            totalQuery.add(new Query("*", "*", "*"));
         }
-        if (q.compareAttribute.equals("delivery")) {
-            String value = _tokenizer.current().getToken();
-            q.setValue(value);
-            _tokenizer.next();
-        }
-
-        totalQuery.add(new Query(q.compareAttribute, q.sign, q.value));
-
-        if (!_tokenizer.hasNext()) {
-            count = 0;
-            return q;
-        } else {
-            _tokenizer.next();
-            return parseEnd();
+        else if(!_tokenizer.hasNext()){
+            totalQuery.add(new Query("*", "*", "*"));
         }
     }
 
+    // Value : number | deliveryValue
+    // DeliveryValue : Y | N
 
-    public Query parseEnd() {
+    /**
+     * Parse the value and check whether it's right or not.
+     * If it's correct, use the attribute and operator store from previous two parsing, and the value which just parsed in this function and add a new query using these information.
+     * If it's incorrect, add it as a Query, mark it's attribute, operator and value by * and stop parsing.
+     * Check whether have token after ;. If there's a token repeat all steps again.
+     * @param Attribute String, The attribute we read and want to store in query.
+     * @param Operator String, The operator we read and want to store in query.
+     */
+    public void parseValue(String Attribute, String Operator) {
+        // Check the query for attribute price and rating.
+        if (Attribute.equals("price") || Attribute.equals("rating")) {
+            String value = _tokenizer.current().getToken();
+            // The value must be number, or it will be an invalid query.
+            if (_tokenizer.current().getAttribute().equals(Token.Attribute.VALUE)) {
+                totalQuery.add(new Query(Attribute, Operator, value));
+                _tokenizer.next();
+                _tokenizer.next();
+            }
+            else {
+                totalQuery.add(new Query("*", "*", "*"));
+                _tokenizer.next();
+                _tokenizer.next();
+            }
+        }
+        // Check the query for attribute delivery.
+        else if (Attribute.equals("delivery")) {
+            String value = _tokenizer.current().getToken();
+            // The value must be type deliveryValue which mean 'Y' or 'N', or it will an invalid query.
+            if (_tokenizer.current().getAttribute().equals(Token.Attribute.DELIVERYValue)) {
+                totalQuery.add(new Query(Attribute, Operator, value));
+                _tokenizer.next();
+                _tokenizer.next();
+            }
+            else {
+                totalQuery.add(new Query("*", "*", "*"));
+                _tokenizer.next();
+                _tokenizer.next();
+            }
+        }
+        // Any condition is invalid query.
+        else {
+            //String value = _tokenizer.current().getToken();
+            totalQuery.add(new Query("*","*","*"));
+            _tokenizer.next();
+            _tokenizer.next();
+        }
+
+        // Repeat from parsing attribute again if there's a token after ; .
         if (_tokenizer.hasNext()) {
-            return parseAttribute();
-        } else {
-            return q;
+            parseAttribute();
         }
     }
 }

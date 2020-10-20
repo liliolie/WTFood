@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "181216011404",
+    "firebase_url": "https://wtfood-f2020.firebaseio.com",
+    "project_id": "wtfood-f2020",
+    "storage_bucket": "wtfood-f2020.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:181216011404:android:d6fe8a7e1cbb34f992c7a9",
+        "android_client_info": {
+          "package_name": "com.example.wtfood"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "181216011404-orc7eqhivslk56tfpiguk0uauge72qrd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBpuk2IT2CTNyXWOFGVX1eNPzfjOoE74ac"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "181216011404-orc7eqhivslk56tfpiguk0uauge72qrd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
