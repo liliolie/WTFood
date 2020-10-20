@@ -1,9 +1,7 @@
 package com.example.wtfood.rbtree;
 
 
-import com.example.wtfood.fileprocess.Location;
-import com.example.wtfood.fileprocess.Restaurant;
-import com.example.wtfood.fileprocess.Type;
+import com.example.wtfood.model.Restaurant;
 
 /**
  * Base class for node

@@ -1,7 +1,4 @@
-package com.example.wtfood.fileprocess;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+package com.example.wtfood.model;
 
 import java.io.Serializable;
 import java.util.Random;

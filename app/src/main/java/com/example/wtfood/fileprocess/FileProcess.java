@@ -1,15 +1,16 @@
 package com.example.wtfood.fileprocess;
 
+import com.example.wtfood.model.Location;
+import com.example.wtfood.model.Restaurant;
+import com.example.wtfood.model.Type;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;

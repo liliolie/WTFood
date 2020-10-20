@@ -1,4 +1,4 @@
-package com.example.wtfood.fileprocess;
+package com.example.wtfood.model;
 
 
 public class Location {

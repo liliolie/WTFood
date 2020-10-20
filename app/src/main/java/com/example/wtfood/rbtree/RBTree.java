@@ -1,13 +1,9 @@
 package com.example.wtfood.rbtree;
 
 
-import com.example.wtfood.fileprocess.Location;
-import com.example.wtfood.fileprocess.Restaurant;
-import com.example.wtfood.fileprocess.Type;
+import com.example.wtfood.model.Restaurant;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
