@@ -20,7 +20,8 @@
         <activity android:name=".DetailsActivity" />
         <activity android:name=".ResultActivity" />
         <activity android:name=".TutorialPage" />
-        <activity android:name=".InfoPage" /> <!-- Set the launch activity to the SplashScreen activity. Charlie Xu -->
+        <activity android:name=".InfoPage" />
+        <!-- Set the launch activity to the SplashScreen activity. Charlie Xu -->
         <activity
             android:name=".SplashScreen"
             android:logo="@mipmap/logo"

@@ -6,30 +6,33 @@ declaration: >-
   own work, with the following exceptions:
 
 
-# add as many "name+comment" entries as necessary
-# (or remove it altogether if you haven't collaborated with anyone)
-collaboration:
-  - name:
-    comment: >-
-
-
 # add as many "url+licence+comment" entries as necessary
 # (or remove it altogether if you haven't used any external code)
 code:
-  - comment:
-    url:
-    licence:
+  - comment: the code in Colour, Node, and RBTree is based on the code from Lab 4 Trees of COMP6442-Sem 2 2020
+    url: https://gitlab.cecs.anu.edu.au/u1064702/comp2100_6442_s2_2020
+    licence: The Australian National University
+  - comment: the code in Tokenizer, MyTokenizer, Token and Parser is based on the code from Lab 5 Parsing of COMP6442-Sem 2 2020
+    url: https://gitlab.cecs.anu.edu.au/u1064702/comp2100_6442_s2_2020
+    licence: The Australian National University
 
 
 # add as many "url+licence+comment" entries as necessary
 # (or remove it altogether if you haven't used any external assets)
 assets:
-  # NOTE: "Bliss" is just here as an example, you should remove it
-  - comment: "_Bliss_ by Charles O'Rear"
-    url: https://en.wikipedia.org/wiki/Bliss_(image)
-    licence: fair use
-
+  - comment: Icons by Icons8
+    url: https://icons8.com/
+    licence: Free License
+  - comment: Logos designed in Placeit
+    url: https://placeit.net/
+    licence: Placeit License - https://placeit.net/#license
 
 # sign *your* name and uid here
-name:
-uid:
+- name: Chan Xu
+  uid: u7076870
+- name: Junliang Liu
+  uid: u7096757
+- name: Lili Chen
+  uid: u6004244
+- name: Yen Kuo
+  uid: u7075575
