@@ -9,18 +9,13 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.example.wtfood.fileprocess.FileProcess;
-import com.example.wtfood.fileprocess.Restaurant;
-import com.example.wtfood.fileprocess.Type;
+import com.example.wtfood.model.Restaurant;
 import com.example.wtfood.parser.MyTokenizer;
 import com.example.wtfood.parser.Parser;
-import com.example.wtfood.parser.Query;
 import com.example.wtfood.rbtree.RBTree;
 import com.google.gson.Gson;
 
 import java.io.IOException;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;

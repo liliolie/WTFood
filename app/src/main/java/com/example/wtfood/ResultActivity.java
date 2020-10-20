@@ -2,7 +2,6 @@ package com.example.wtfood;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -14,8 +13,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.wtfood.fileprocess.FileProcess;
-import com.example.wtfood.fileprocess.Restaurant;
-import com.example.wtfood.fileprocess.Type;
+import com.example.wtfood.model.Restaurant;
 import com.example.wtfood.parser.MyTokenizer;
 import com.example.wtfood.parser.Parser;
 import com.example.wtfood.rbtree.RBTree;
