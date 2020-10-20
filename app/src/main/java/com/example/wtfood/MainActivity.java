@@ -175,7 +175,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 for (int i = 0; i < p.totalQuery.size(); i++) {
                     System.out.println("Hi");
                     if(p.totalQuery.get(i).getCompareAttribute().equals("*") || p.totalQuery.get(i).getSign().equals("*") || p.totalQuery.get(i).getValue().equals("*")){
-                        Toast.makeText(getApplicationContext(),"Invalid query! \nTCheck out our query instruction at the top right corner.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(),"Invalid query! \nCheck out our query instruction at the top right corner.", Toast.LENGTH_LONG).show();
                         count++;
                         break;
                     }
@@ -220,7 +220,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     startActivity(intent);
                     et.setText("");
                 } else {
-                    Toast.makeText(getApplicationContext(),"Invalid query! \nTCheck out our query instruction at the top right corner.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"Invalid query! \nCheck out our query instruction at the top right corner.", Toast.LENGTH_LONG).show();
                 }
             } else {
                 Toast.makeText(getApplicationContext(),"Empty query! \nCheck out our query instruction at the top right corner.", Toast.LENGTH_LONG).show();
