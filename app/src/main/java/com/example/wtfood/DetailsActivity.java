@@ -18,9 +18,7 @@ public class DetailsActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String details = intent.getStringExtra("restaurant");
 
-        String rname = intent.getStringExtra("rname");
-        EditText text = findViewById(R.id.rnameV);
-//        text.setText(rname);
+
 
         // set the ImageView
         ImageView image1 = (ImageView) findViewById(R.id.image1);
@@ -35,13 +33,13 @@ public class DetailsActivity extends AppCompatActivity {
             imageResource = getResources().getIdentifier("@drawable/brunchtea", null, this.getPackageName());
         }if (details.contains("Turkish")) {
             imageResource = getResources().getIdentifier("@drawable/turkey", null, this.getPackageName());
-        }if (details.contains("Fine Dinning")) {
-            imageResource = getResources().getIdentifier("@drawable/finedining", null, this.getPackageName());
+        }if (details.contains("burger")) {
+            imageResource = getResources().getIdentifier("@drawable/burger", null, this.getPackageName());
         }if (details.contains("Italian")) {
             imageResource = getResources().getIdentifier("@drawable/italian", null, this.getPackageName());
         }if (details.contains("Mexico")) {
             imageResource = getResources().getIdentifier("@drawable/mexico", null, this.getPackageName());
-        }if (details.contains("Fine Dinning")) {
+        }if (details.contains("wine")) {
             imageResource = getResources().getIdentifier("@drawable/finedining", null, this.getPackageName());
         }if (details.contains("Japanese")) {
             imageResource = getResources().getIdentifier("@drawable/japanese", null, this.getPackageName());
