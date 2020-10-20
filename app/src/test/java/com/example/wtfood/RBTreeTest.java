@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
+import java.util.Random;
 
 import static org.junit.Assert.*;
 
@@ -48,8 +49,6 @@ public class RBTreeTest {
             priceTree.insert(r);
         }
         assertEquals(1000, priceTree.size());
-        priceTree.insert(restaurants.get(restaurants.size() - 1));
-        assertEquals(1000, priceTree.size());
 
         for (Restaurant r : smallRestaurants) {
             smallPriceTree.insert(r);
@@ -65,6 +64,21 @@ public class RBTreeTest {
             smallRatingTree.insert(r);
         }
         assertEquals(10, smallRatingTree.size());
+    }
+
+    @Test
+    public void testInsertDuplicateRestaurant() {
+        for (Restaurant r : restaurants) {
+            priceTree.insert(r);
+        }
+        assertEquals(1000, priceTree.size());
+
+        Random random = new Random();
+        for (int i = 0; i < 10; i++) {
+            int pos = random.nextInt(1000);
+            priceTree.insert(restaurants.get(pos));
+            assertEquals(1000, priceTree.size());
+        }
     }
 
     @Test
@@ -92,8 +106,13 @@ public class RBTreeTest {
         assertEquals(4, smallPriceTree.searchForNodes("<", 141).size());
         assertEquals(5, smallPriceTree.searchForNodes(">", 141).size());
         assertEquals(1, smallPriceTree.searchForNodes("=", 141).size());
-        assertEquals(5, smallPriceTree.searchForNodes("<=", 141).size());
-        assertEquals(6, smallPriceTree.searchForNodes(">=", 141).size());
-        assertEquals(0, smallPriceTree.searchForNodes("<", 0).size());
+
+
+        for (Restaurant r : smallRestaurants) {
+            smallRatingTree.insert(r);
+        }
+        assertEquals(1, smallRatingTree.searchForNodes("=", 2).size());
+        assertEquals(1, smallRatingTree.searchForNodes("<=", 2).size());
+        assertEquals(9, smallRatingTree.searchForNodes(">=", 3).size());
     }
 }

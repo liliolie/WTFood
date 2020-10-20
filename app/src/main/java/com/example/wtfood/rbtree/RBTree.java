@@ -246,14 +246,21 @@ public class RBTree {
 		if (x.restaurant == null)
 			return null;
 
-		if (x.equals(node)) {
+		if (x.restaurant.equals(node.restaurant)) {
 			return x;
 		}
 		int cmp = x.compareTo(node);
-		if (cmp <= 0) {
+		if (cmp < 0) {
 			return find(x.right, node);
-		} else {
+		} else if (cmp > 0) {
 			return find(x.left, node);
+		} else {
+			Node t = find(x.left, node);
+			if (t == null) {
+				return find(x.right, node);
+			} else {
+				return t;
+			}
 		}
 	}
 
