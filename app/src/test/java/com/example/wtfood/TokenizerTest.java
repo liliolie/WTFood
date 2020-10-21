@@ -5,206 +5,91 @@ import com.example.wtfood.parser.Token;
 import com.example.wtfood.parser.Tokenizer;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
 public class TokenizerTest {
 
     private static Tokenizer tokenizer;
-    private static final String twoCase = "rating <= 2; price > 50" ;
-    private static final String oneCase = "price >= 10";
     private static final String threeCase = "delivery = Y; rating < 5; price <= 100";
-    private static final String wrongCase = "pric >= abd";
-    private static final String wrongOrderCase = "Y = 10";
-    private static final String EndCase = "price = 10; rating = 2";
-    private static final String UpperCase = "Price = 10";
+    private static final String wrongCase1 = "pric >= abd";
+    private static final String wrongOrderCase = "N > Delivery";
+    private static final String emptyCase = "    ";
+    private static final String hasNext = "price =< 100";
+
 
     @Test(timeout=1000)
-    public void testUpperCaseToken() {
-        tokenizer = new MyTokenizer(UpperCase);
+    public void testHasNext() {
+        tokenizer = new MyTokenizer(hasNext);
 
-        //check the type of the first token
-        assertEquals("wrong token type", Token.Attribute.PRICE, tokenizer.current().getAttribute());
-
-        //check the actual token value"
-        assertEquals("wrong token value", "price", tokenizer.current().getToken());
+        assertTrue(tokenizer.hasNext());
 
         tokenizer.next();
-
-        assertEquals("wrong token type", Token.Attribute.EQUAL, tokenizer.current().getAttribute());
-
-        //check the actual token value"
-        assertEquals("wrong token value", "=", tokenizer.current().getToken());
-
         tokenizer.next();
-
-        assertEquals("wrong token type", Token.Attribute.VALUE, tokenizer.current().getAttribute());
-
-        //check the actual token value"
-        assertEquals("wrong token value", "10", tokenizer.current().getToken());
+        tokenizer.next();
+        assertFalse(tokenizer.hasNext());
     }
 
     @Test(timeout=1000)
-    public void testWrongToken() {
-        tokenizer = new MyTokenizer(wrongOrderCase);
+    public void testWrongToken1() {
+        tokenizer = new MyTokenizer(wrongCase1);
 
-        //check the type of the first token
-        assertEquals("wrong token type", Token.Attribute.DELIVERYValue, tokenizer.current().getAttribute());
-
-        //check the actual token value"
-        assertEquals("wrong token value", "y", tokenizer.current().getToken());
-
-        tokenizer.next();
-
-        assertEquals("wrong token type", Token.Attribute.EQUAL, tokenizer.current().getAttribute());
-
-        //check the actual token value"
-        assertEquals("wrong token value", "=", tokenizer.current().getToken());
-
-        tokenizer.next();
-
-        assertEquals("wrong token type", Token.Attribute.VALUE, tokenizer.current().getAttribute());
-
-        //check the actual token value"
-        assertEquals("wrong token value", "10", tokenizer.current().getToken());
-    }
-
-    @Test(timeout=1000)
-    public void testWrongToken2() {
-        tokenizer = new MyTokenizer(wrongCase);
-
-        //check the type of the first token
+        // pric
         assertEquals("wrong token type", Token.Attribute.UNKNOWN, tokenizer.current().getAttribute());
-
-        //check the actual token value"
         assertEquals("wrong token value", "pric", tokenizer.current().getToken());
 
         tokenizer.next();
-
+        // >=
         assertEquals("wrong token type", Token.Attribute.GOE, tokenizer.current().getAttribute());
-
-        //check the actual token value"
         assertEquals("wrong token value", ">=", tokenizer.current().getToken());
 
         tokenizer.next();
-
+        // abd
         assertEquals("wrong token type", Token.Attribute.UNKNOWN, tokenizer.current().getAttribute());
-
-        //check the actual token value"
         assertEquals("wrong token value", "abd", tokenizer.current().getToken());
     }
 
     @Test(timeout=1000)
-    public void testPriceToken() {
-        tokenizer = new MyTokenizer(oneCase);
+    public void emptyCase() {
+        tokenizer = new MyTokenizer(emptyCase);
 
-        //check the type of the first token
-        assertEquals("wrong token type", Token.Attribute.PRICE, tokenizer.current().getAttribute());
+        // empty
+        assertNull(tokenizer.current());
 
-        //check the actual token value"
-        assertEquals("wrong token value", "price", tokenizer.current().getToken());
     }
 
     @Test(timeout=1000)
-    public void testEqualToken() {
-        tokenizer = new MyTokenizer(oneCase);
+    public void testWrongOrder() {
+        tokenizer = new MyTokenizer(wrongOrderCase);
 
-        //extract next token (just to skip first passCase token)
+        // N
+        assertEquals("wrong token type", Token.Attribute.DELIVERYValue, tokenizer.current().getAttribute());
+        assertEquals("wrong token value", "n", tokenizer.current().getToken());
+
         tokenizer.next();
+        // >
+        assertEquals("wrong token type", Token.Attribute.GREATER, tokenizer.current().getAttribute());
+        assertEquals("wrong token value", ">", tokenizer.current().getToken());
 
-        //check the type of the first token
-        assertEquals("wrong token type", Token.Attribute.GOE, tokenizer.current().getAttribute());
-
-        //check the actual token value
-        assertEquals("wrong token value", ">=", tokenizer.current().getToken());
+        tokenizer.next();
+        // delivery
+        assertEquals("wrong token type", Token.Attribute.DELIVERY, tokenizer.current().getAttribute());
+        assertEquals("wrong token value", "delivery", tokenizer.current().getToken());
     }
 
-    @Test(timeout=1000)
-    public void testValueToken() {
-        tokenizer = new MyTokenizer(oneCase);
 
-        //extract next token (just to skip first passCase token)
-        tokenizer.next();
-
-        tokenizer.next();
-
-        //check the type of the first token
-        assertEquals("wrong token type", Token.Attribute.VALUE, tokenizer.current().getAttribute());
-
-        //check the actual token value
-        assertEquals("wrong token value", "10", tokenizer.current().getToken());
-    }
-    @Test(timeout=1000)
-    public void testEndToken() {
-        tokenizer = new MyTokenizer(EndCase);
-
-        //extract next token (just to skip three token)
-        tokenizer.next();
-        tokenizer.next();
-        tokenizer.next();
-
-        //check the type of the first token
-        assertEquals("wrong token type", Token.Attribute.END, tokenizer.current().getAttribute());
-
-        //check the actual token value
-        assertEquals("wrong token value", ";", tokenizer.current().getToken());
-    }
 
     @Test(timeout=1000)
-    public void testFirstToken(){
-        tokenizer = new MyTokenizer(twoCase);
-
-        //check the type of the first token
-        assertEquals("wrong token type", Token.Attribute.RATING, tokenizer.current().getAttribute());
-        //check the actual token value
-        assertEquals("wrong token value", "rating", tokenizer.current().getToken());
-    }
-
-    @Test(timeout=1000)
-    public void testTokenResult(){
-        tokenizer = new MyTokenizer(twoCase);
-
-        // test first token (
-        assertEquals(Token.Attribute.RATING, tokenizer.current().getAttribute());
-
-        // test second token 100
-        tokenizer.next();
-        assertEquals(Token.Attribute.LOE, tokenizer.current().getAttribute());
-        assertEquals("<=", tokenizer.current().getToken());
-
-        // test third token +
-        tokenizer.next();
-        assertEquals(Token.Attribute.VALUE, tokenizer.current().getAttribute());
-        assertEquals("2", tokenizer.current().getToken());
-
-        // test fourth token 2
-        tokenizer.next();
-        assertEquals(Token.Attribute.END, tokenizer.current().getAttribute());
-        assertEquals(";", tokenizer.current().getToken());
-
-        // test fourth token -
-        tokenizer.next();
-        assertEquals(Token.Attribute.PRICE, tokenizer.current().getAttribute());
-        assertEquals("price", tokenizer.current().getToken());
-
-        //we skip token 5
-        tokenizer.next();
-        assertEquals(Token.Attribute.GREATER, tokenizer.current().getAttribute());
-        assertEquals(">", tokenizer.current().getToken());
-
-        // test sixth token ), note that we call next twice.
-        // Correct implementation of tokenizer.current() should return ')' this case (not 40)
-        tokenizer.next();
-        assertEquals(Token.Attribute.VALUE, tokenizer.current().getAttribute());
-        assertEquals("50", tokenizer.current().getToken());
-    }
-
-    @Test(timeout=1000)
-    public void testDelivery(){
+    public void testMultipleRequirement(){
         tokenizer = new MyTokenizer(threeCase);
         //Delivery = Y; Rating < 5; Price <= 100
         //Delivery
         assertEquals(Token.Attribute.DELIVERY, tokenizer.current().getAttribute());
+        assertEquals("delivery", tokenizer.current().getToken());
 
         // =
         tokenizer.next();

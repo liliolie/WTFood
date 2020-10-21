@@ -25,7 +25,7 @@ public class MyTokenizer extends Tokenizer {
             return;
         }
 
-        String current = "";
+        String current;
         if (buffer.charAt(0) != '<' && buffer.charAt(0) != '>' && buffer.charAt(0) != '=' && buffer.charAt(0) != ';') {
             current = getAttribute(buffer);
         } else if (buffer.charAt(0) == '<' || buffer.charAt(0) == '>' || buffer.charAt(0) == '=') {
@@ -61,7 +61,6 @@ public class MyTokenizer extends Tokenizer {
         } else if (current.equals("delivery")) {
             currentToken = new Token("delivery", Token.Attribute.DELIVERY);
         } else if (current.equals("y") || current.equals("n")) {
-
             currentToken = new Token(current, Token.Attribute.DELIVERYValue);
         } else {
             currentToken = new Token(current, Token.Attribute.UNKNOWN);

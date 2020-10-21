@@ -42,7 +42,7 @@ public class Parser {
         else if (_tokenizer.hasNext() && (!_tokenizer.current().getAttribute().equals("price") || !_tokenizer.current().getAttribute().equals("rating") || !_tokenizer.current().getAttribute().equals("delivery"))) {
             _tokenizer.next();
             totalQuery.add(new Query("*", "*", "*"));
-        } else if (!_tokenizer.hasNext()) {
+        } else {
             totalQuery.add(new Query("*", "*", "*"));
         }
     }
@@ -57,32 +57,31 @@ public class Parser {
     // Operator : = | >= | <= | > | <
     public void parseOperator(String Attribute) {
 
-        // A is relative attribute from last token.
-        String A = Attribute;
+        // Attribute is relative attribute from last token.
         // Check whether has next token and operator is valid or not.
         // If it's valid operator, store the Attribute type and operator, and keep going to parse next token.
         if (_tokenizer.hasNext() && _tokenizer.current().getToken().equals("=")) {
             _tokenizer.next();
-            parseValue(A, "=");
+            parseValue(Attribute, "=");
         } else if (_tokenizer.hasNext() && _tokenizer.current().getToken().equals("<")) {
             _tokenizer.next();
-            parseValue(A, "<");
+            parseValue(Attribute, "<");
         } else if (_tokenizer.hasNext() && _tokenizer.current().getToken().equals(">")) {
             _tokenizer.next();
-            parseValue(A, ">");
+            parseValue(Attribute, ">");
         } else if (_tokenizer.hasNext() && _tokenizer.current().getToken().equals(">=")) {
             _tokenizer.next();
-            parseValue(A, ">=");
+            parseValue(Attribute, ">=");
         } else if (_tokenizer.hasNext() && _tokenizer.current().getToken().equals("<=")) {
             _tokenizer.next();
-            parseValue(A, "<=");
+            parseValue(Attribute, "<=");
         }
 
         // If there's no next token or operator is invalid. Mark *.
         else if (_tokenizer.hasNext() && (!_tokenizer.current().getAttribute().equals(Token.Attribute.EQUAL) || !_tokenizer.current().getAttribute().equals(Token.Attribute.GREATER) || !_tokenizer.current().getAttribute().equals(Token.Attribute.LESS)
                 || !_tokenizer.current().getAttribute().equals(Token.Attribute.GOE) || !_tokenizer.current().getAttribute().equals(Token.Attribute.LOE))) {
             totalQuery.add(new Query("*", "*", "*"));
-        } else if (!_tokenizer.hasNext()) {
+        } else {
             totalQuery.add(new Query("*", "*", "*"));
         }
     }
@@ -115,7 +114,7 @@ public class Parser {
             }
         }
         // Check the query for attribute delivery.
-        else if (Attribute.equals("delivery")) {
+        else{
             String value = _tokenizer.current().getToken();
             // The value must be type deliveryValue which mean 'Y' or 'N', or it will an invalid query.
             if (_tokenizer.current().getAttribute().equals(Token.Attribute.DELIVERYValue)) {
@@ -128,13 +127,7 @@ public class Parser {
                 _tokenizer.next();
             }
         }
-        // Any condition is invalid query.
-        else {
-            //String value = _tokenizer.current().getToken();
-            totalQuery.add(new Query("*", "*", "*"));
-            _tokenizer.next();
-            _tokenizer.next();
-        }
+
 
         // Repeat from parsing attribute again if there's a token after ; .
         if (_tokenizer.hasNext()) {
