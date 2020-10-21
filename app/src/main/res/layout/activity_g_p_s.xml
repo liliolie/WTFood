@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#f4b71f"
     tools:context=".LocationActivity">
 
     <Button
@@ -13,6 +14,7 @@
         android:layout_marginStart="150dp"
         android:layout_marginTop="100dp"
         android:layout_marginEnd="150dp"
+        android:onClick="getLocation"
         android:text="Get Location "
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,8 +22,8 @@
 
     <TextView
         android:id="@+id/locationText"
-        android:layout_width="146dp"
-        android:layout_height="26dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="150dp"
         android:layout_marginTop="147dp"
         android:layout_marginEnd="150dp"
