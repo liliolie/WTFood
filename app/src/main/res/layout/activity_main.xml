@@ -99,7 +99,7 @@
             android:layout_marginBottom="50dp"
             android:onClick="locationButton"
             android:text="Check your current location"
-            android:textColor="#f4b71f"
+            android:textColor="#0B0A0A"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

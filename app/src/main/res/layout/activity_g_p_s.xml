@@ -15,7 +15,8 @@
         android:layout_marginTop="100dp"
         android:layout_marginEnd="150dp"
         android:onClick="getLocation"
-        android:text="Get Location "
+        android:text="Get Your Current Location "
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -27,6 +28,7 @@
         android:layout_marginStart="150dp"
         android:layout_marginTop="147dp"
         android:layout_marginEnd="150dp"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/locationB" />
