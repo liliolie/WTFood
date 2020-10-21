@@ -149,7 +149,7 @@ public class Restaurant implements Serializable {
         if (isDeliveryService()) {
             delivery = "Deliverable.";
         } else {
-            delivery = "Unable to for delivery.";
+            delivery = "Unable to make delivery.";
         }
 
         if (getType().equals(Type.chinesefood)) {
@@ -163,7 +163,7 @@ public class Restaurant implements Serializable {
         }
 
         return name + " \n " + address + " | " + phone + " \n " + "Rating: " + rating + " \n " + "Price: " +
-                price + " \n " + delivery + " \n " + "FoodType: " + type;
+                price + " AUD/person" + " \n " + delivery + " \n " + "Food Type: " + type;
     }
 
 }

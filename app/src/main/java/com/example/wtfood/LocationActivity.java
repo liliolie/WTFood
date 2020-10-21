@@ -2,6 +2,7 @@ package com.example.wtfood;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
 import android.content.Intent;
@@ -28,14 +29,15 @@ public class LocationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_g_p_s);
 
-        locationText = (TextView)findViewById(R.id.locationText);
-        locationManager = (LocationManager)getSystemService(LOCATION_SERVICE);
+        locationText = (TextView) findViewById(R.id.locationText);
+        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         locationListener = new LocationListener() {
+
+            //detect the change of the location
+            //set the text to the current location
             @Override
-            public void onLocationChanged( Location location) {
+            public void onLocationChanged(Location location) {
                 locationText.setText(location.getLatitude() + ", " + location.getLongitude());
-
-
             }
 
             @Override
@@ -48,26 +50,38 @@ public class LocationActivity extends AppCompatActivity {
 
             }
 
+            //if the location services are lost, it will bring up the setting panel
             @Override
             public void onProviderDisabled(String provider) {
-                Intent intent = new Intent(Settings.ACTION_LOCALE_SETTINGS);
+                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                 startActivity(intent);
 
             }
         };
-// set up the permission
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+
+        // set up the permission
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
                     || checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                    || checkSelfPermission(Manifest.permission.INTERNET) != PackageManager.PERMISSION_GRANTED){
+                    || checkSelfPermission(Manifest.permission.INTERNET) != PackageManager.PERMISSION_GRANTED) {
 
-                requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,  Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.INTERNET}, 10);
+                requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.INTERNET}, 10);
             }
         }
     }
 
-    public void getLocation(View v){
-//        locationManager.requestLocationUpdates("gps", 1000, 0, locationListener);
+    public void getLocation(View v) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        locationManager.requestLocationUpdates("gps", 1000, 0, locationListener);
     }
 
 }

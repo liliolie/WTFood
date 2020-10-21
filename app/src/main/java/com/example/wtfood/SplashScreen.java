@@ -6,6 +6,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 //Set the splash screen activity. Charlie Xu
 public class SplashScreen extends AppCompatActivity {
 
