@@ -13,7 +13,7 @@ public class TutorialPage extends AppCompatActivity {
         setContentView(R.layout.activity_tutorial_page);
     }
 
-    public void tutorialBackButton(View view){
+    public void tutorialBackButton(View view) {
         finish();
     }
 }

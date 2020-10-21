@@ -28,11 +28,11 @@ public class LocationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_g_p_s);
 
-        locationText = (TextView)findViewById(R.id.locationText);
-        locationManager = (LocationManager)getSystemService(LOCATION_SERVICE);
+        locationText = (TextView) findViewById(R.id.locationText);
+        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         locationListener = new LocationListener() {
             @Override
-            public void onLocationChanged( Location location) {
+            public void onLocationChanged(Location location) {
                 locationText.setText(location.getLatitude() + ", " + location.getLongitude());
 
 
@@ -56,17 +56,17 @@ public class LocationActivity extends AppCompatActivity {
             }
         };
 // set up the permission
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
                     || checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                    || checkSelfPermission(Manifest.permission.INTERNET) != PackageManager.PERMISSION_GRANTED){
+                    || checkSelfPermission(Manifest.permission.INTERNET) != PackageManager.PERMISSION_GRANTED) {
 
-                requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,  Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.INTERNET}, 10);
+                requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.INTERNET}, 10);
             }
         }
     }
 
-    public void getLocation(View v){
+    public void getLocation(View v) {
 //        locationManager.requestLocationUpdates("gps", 1000, 0, locationListener);
     }
 

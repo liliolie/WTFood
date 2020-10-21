@@ -45,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
         progress = findViewById(R.id.progressBar);
 
         //If the user is already logged in, direct the user back to the main activity.
-        if (fAuth.getCurrentUser() != null){
+        if (fAuth.getCurrentUser() != null) {
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
             finish();
         }
@@ -56,12 +56,10 @@ public class LoginActivity extends AppCompatActivity {
                 String email = lEmail.getText().toString().trim();
                 String password = lPassword.getText().toString();
 
-                if (TextUtils.isEmpty(email)){
+                if (TextUtils.isEmpty(email)) {
                     lEmail.setError("Email cannot be empty.");
                     return;
-                }
-
-                else if (TextUtils.isEmpty(password)) {
+                } else if (TextUtils.isEmpty(password)) {
                     lPassword.setError("Password cannot be empty.");
                     return;
                 }
@@ -72,7 +70,7 @@ public class LoginActivity extends AppCompatActivity {
                 fAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             progress.setVisibility(View.INVISIBLE);
                             Toast.makeText(getApplicationContext(), "Logged in successfully!", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
@@ -86,7 +84,6 @@ public class LoginActivity extends AppCompatActivity {
         });
 
 
-
         goToSignUp = findViewById(R.id.goToSignUpButton);
         goToSignUp.setOnClickListener(v -> {
             Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
@@ -94,7 +91,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    public void loginBackButton(View view){
+    public void loginBackButton(View view) {
         finish();
     }
 }
