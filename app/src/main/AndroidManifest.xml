@@ -9,8 +9,8 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/logo"
-        android:label="@string/app_name"
         android:logo="@mipmap/logo"
+        android:label="@string/app_name"
         android:roundIcon="@mipmap/logo_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -20,9 +20,11 @@
         <activity android:name=".DetailsActivity" />
         <activity android:name=".ResultActivity" />
         <activity android:name=".TutorialPage" />
-        <activity android:name=".InfoPage" /> <!-- Set the launch activity to the SplashScreen activity. Charlie Xu -->
+        <activity android:name=".InfoPage" />
+        <!-- Set the launch activity to the SplashScreen activity. Charlie Xu -->
         <activity
             android:name=".SplashScreen"
+            android:icon="@mipmap/logo"
             android:logo="@mipmap/logo"
             android:theme="@style/SplashTheme">
             <intent-filter>
@@ -33,6 +35,7 @@
         </activity>
         <activity
             android:name=".MainActivity"
+            android:icon="@mipmap/logo"
             android:logo="@mipmap/logo">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
