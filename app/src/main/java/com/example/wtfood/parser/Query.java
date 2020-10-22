@@ -7,13 +7,7 @@ public class Query {
     String operator;
     String value;
 
-    public void setCompareAttribute(String compareAttribute) {
-        this.compareAttribute = compareAttribute;
-    }
 
-    public void setSign(String sign) {
-        this.operator = sign;
-    }
 
     public String getCompareAttribute() {
         return compareAttribute;
@@ -27,15 +21,18 @@ public class Query {
         return value;
     }
 
-    public void setValue(String value) {
-        this.value = value;
-    }
-
     @Override
     public String toString() {
         return compareAttribute + operator + value;
     }
 
+
+    /**
+     * a constructor to construct a query with given name
+     * @param compareAttribute the attribute which parser read.
+     * @param sign the operator which parser read.
+     * @param value the value which parser read.
+     */
     public Query(String compareAttribute, String sign, String value) {
         this.compareAttribute = compareAttribute;
         this.operator = sign;
