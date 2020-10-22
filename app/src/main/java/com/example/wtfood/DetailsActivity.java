@@ -19,6 +19,8 @@ import java.util.Set;
 
 public class DetailsActivity extends AppCompatActivity {
     TextView detailText;
+    TextView addressText;
+    TextView numText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +34,12 @@ public class DetailsActivity extends AppCompatActivity {
         System.out.println(restaurant);
 
         detailText = (TextView) findViewById(R.id.detailText);
-        detailText.setText(bookJson);
+        addressText = (TextView) findViewById(R.id.addressText);
+        numText = (TextView) findViewById(R.id.numText);
+
+        detailText.setText(restaurant.getName());
+        addressText.setText("Address: " + restaurant.getAddress());
+        numText.setText("Call Us: " + restaurant.getPhone());
 
 
         // set the ImageView
