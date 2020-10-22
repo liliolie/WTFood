@@ -19,6 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.wtfood.fileprocess.FileProcess;
@@ -56,6 +57,11 @@ public class ResultActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
 
+        TextView headline = (TextView) findViewById(R.id.headlineText);
+        headline.setText("Results are Sorted by Distance from Low to High");
+
+
+
         priceTree = new RBTree("price");
         raringTree = new RBTree("rating");
 
@@ -73,6 +79,7 @@ public class ResultActivity extends AppCompatActivity {
         // Set listener to button for search again.
         ImageButton search = (ImageButton) findViewById(R.id.research_search_button);
         search.setOnClickListener(l1);
+
 
 
         result = (ListView) findViewById(R.id.result_lv);
@@ -140,12 +147,6 @@ public class ResultActivity extends AppCompatActivity {
             }
         });
 
-//        public void locationButton(View v) {
-//            Intent intent = new Intent(MainActivity.this, LocationActivity.class);
-//
-//            startActivity(intent);
-//
-//        }
 
     }
 

@@ -52,8 +52,6 @@ public class LocationActivity extends AppCompatActivity {
 
 
         locationListener = new LocationListener() {
-
-
             //detect the change of the location
             //set the text to the current location
             //show the distance from current location
@@ -61,7 +59,7 @@ public class LocationActivity extends AppCompatActivity {
             public void onLocationChanged(Location location) {
                 latText.setText(location.getLatitude() + "");
                 lonText.setText(location.getLongitude() + "");
-                distanceText.setText(getDistance(location.getLatitude(), location.getLongitude(), 100, 200) + "");
+
             }
 
             @Override

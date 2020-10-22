@@ -61,5 +61,18 @@
         app:layout_constraintTop_toTopOf="@+id/ResultQuery"
         app:srcCompat="@drawable/go_50" />
 
+    <TextView
+        android:id="@+id/headlineText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="15dp"
+        android:textColor="#050505"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/result_lv"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ResultQuery" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
