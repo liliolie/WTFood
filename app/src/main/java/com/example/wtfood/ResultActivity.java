@@ -85,6 +85,12 @@ public class ResultActivity extends AppCompatActivity {
             }
         });
 
+//        public void locationButton(View v) {
+//            Intent intent = new Intent(MainActivity.this, LocationActivity.class);
+//
+//            startActivity(intent);
+//
+//        }
 
     }
 

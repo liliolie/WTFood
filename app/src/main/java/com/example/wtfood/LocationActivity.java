@@ -115,6 +115,6 @@ public class LocationActivity extends AppCompatActivity {
         }
         return results[0];
     }
-    
+
 
 }
