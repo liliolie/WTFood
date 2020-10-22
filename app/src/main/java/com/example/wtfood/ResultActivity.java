@@ -19,6 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.wtfood.fileprocess.FileProcess;
@@ -55,6 +56,11 @@ public class ResultActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
+
+        TextView headline = (TextView) findViewById(R.id.headlineText);
+        headline.setText("Results are Sorted by Distance from Low to High");
+
+
 
         priceTree = new RBTree("price");
         raringTree = new RBTree("rating");
@@ -141,12 +147,6 @@ public class ResultActivity extends AppCompatActivity {
             }
         });
 
-//        public void locationButton(View v) {
-//            Intent intent = new Intent(MainActivity.this, LocationActivity.class);
-//
-//            startActivity(intent);
-//
-//        }
 
     }
 
