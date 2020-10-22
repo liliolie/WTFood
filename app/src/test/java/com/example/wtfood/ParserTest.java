@@ -14,7 +14,8 @@ public class ParserTest {
     private static final String[] testExample = new String[]{"price >= 10", "rating <= 3", "delivery = Y"};
     private static final String testExample2 = "price > 100; rating < 2; delivery = N";
     private static final String testWrongOrderCase = "Y = Delivery";
-    private static final String[] testWrongCase = new String[]{"Name = ABC", "Price : 5", "Rating = A"};
+    private static final String[] testWrongCase = new String[]{"Name = ABC", "Price : 5", "Rating = A", "Pr; Rating <= 4"};
+    private static final String[] testSpecialCase = new String[]{"; rating = 5", "price > 100, rating = 2"};
     private static final String emptyCase = "    ";
 
     @Test(timeout=1000)
@@ -90,6 +91,51 @@ public class ParserTest {
         p2.parseAttribute();
 
         assertEquals("***", p2.totalQuery.get(0).toString());
+
+
+        MyTokenizer queryTokenizer3 = new MyTokenizer(testWrongCase[3]);
+        Parser p3 = new Parser(queryTokenizer3);
+        p3.parseAttribute();
+
+        assertEquals("***", p3.totalQuery.get(0).toString());
+        assertEquals("rating<=4", p3.totalQuery.get(1).toString());
+
+    }
+
+    @Test(timeout=1000)
+    public void testSpecialCase() {
+        MyTokenizer queryTokenizer = new MyTokenizer(testSpecialCase[0]);
+        Parser p = new Parser(queryTokenizer);
+        p.parseAttribute();
+
+        assertEquals("***", p.totalQuery.get(0).toString());
+        assertEquals("rating=5", p.totalQuery.get(1).toString());
+
+
+        MyTokenizer queryTokenizer1 = new MyTokenizer(testSpecialCase[1]);
+        Parser p1 = new Parser(queryTokenizer1);
+        p1.parseAttribute();
+
+
+
+        assertEquals("price>100", p1.totalQuery.get(0).toString());
+        assertEquals("rating=2", p1.totalQuery.get(1).toString());
+
+        MyTokenizer queryTokenizer2 = new MyTokenizer(testWrongCase[2]);
+        Parser p2 = new Parser(queryTokenizer2);
+        p2.parseAttribute();
+
+        assertEquals("***", p2.totalQuery.get(0).toString());
+
+
+        MyTokenizer queryTokenizer3 = new MyTokenizer(testWrongCase[3]);
+        Parser p3 = new Parser(queryTokenizer3);
+        p3.parseAttribute();
+
+
+        assertEquals("***", p3.totalQuery.get(0).toString());
+        assertEquals("rating<=4", p3.totalQuery.get(1).toString());
+
     }
 
 
