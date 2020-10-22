@@ -115,7 +115,7 @@ public class ResultActivity extends AppCompatActivity {
                 int count = 0;
                 for (int i = 0; i < p.totalQuery.size(); i++) {
                     // If it's not valid. Toast and show instruction information.
-                    if (p.totalQuery.get(i).getCompareAttribute().equals("*") || p.totalQuery.get(i).getSign().equals("*") || p.totalQuery.get(i).getValue().equals("*")) {
+                    if (p.totalQuery.get(i).equals("***")) {
                         Toast.makeText(getApplicationContext(), "Wrong type query!! \nThe instruction is at the top right concern. \nGo & Check it out!!", Toast.LENGTH_SHORT).show();
                         count++;
                         continue;
@@ -157,10 +157,11 @@ public class ResultActivity extends AppCompatActivity {
 
                 // Count = 0 means that there's no wrong query.
                 if (restaurantsSet != null) {
-                    // Make the list empty.
+                    System.out.println("Hi" + count);
                     if (count != 0) {
                         Toast.makeText(getApplicationContext(), "Some part of the query are invalid!! \nCheck out our query instruction at the top right corner.", Toast.LENGTH_LONG).show();
                     }
+                    // Make the list empty.
                     restaurants.clear();
                     // Add new restaurant which satisfied the requirement from set to the list.
                     for (Restaurant r : restaurantsSet) {
