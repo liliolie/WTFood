@@ -58,6 +58,7 @@ public class LocationActivity extends AppCompatActivity {
             //show the distance from current location
             @Override
             public void onLocationChanged(Location location) {
+
                 latText.setText(location.getLatitude() + "");
                 lonText.setText(location.getLongitude() + "");
                 distanceText.setText(getDistance(location.getLatitude(), location.getLongitude(), 100, 200) + "");
