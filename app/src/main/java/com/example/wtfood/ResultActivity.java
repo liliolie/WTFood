@@ -71,7 +71,7 @@ public class ResultActivity extends AppCompatActivity {
         result.setAdapter(aa);
 
 
-        //set the listener to the listView items [Lili]
+        //set the listener to the listView items
         result.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {

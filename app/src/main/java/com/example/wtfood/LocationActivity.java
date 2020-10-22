@@ -1,8 +1,5 @@
 package com.example.wtfood;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -14,6 +11,17 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.view.View;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+
+import com.example.wtfood.model.Restaurant;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.util.ArrayList;
+import java.util.Set;
+
 
 public class LocationActivity extends AppCompatActivity {
 
@@ -27,15 +35,23 @@ public class LocationActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_g_p_s);
+
+
+        String bookJson = getIntent().getStringExtra("Restaurants");
+        Set<Restaurant> restaurant = new Gson().fromJson(bookJson, new TypeToken<Set<Restaurant>>() {
+        }.getType());
 
         latText = (TextView) findViewById(R.id.locationText);
         lonText = (TextView) findViewById(R.id.latText);
         distanceText = (TextView) findViewById(R.id.distanceT);
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
+
         locationListener = new LocationListener() {
+
 
             //detect the change of the location
             //set the text to the current location
@@ -44,7 +60,7 @@ public class LocationActivity extends AppCompatActivity {
             public void onLocationChanged(Location location) {
                 latText.setText(location.getLatitude() + "");
                 lonText.setText(location.getLongitude() + "");
-                distanceText.setText(getDistance(location.getLatitude(), location.getLongitude(), 100.22, 120.33) + "");
+                distanceText.setText(getDistance(location.getLatitude(), location.getLongitude(), 100, 200) + "");
             }
 
             @Override
@@ -87,7 +103,6 @@ public class LocationActivity extends AppCompatActivity {
             return;
         }
         locationManager.requestLocationUpdates("gps", 1000, 0, locationListener);
-
     }
 
     //calculate distance between two locations
@@ -100,4 +115,6 @@ public class LocationActivity extends AppCompatActivity {
         }
         return results[0];
     }
+    
+
 }

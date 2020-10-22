@@ -135,7 +135,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void locationButton(View v) {
         Intent intent = new Intent(MainActivity.this, LocationActivity.class);
+
         startActivity(intent);
+
     }
 
 

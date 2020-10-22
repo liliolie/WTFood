@@ -4,19 +4,26 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 public class DetailsActivity extends AppCompatActivity {
+    TextView detailText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
 
-        // get the information and show [Lili]
+        // get the information and show
         Intent intent = getIntent();
         String details = intent.getStringExtra("restaurant");
+
+        detailText = (TextView) findViewById(R.id.detailText);
+        detailText.setText(details);
 
 
         // set the ImageView
@@ -55,4 +62,5 @@ public class DetailsActivity extends AppCompatActivity {
         image1.setImageResource(imageResource);
 
     }
+
 }
