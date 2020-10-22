@@ -75,6 +75,7 @@ public class ResultActivity extends AppCompatActivity {
         search.setOnClickListener(l1);
 
 
+
         result = (ListView) findViewById(R.id.result_lv);
         String bookJson = getIntent().getStringExtra("Restaurants");
         Set<Restaurant> r = new Gson().fromJson(bookJson, new TypeToken<Set<Restaurant>>() {

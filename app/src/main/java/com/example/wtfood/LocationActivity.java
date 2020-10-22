@@ -65,7 +65,7 @@ public class LocationActivity extends AppCompatActivity {
                 Longitude = location.getLongitude();
                 latText.setText(location.getLatitude() + "");
                 lonText.setText(location.getLongitude() + "");
-                distanceText.setText(getDistance(location.getLatitude(), location.getLongitude(), 100, 200) + "");
+
             }
 
             @Override

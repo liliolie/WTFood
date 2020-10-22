@@ -143,6 +143,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         startActivity(intent);
     }
 
+    public void locationUpdate(View view) {
+        Intent intent = new Intent(this, LocationActivity.class);
+        startActivity(intent);
+    }
+
     /**
      * The on click listener for go button on the main menu.
      * If the query are correct, it will pass the data to the new intent(Result Activity).
