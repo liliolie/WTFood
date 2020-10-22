@@ -108,8 +108,6 @@ public class Parser {
      * Parse the value and check whether it's right or not.
      * If it's correct, use the attribute and operator store from previous two parsing, and the value which just parsed in this function and add a new query using these information.
      * If it's incorrect, add it as a Query, mark it's attribute, operator and value by * and stop parsing.
-     * Check whether have token after ;. If there's a token repeat all steps again.
-     *
      * @param Attribute String, The attribute we read and want to store in query.
      * @param Operator  String, The operator we read and want to store in query.
      */
@@ -138,6 +136,10 @@ public class Parser {
         parseEnd();
     }
 
+
+    /**
+     * Check whether have token after ;. If there's a token repeat all steps again.
+     */
     public void parseEnd() {
         if (_tokenizer.current().getToken().equals(";")) {
             _tokenizer.next();

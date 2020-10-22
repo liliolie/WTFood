@@ -175,7 +175,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 for (int i = 0; i < p.totalQuery.size(); i++) {
                     // If it's not valid. Toast and show instruction information.
                     if (p.totalQuery.get(i).getCompareAttribute().equals("*") || p.totalQuery.get(i).getSign().equals("*") || p.totalQuery.get(i).getValue().equals("*")) {
-
                         count++;
                         continue;
                     }

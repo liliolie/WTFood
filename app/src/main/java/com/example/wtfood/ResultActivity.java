@@ -112,7 +112,7 @@ public class ResultActivity extends AppCompatActivity {
                     if (p.totalQuery.get(i).getCompareAttribute().equals("*") || p.totalQuery.get(i).getSign().equals("*") || p.totalQuery.get(i).getValue().equals("*")) {
                         Toast.makeText(getApplicationContext(), "Wrong type query!! \nThe instruction is at the top right concern. \nGo & Check it out!!", Toast.LENGTH_SHORT).show();
                         count++;
-                        break;
+                        continue;
                     } else {
 
                         // If it's valid. Search in the relative tree and add it to restaurants set.
