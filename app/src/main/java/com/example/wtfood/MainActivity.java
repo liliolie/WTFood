@@ -94,6 +94,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         go.setOnClickListener(l1);
     }
 
+    //Update the navigation drawer menu's content based on the user's login status
     public void updateUI(FirebaseUser user){
         Menu drawerMenu = navigationView.getMenu();
         if (fAuth.getCurrentUser() != null){
@@ -117,7 +118,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    //Make the items inside the navigation drawer clickable.
+    //Make the items inside the navigation drawer clickable and direct the user to the corresponding
+    // activity.
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
