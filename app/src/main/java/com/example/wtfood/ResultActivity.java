@@ -65,8 +65,7 @@ public class ResultActivity extends AppCompatActivity {
 
         result = (ListView) findViewById(R.id.result_lv);
         String bookJson = getIntent().getStringExtra("Restaurants");
-        Set<Restaurant> r = new Gson().fromJson(bookJson, new TypeToken<Set<Restaurant>>() {
-        }.getType());
+        Set<Restaurant> r = new Gson().fromJson(bookJson, new TypeToken<Set<Restaurant>>() {}.getType());
         restaurants = new ArrayList<>(r);
         restaurants.sort(Comparator.comparing(Restaurant::getDistance));
         Collections.reverse(restaurants);
@@ -80,7 +79,7 @@ public class ResultActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getApplicationContext(), DetailsActivity.class);
-                intent.putExtra("restaurant", restaurants.get(i).toString());
+                intent.putExtra("Restaurant", new Gson().toJson(restaurants.get(i)));
                 startActivity(intent);
             }
         });
