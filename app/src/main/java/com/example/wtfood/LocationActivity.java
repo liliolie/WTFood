@@ -32,8 +32,8 @@ public class LocationActivity extends AppCompatActivity {
     TextView lonText;
     TextView distanceText;
 
-    public static double Lat;
-    public static double lon;
+    public static double Latitude;
+    public static double Longitude;
 
 
     @Override
@@ -61,8 +61,8 @@ public class LocationActivity extends AppCompatActivity {
             //show the distance from current location
             @Override
             public void onLocationChanged(Location location) {
-                Lat = location.getLatitude();
-                lon = location.getLongitude();
+                Latitude = location.getLatitude();
+                Longitude = location.getLongitude();
                 latText.setText(location.getLatitude() + "");
                 lonText.setText(location.getLongitude() + "");
                 distanceText.setText(getDistance(location.getLatitude(), location.getLongitude(), 100, 200) + "");
