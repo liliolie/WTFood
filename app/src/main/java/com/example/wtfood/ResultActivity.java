@@ -75,7 +75,7 @@ public class ResultActivity extends AppCompatActivity {
         result.setAdapter(aa);
 
 
-        //set the listener to the listView items [Lili]
+        //set the listener to the listView items
         result.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -85,6 +85,12 @@ public class ResultActivity extends AppCompatActivity {
             }
         });
 
+//        public void locationButton(View v) {
+//            Intent intent = new Intent(MainActivity.this, LocationActivity.class);
+//
+//            startActivity(intent);
+//
+//        }
 
     }
 
@@ -147,7 +153,6 @@ public class ResultActivity extends AppCompatActivity {
 
                         }
                     }
-
                 }
 
                 // Count = 0 means that there's no wrong query.

@@ -4,8 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.wtfood.model.Restaurant;
 import com.example.wtfood.model.Type;
@@ -15,17 +18,28 @@ import com.google.gson.reflect.TypeToken;
 import java.util.Set;
 
 public class DetailsActivity extends AppCompatActivity {
+    TextView detailText;
+    TextView addressText;
+    TextView numText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
 
-        // get the information and show [Lili]
+        // get the information and show
         Intent intent = getIntent();
         String restaurantJSON = getIntent().getStringExtra("Restaurant");
         Restaurant restaurant = new Gson().fromJson(restaurantJSON, Restaurant.class);
         System.out.println(restaurant);
+
+        detailText = (TextView) findViewById(R.id.detailText);
+        addressText = (TextView) findViewById(R.id.addressText);
+        numText = (TextView) findViewById(R.id.numText);
+
+        detailText.setText(restaurant.getName());
+        addressText.setText("Address: " + restaurant.getAddress());
+        numText.setText("Call Us: " + restaurant.getPhone());
 
 
         // set the ImageView
@@ -64,4 +78,5 @@ public class DetailsActivity extends AppCompatActivity {
         image1.setImageResource(imageResource);
 
     }
+
 }

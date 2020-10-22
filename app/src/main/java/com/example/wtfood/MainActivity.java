@@ -133,12 +133,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    public void locationButton(View v) {
-        Intent intent = new Intent(MainActivity.this, LocationActivity.class);
-        startActivity(intent);
-    }
-
-
     public void logoButton(View view) {
         Intent intent = new Intent(this, InfoPage.class);
         startActivity(intent);
