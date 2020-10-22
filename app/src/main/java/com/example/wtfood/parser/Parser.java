@@ -30,7 +30,6 @@ public class Parser {
         if (_tokenizer.hasNext() && _tokenizer.current().getToken().equals("price")) {
             _tokenizer.next();
             parseOperator("price");
-
         } else if (_tokenizer.hasNext() && _tokenizer.current().getToken().equals("rating")) {
             _tokenizer.next();
             parseOperator("rating");
@@ -42,14 +41,10 @@ public class Parser {
         else if (_tokenizer.hasNext() && !_tokenizer.current().getAttribute().equals("price")
                 && !_tokenizer.current().getAttribute().equals("rating")
                 && !_tokenizer.current().getAttribute().equals("delivery")) {
-            String A = _tokenizer.current().getToken();
-            if (A.equals(";")) {
-                totalQuery.add(new Query("*", "*", "*"));
-                parseEnd();
-            } else {
-                totalQuery.add(new Query("*", "*", "*"));
-                parseEnd();
-            }
+
+            totalQuery.add(new Query("*", "*", "*"));
+            parseEnd();
+
         }
         // No next token after.
         else {
@@ -92,6 +87,7 @@ public class Parser {
                 && !_tokenizer.current().getAttribute().equals(Token.Attribute.LOE)) {
 
             totalQuery.add(new Query("*", "*", "*"));
+            _tokenizer.next();
             parseEnd();
         }
         // If there's no next token or operator is invalid. Mark *.
@@ -108,6 +104,7 @@ public class Parser {
      * Parse the value and check whether it's right or not.
      * If it's correct, use the attribute and operator store from previous two parsing, and the value which just parsed in this function and add a new query using these information.
      * If it's incorrect, add it as a Query, mark it's attribute, operator and value by * and stop parsing.
+     *
      * @param Attribute String, The attribute we read and want to store in query.
      * @param Operator  String, The operator we read and want to store in query.
      */
@@ -119,7 +116,6 @@ public class Parser {
             if (_tokenizer.current().getAttribute().equals(Token.Attribute.VALUE)) {
                 totalQuery.add(new Query(Attribute, Operator, value));
             } else {
-
                 totalQuery.add(new Query("*", "*", "*"));
             }
         }
@@ -136,21 +132,21 @@ public class Parser {
         parseEnd();
     }
 
-
     /**
      * Check whether have token after ;. If there's a token repeat all steps again.
      */
     public void parseEnd() {
-        if (_tokenizer.current().getToken().equals(";")) {
-            _tokenizer.next();
-        } else {
-            _tokenizer.next();
-            _tokenizer.next();
+        _tokenizer.next();
+        if(_tokenizer.hasNext()) {
+            if (_tokenizer.current().getToken().equals("price") || _tokenizer.current().getToken().equals("delivery") || _tokenizer.current().getToken().equals("rating")) {
+                parseAttribute();
+            }
+            else {
+                _tokenizer.next();
+                parseAttribute();
+            }
         }
-        // Repeat from parsing attribute again if there's a token after ; .
-        if (_tokenizer.hasNext()) {
-            parseAttribute();
-        }
+
     }
 }
 
