@@ -21,6 +21,8 @@ public class DetailsActivity extends AppCompatActivity {
     TextView detailText;
     TextView addressText;
     TextView numText;
+    TextView priceText;
+    TextView ratingText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,11 +37,14 @@ public class DetailsActivity extends AppCompatActivity {
         detailText = (TextView) findViewById(R.id.detailText);
         addressText = (TextView) findViewById(R.id.addressText);
         numText = (TextView) findViewById(R.id.numText);
+        priceText = (TextView) findViewById(R.id.priceText);
+        ratingText = (TextView) findViewById(R.id.ratingText);
 
         detailText.setText(restaurant.getName());
         addressText.setText("Address: " + restaurant.getAddress());
-        numText.setText("Call Us: " + restaurant.getPhone());
-
+        numText.setText("Call us: " + restaurant.getPhone());
+        priceText.setText("Price : " + restaurant.getPrice());
+        ratingText.setText("Ratings : " + restaurant.getRating());
 
         // set the ImageView
         ImageView image1 = (ImageView) findViewById(R.id.image1);
