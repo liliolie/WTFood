@@ -15,6 +15,9 @@ code:
   - comment: the code in Tokenizer, MyTokenizer, Token and Parser is based on the code from Lab 5 Parsing of COMP6442-Sem 2 2020
     url: https://gitlab.cecs.anu.edu.au/u1064702/comp2100_6442_s2_2020
     licence: The Australian National University
+  - comment: the code of GPS in ResultActivity is based on the code from CSDN.
+    url: https://blog.csdn.net/fahaia/article/details/81982161
+    licence: CC 4.0 BY-SA
 
 
 # add as many "url+licence+comment" entries as necessary
