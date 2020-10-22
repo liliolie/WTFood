@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         ImageButton menuButton = findViewById(R.id.menuButton);
         menuButton.setOnClickListener(v -> {
-            if (!drawerLayout.isDrawerOpen(GravityCompat.START)){
+            if (!drawerLayout.isDrawerOpen(GravityCompat.START)) {
                 drawerLayout.openDrawer(GravityCompat.START);
             } else {
                 drawerLayout.closeDrawer(GravityCompat.END);
@@ -81,23 +81,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } catch (IOException e) {
             e.printStackTrace();
         }
-        // Here can add our data in the array list.
-//        restaurants = new HashSet<>();
-//        restaurants.add(new Restaurant("Hero burger"));
-//        restaurants.add(new Restaurant("KFC"));
-//        restaurants.add(new Restaurant("Subway"));
-//        restaurants.add(new Restaurant("Tacobell"));
-//        restaurants.add(new Restaurant("BurgerKing"));
-//        restaurants.add(new Restaurant("Raku"));
 
         ImageButton go = (ImageButton) findViewById(R.id.goButton);
         go.setOnClickListener(l1);
     }
 
-    //Update the navigation drawer menu's content based on the user's login status
-    public void updateUI(FirebaseUser user){
+    public void updateUI(FirebaseUser user) {
         Menu drawerMenu = navigationView.getMenu();
-        if (fAuth.getCurrentUser() != null){
+        if (fAuth.getCurrentUser() != null) {
             drawerMenu.findItem(R.id.nav_login).setVisible(false);
             drawerMenu.findItem(R.id.nav_profile).setVisible(true);
             drawerMenu.findItem(R.id.nav_logout).setVisible(true);
@@ -107,23 +98,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             drawerMenu.findItem(R.id.nav_logout).setVisible(false);
         }
     }
+
     //Override the Back button of Android system, making pressing the Back button close the
     // navigation drawer instead of quiting the application
     @Override
-    public void onBackPressed(){
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)){
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
         }
     }
 
-    //Make the items inside the navigation drawer clickable and direct the user to the corresponding
-    // activity.
+    //Make the items inside the navigation drawer clickable.
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.nav_login:
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
@@ -142,12 +133,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    public void locationButton(View v){
-        Intent intent = new Intent(MainActivity.this, LocationActivity.class);
-        startActivity(intent);
-    }
-
-
     public void logoButton(View view) {
         Intent intent = new Intent(this, InfoPage.class);
         startActivity(intent);
@@ -158,29 +143,41 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         startActivity(intent);
     }
 
+    public void locationUpdate(View view) {
+        Intent intent = new Intent(this, LocationActivity.class);
+        startActivity(intent);
+    }
+
+    /**
+     * The on click listener for go button on the main menu.
+     * If the query are correct, it will pass the data to the new intent(Result Activity).
+     * If the query are incorrect, it will show the error messages.
+     */
     private View.OnClickListener l1 = new View.OnClickListener() {
         public void onClick(View v) {
-            // Passing the array to List_Activity.
-
-            // an example to doing querying
 
             EditText et = (EditText) findViewById(R.id.query);
             String query = et.getText().toString();
-            query = query.replaceAll("\\s+","");
+            // Remove white space.
+            query = query.replaceAll("\\s+", "");
             et.setText("");
             Set<Restaurant> restaurants = null;
+
+            // If input isn't empty or space.
             if (!query.equals("")) {
                 MyTokenizer queryTokenizer = new MyTokenizer(query);
                 Parser p = new Parser(queryTokenizer);
                 p.parseAttribute();
+
+                // Count is checking whether received wrong queries or not.
                 int count = 0;
                 for (int i = 0; i < p.totalQuery.size(); i++) {
-                    System.out.println("Hi");
-                    if(p.totalQuery.get(i).getCompareAttribute().equals("*") || p.totalQuery.get(i).getSign().equals("*") || p.totalQuery.get(i).getValue().equals("*")){
-                        Toast.makeText(getApplicationContext(),"Invalid query! \nCheck out our query instruction at the top right corner.", Toast.LENGTH_LONG).show();
+                    // If it's not valid. Toast and show instruction information.
+                    if (p.totalQuery.get(i).getCompareAttribute().equals("*") || p.totalQuery.get(i).getSign().equals("*") || p.totalQuery.get(i).getValue().equals("*")) {
                         count++;
-                        break;
+                        continue;
                     }
+                    // If it's valid. Search in the relative tree and add it to restaurants set.
                     else {
                         if (p.totalQuery.get(i).getCompareAttribute().equals("price")) {
                             if (restaurants == null) {
@@ -215,17 +212,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     }
 
                 }
+                // Count = 0 means that there's no wrong query.
 
-                if (count == 0) {
+                if (restaurants != null) {
+                    // Passing restaurant data to the new intent.
+                    if (count != 0) {
+                        Toast.makeText(getApplicationContext(), "Some part of the query are invalid!! \nCheck out our query instruction at the top right corner.", Toast.LENGTH_LONG).show();
+                    }
                     Intent intent = new Intent(getApplicationContext(), ResultActivity.class);
                     intent.putExtra("Restaurants", new Gson().toJson(restaurants));
                     startActivity(intent);
                     et.setText("");
                 } else {
-                    Toast.makeText(getApplicationContext(),"Invalid query! \nCheck out our query instruction at the top right corner.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Invalid query! \nCheck out our query instruction at the top right corner.", Toast.LENGTH_LONG).show();
                 }
-            } else {
-                Toast.makeText(getApplicationContext(),"Empty query! \nCheck out our query instruction at the top right corner.", Toast.LENGTH_LONG).show();
+            }
+            // Toast if input is empty.
+            else {
+                Toast.makeText(getApplicationContext(), "Empty query! \nCheck out our query instruction at the top right corner.", Toast.LENGTH_LONG).show();
             }
         }
     };

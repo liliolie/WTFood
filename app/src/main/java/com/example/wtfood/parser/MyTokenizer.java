@@ -90,7 +90,7 @@ public class MyTokenizer extends Tokenizer {
      */
     public String getAttribute(String currentBuffer) {
         int i = 0;
-        while (currentBuffer.charAt(i) != '=' && currentBuffer.charAt(i) != '>' && currentBuffer.charAt(i) != '<' && currentBuffer.charAt(i) != ';') {
+        while (Character.isAlphabetic(currentBuffer.charAt(i))) {
             i++;
             if (i == currentBuffer.length()) {
                 return currentBuffer.substring(0, i);

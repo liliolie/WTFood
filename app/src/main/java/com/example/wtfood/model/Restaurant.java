@@ -158,23 +158,46 @@ public class Restaurant implements Serializable {
         if (isDeliveryService()) {
             delivery = "Deliverable.";
         } else {
-            delivery = "Unable to make delivery.";
+            delivery = "Unable to for delivery.";
         }
 
-        if (getType().equals(Type.chinesefood)) {
+        if (getType().equals(Type.chineseFood)) {
             type = "Chinese Food!";
         }
-        if (getType().equals(Type.fastfood)) {
-            type = "Fast Food!";
-        }
-        if (getType().equals(Type.japanesefood)) {
-
+        if (getType().equals(Type.japaneseFood)) {
             type = "Japanese Food!";
+        }
+        if (getType().equals(Type.indianFood)) {
+            type = "Indian Food!";
+        }
+        if (getType().equals(Type.malaysianFood)) {
+            type = "Malaysian Food!";
+        }
+        if (getType().equals(Type.thaiFood)) {
+            type = "Thai Food!";
+        }
+        if (getType().equals(Type.italianFood)) {
+            type = "Italian Food!";
+        }
+        if (getType().equals(Type.frenchFood)) {
+            type = "French Food!";
+        }
+        if (getType().equals(Type.americanFood)) {
+            type = "American Food!";
+        }
+        if (getType().equals(Type.koreanFood)) {
+            type = "Korean Food!";
+        }
+        if (getType().equals(Type.mexicanFood)) {
+            type = "Mexican Food!";
+        }
+        if (getType().equals(Type.turkishFood)) {
+            type = "Turkish Food!";
         }
 
         String distance = "";
         if (this.distance != 0.0) {
-            distance += this.distance + " m";
+            distance += (int) this.distance + " m";
         }
 
         return name + " \n " + address + " | " + phone + " \n " + "Rating: " + rating + " \n " + "Price: " +
