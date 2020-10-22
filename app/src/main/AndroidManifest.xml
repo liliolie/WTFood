@@ -9,19 +9,18 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/logo"
-        android:logo="@mipmap/logo"
         android:label="@string/app_name"
+        android:logo="@mipmap/logo"
         android:roundIcon="@mipmap/logo_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".RegisterActivity"></activity>
+        <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".LocationActivity" />
         <activity android:name=".DetailsActivity" />
         <activity android:name=".ResultActivity" />
         <activity android:name=".TutorialPage" />
-        <activity android:name=".InfoPage" />
-        <!-- Set the launch activity to the SplashScreen activity. Charlie Xu -->
+        <activity android:name=".InfoPage" /> <!-- Set the launch activity to the SplashScreen activity. Charlie Xu -->
         <activity
             android:name=".SplashScreen"
             android:icon="@mipmap/logo"
@@ -47,7 +46,9 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
-        <meta-data android:name="android.max_aspect" android:value="5.0"/>
+        <meta-data
+            android:name="android.max_aspect"
+            android:value="5.0" />
     </application>
 
 </manifest>

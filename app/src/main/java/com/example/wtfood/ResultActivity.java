@@ -65,7 +65,8 @@ public class ResultActivity extends AppCompatActivity {
 
         result = (ListView) findViewById(R.id.result_lv);
         String bookJson = getIntent().getStringExtra("Restaurants");
-        Set<Restaurant> r = new Gson().fromJson(bookJson, new TypeToken<Set<Restaurant>>() {}.getType());
+        Set<Restaurant> r = new Gson().fromJson(bookJson, new TypeToken<Set<Restaurant>>() {
+        }.getType());
         restaurants = new ArrayList<>(r);
         restaurants.sort(Comparator.comparing(Restaurant::getDistance));
         Collections.reverse(restaurants);
@@ -74,7 +75,7 @@ public class ResultActivity extends AppCompatActivity {
         result.setAdapter(aa);
 
 
-        //set the listener to the listView items [Lili]
+        //set the listener to the listView items
         result.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -84,6 +85,12 @@ public class ResultActivity extends AppCompatActivity {
             }
         });
 
+//        public void locationButton(View v) {
+//            Intent intent = new Intent(MainActivity.this, LocationActivity.class);
+//
+//            startActivity(intent);
+//
+//        }
 
     }
 
@@ -108,10 +115,10 @@ public class ResultActivity extends AppCompatActivity {
                 int count = 0;
                 for (int i = 0; i < p.totalQuery.size(); i++) {
                     // If it's not valid. Toast and show instruction information.
-                    if (p.totalQuery.get(i).getCompareAttribute().equals("*") || p.totalQuery.get(i).getSign().equals("*") || p.totalQuery.get(i).getValue().equals("*")) {
+                    if (p.totalQuery.get(i).equals("***")) {
                         Toast.makeText(getApplicationContext(), "Wrong type query!! \nThe instruction is at the top right concern. \nGo & Check it out!!", Toast.LENGTH_SHORT).show();
                         count++;
-                        break;
+                        continue;
                     } else {
 
                         // If it's valid. Search in the relative tree and add it to restaurants set.
@@ -146,11 +153,14 @@ public class ResultActivity extends AppCompatActivity {
 
                         }
                     }
-
                 }
 
                 // Count = 0 means that there's no wrong query.
-                if (count == 0) {
+                if (restaurantsSet != null) {
+                    System.out.println("Hi" + count);
+                    if (count != 0) {
+                        Toast.makeText(getApplicationContext(), "Some part of the query are invalid!! \nCheck out our query instruction at the top right corner.", Toast.LENGTH_LONG).show();
+                    }
                     // Make the list empty.
                     restaurants.clear();
                     // Add new restaurant which satisfied the requirement from set to the list.
