@@ -32,6 +32,9 @@ public class LocationActivity extends AppCompatActivity {
     TextView lonText;
     TextView distanceText;
 
+    public static double Lat;
+    public static double lon;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +61,8 @@ public class LocationActivity extends AppCompatActivity {
             //show the distance from current location
             @Override
             public void onLocationChanged(Location location) {
+                Lat = location.getLatitude();
+                lon = location.getLongitude();
                 latText.setText(location.getLatitude() + "");
                 lonText.setText(location.getLongitude() + "");
                 distanceText.setText(getDistance(location.getLatitude(), location.getLongitude(), 100, 200) + "");
@@ -106,7 +111,7 @@ public class LocationActivity extends AppCompatActivity {
     }
 
     //calculate distance between two locations
-    public double getDistance(double lat1, double lon1, double lat2, double lon2) {
+    public static double getDistance(double lat1, double lon1, double lat2, double lon2) {
         float[] results = new float[1];
         try {
             Location.distanceBetween(lat1, lon1, lat2, lon2, results);
