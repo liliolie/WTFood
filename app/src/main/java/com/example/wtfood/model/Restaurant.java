@@ -17,6 +17,7 @@ public class Restaurant implements Serializable {
     private int price;
     private String address;
     private String phone;
+    private double distance = 0.0;
     
     public Restaurant(int rating, String name, boolean deliveryService, Location location, Type type, int price, String address, String phone) {
         this.rating = rating;
@@ -118,8 +119,21 @@ public class Restaurant implements Serializable {
         return price;
     }
 
+    public double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(double distance) {
+        this.distance = distance;
+    }
+
+    /**
+     * the Object is equals to this Restaurant
+     * @param obj another Object
+     * @return true if the class of Object is Restaurant and their name, location and address are equal.
+     */
     @Override
-    public boolean equals( Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -157,8 +171,13 @@ public class Restaurant implements Serializable {
             type = "Japanese Food!";
         }
 
+        String distance = "";
+        if (this.distance != 0.0) {
+            distance += this.distance + " m";
+        }
+
         return name + " \n " + address + " | " + phone + " \n " + "Rating: " + rating + " \n " + "Price: " +
-                price + " AUD/person" + " \n " + delivery + " \n " + "Food Type: " + type;
+                price + " AUD/person" + " \n " + delivery + " \n " + "Food Type: " + type + "\n" + distance;
     }
 
 }

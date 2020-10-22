@@ -68,6 +68,12 @@ public class Node implements Comparable<Node> {
 		return false;
 	}
 
+	/**
+	 * return the current node satisfy the requirement of sign and number.
+	 * @param sign the sign of >, <, <=, >=, =
+	 * @param requirement the number of the requirement.
+	 * @return true if the requirement is satisfied, else return false.
+	 */
 	public boolean satisfy(String sign, int requirement) {
 		switch (comparingAttribute) {
 			case "price":
@@ -79,6 +85,12 @@ public class Node implements Comparable<Node> {
 		return false;
 	}
 
+	/**
+	 * return the current node satisfy the requirement of sign and number in price comparing.
+	 * @param sign the sign of >, <, <=, >=, =
+	 * @param requirement the number of the requirement.
+	 * @return true if the requirement is satisfied, else return false.
+	 */
 	public boolean satisfyPrice(String sign, int requirement) {
 		switch (sign) {
 			case "=":
@@ -96,6 +108,12 @@ public class Node implements Comparable<Node> {
 		return false;
 	}
 
+	/**
+	 * return the current node satisfy the requirement of sign and number in rating comparing.
+	 * @param sign the sign of >, <, <=, >=, =
+	 * @param requirement the number of the requirement.
+	 * @return true if the requirement is satisfied, else return false.
+	 */
 	public boolean satisfyRating(String sign, int requirement) {
 		switch (sign) {
 			case "=":

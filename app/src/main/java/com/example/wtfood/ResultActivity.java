@@ -1,8 +1,17 @@
 package com.example.wtfood;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.location.LocationProvider;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -22,6 +31,8 @@ import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -35,6 +46,9 @@ public class ResultActivity extends AppCompatActivity {
     private RBTree raringTree;
 
     private ArrayAdapter aa;
+
+    private double longitude = -360.0;
+    private double latitude = -360.0;
 
 
     @Override
@@ -67,20 +81,71 @@ public class ResultActivity extends AppCompatActivity {
         }.getType());
         restaurants = new ArrayList<>(r);
 
+        LocationListener locationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(@NonNull Location location) {
+                longitude = location.getLongitude();
+                latitude = location.getLatitude();
+            }
+        };
+        String locationProvider = "";
+        LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        List<String> providers = locationManager.getProviders(true);
+        if (providers.contains(LocationManager.GPS_PROVIDER)) {
+            locationProvider = LocationManager.GPS_PROVIDER;
+        } else if (providers.contains(LocationManager.NETWORK_PROVIDER)) {
+            locationProvider = LocationManager.NETWORK_PROVIDER;
+        } else {
+            Toast.makeText(this, "No Available Provider.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_COARSE_LOCATION)) {
+                Toast.makeText(this, "You reject to give access to GPS.", Toast.LENGTH_SHORT).show();
+            }
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 0);
+        }
+        Location location = locationManager.getLastKnownLocation(locationProvider);
+        if (location != null) {
+            longitude = location.getLongitude();
+            latitude = location.getLatitude();
+        } else {
+            Toast.makeText(this, "GPS not available.", Toast.LENGTH_SHORT).show();
+        }
+
+        locationManager.requestLocationUpdates(locationProvider, 3000, 1, locationListener);
+
+        if (longitude != -360.0 && latitude != -360.0) {
+            for (Restaurant restaurant : restaurants) {
+                float[] result = new float[3];
+                Location.distanceBetween(latitude, longitude, restaurant.getLocation().getLatitude(), restaurant.getLocation().getLongitude(), result);
+                restaurant.setDistance(result[0]);
+            }
+            restaurants.sort(Comparator.comparing(Restaurant::getDistance));
+        }
+
         aa = new ArrayAdapter(this, android.R.layout.simple_list_item_1, restaurants);
         result.setAdapter(aa);
 
 
-        //set the listener to the listView items [Lili]
+        //set the listener to the listView items
         result.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getApplicationContext(), DetailsActivity.class);
-                intent.putExtra("restaurant", restaurants.get(i).toString());
+                intent.putExtra("Restaurant", new Gson().toJson(restaurants.get(i)));
                 startActivity(intent);
             }
         });
 
+//        public void locationButton(View v) {
+//            Intent intent = new Intent(MainActivity.this, LocationActivity.class);
+//
+//            startActivity(intent);
+//
+//        }
 
     }
 
@@ -105,10 +170,10 @@ public class ResultActivity extends AppCompatActivity {
                 int count = 0;
                 for (int i = 0; i < p.totalQuery.size(); i++) {
                     // If it's not valid. Toast and show instruction information.
-                    if (p.totalQuery.get(i).getCompareAttribute().equals("*") || p.totalQuery.get(i).getSign().equals("*") || p.totalQuery.get(i).getValue().equals("*")) {
+                    if (p.totalQuery.get(i).equals("***")) {
                         Toast.makeText(getApplicationContext(), "Wrong type query!! \nThe instruction is at the top right concern. \nGo & Check it out!!", Toast.LENGTH_SHORT).show();
                         count++;
-                        break;
+                        continue;
                     } else {
 
                         // If it's valid. Search in the relative tree and add it to restaurants set.
@@ -143,16 +208,26 @@ public class ResultActivity extends AppCompatActivity {
 
                         }
                     }
-
                 }
 
                 // Count = 0 means that there's no wrong query.
-                if (count == 0) {
+                if (restaurantsSet != null) {
+                    System.out.println("Hi" + count);
+                    if (count != 0) {
+                        Toast.makeText(getApplicationContext(), "Some part of the query are invalid!! \nCheck out our query instruction at the top right corner.", Toast.LENGTH_LONG).show();
+                    }
                     // Make the list empty.
                     restaurants.clear();
                     // Add new restaurant which satisfied the requirement from set to the list.
-                    for (Restaurant r : restaurantsSet) {
-                        restaurants.add(r);
+                    restaurants.addAll(restaurantsSet);
+
+                    if (longitude != -360.0 && latitude != -360.0) {
+                        for (Restaurant restaurant : restaurants) {
+                            float[] result = new float[3];
+                            Location.distanceBetween(latitude, longitude, restaurant.getLocation().getLatitude(), restaurant.getLocation().getLongitude(), result);
+                            restaurant.setDistance(result[0]);
+                        }
+                        restaurants.sort(Comparator.comparing(Restaurant::getDistance));
                     }
 
                     // Notify the data have changed.

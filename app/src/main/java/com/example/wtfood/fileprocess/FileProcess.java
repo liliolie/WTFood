@@ -7,7 +7,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import net.sf.json.JSONArray;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -21,6 +20,12 @@ import java.util.List;
 
 public class FileProcess {
 
+    /**
+     * read the Restaurants from the JSON file.
+     * @param inputStream the inputStream of the file
+     * @return List of Restaurants
+     * @throws IOException
+     */
     public List<Restaurant> jsonFileRead(InputStream inputStream) throws IOException {
 
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
@@ -35,6 +40,12 @@ public class FileProcess {
         return restaurants;
     }
 
+    /**
+     * read the Restaurants from the CSV file.
+     * @param inputStream the inputStream of the file
+     * @return List of Restaurants
+     * @throws IOException
+     */
     public List<Restaurant> csvFileRead(InputStream inputStream) throws IOException {
 
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));

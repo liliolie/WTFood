@@ -14,7 +14,7 @@ public class InfoPage extends AppCompatActivity {
         setContentView(R.layout.activity_info_page);
     }
 
-    public void infoBackButton(View view){
+    public void infoBackButton(View view) {
         finish();
     }
 }
