@@ -174,7 +174,7 @@ public class Restaurant implements Serializable {
 
         String distance = "";
         if (this.distance != 0.0) {
-            distance += this.distance + " m";
+            distance += (int) this.distance + " m";
         }
 
         return name + " \n " + address + " | " + phone + " \n " + "Rating: " + rating + " \n " + "Price: " +
