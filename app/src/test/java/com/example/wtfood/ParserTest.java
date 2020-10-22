@@ -18,7 +18,7 @@ public class ParserTest {
     private static final String[] testSpecialCase = new String[]{"; rating = 5", "price > 100, rating = 2"};
     private static final String emptyCase = "    ";
 
-    @Test(timeout=1000)
+    @Test(timeout = 1000)
     public void testOneRequirement() {
         MyTokenizer queryTokenizer = new MyTokenizer(testExample[0]);
         Parser p = new Parser(queryTokenizer);
@@ -37,24 +37,24 @@ public class ParserTest {
     }
 
 
-    @Test(timeout=1000)
+    @Test(timeout = 1000)
     public void testMultiRequirements() {
         MyTokenizer queryTokenizer = new MyTokenizer(testExample2);
         Parser p = new Parser(queryTokenizer);
         p.parseAttribute();
-        try{
+        try {
             assertEquals("Incorrect item", "[price>100, rating<2, delivery=n]", p.totalQuery.toString());
             assertEquals("Incorrect size", 3, p.totalQuery.size());
             assertEquals("incorrect display format", "price>100", p.totalQuery.get(0).toString());
             assertEquals("incorrect display format", "rating<2", p.totalQuery.get(1).toString());
             assertEquals("incorrect display format", "delivery=n", p.totalQuery.get(2).toString());
 
-        }catch (Exception e){
+        } catch (Exception e) {
             fail(e.getMessage());
         }
     }
 
-    @Test(timeout=1000)
+    @Test(timeout = 1000)
     public void wrongOrderCase() {
         MyTokenizer queryTokenizer = new MyTokenizer(testWrongOrderCase);
         Parser p = new Parser(queryTokenizer);
@@ -62,7 +62,7 @@ public class ParserTest {
         assertEquals("***", p.totalQuery.get(0).toString());
     }
 
-    @Test(timeout=1000)
+    @Test(timeout = 1000)
     public void testEmptyCase() {
         MyTokenizer queryTokenizer = new MyTokenizer(emptyCase);
         Parser p = new Parser(queryTokenizer);
@@ -71,7 +71,7 @@ public class ParserTest {
         assertEquals("***", p.totalQuery.get(0).toString());
     }
 
-    @Test(timeout=1000)
+    @Test(timeout = 1000)
     public void testWrongCase() {
         MyTokenizer queryTokenizer = new MyTokenizer(testWrongCase[0]);
         Parser p = new Parser(queryTokenizer);
@@ -102,7 +102,7 @@ public class ParserTest {
 
     }
 
-    @Test(timeout=1000)
+    @Test(timeout = 1000)
     public void testSpecialCase() {
         MyTokenizer queryTokenizer = new MyTokenizer(testSpecialCase[0]);
         Parser p = new Parser(queryTokenizer);
@@ -115,7 +115,6 @@ public class ParserTest {
         MyTokenizer queryTokenizer1 = new MyTokenizer(testSpecialCase[1]);
         Parser p1 = new Parser(queryTokenizer1);
         p1.parseAttribute();
-
 
 
         assertEquals("price>100", p1.totalQuery.get(0).toString());

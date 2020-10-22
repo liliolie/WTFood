@@ -175,9 +175,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 for (int i = 0; i < p.totalQuery.size(); i++) {
                     // If it's not valid. Toast and show instruction information.
                     if (p.totalQuery.get(i).getCompareAttribute().equals("*") || p.totalQuery.get(i).getSign().equals("*") || p.totalQuery.get(i).getValue().equals("*")) {
-                        Toast.makeText(getApplicationContext(), "Invalid query! \nCheck out our query instruction at the top right corner.", Toast.LENGTH_LONG).show();
+
                         count++;
-                        break;
+                        continue;
                     }
                     // If it's valid. Search in the relative tree and add it to restaurants set.
                     else {
@@ -215,8 +215,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 }
                 // Count = 0 means that there's no wrong query.
-                if (count == 0) {
+
+                if (restaurants != null) {
                     // Passing restaurant data to the new intent.
+                    if (count != 0) {
+                        Toast.makeText(getApplicationContext(), "Some part of the query are invalid!! \nCheck out our query instruction at the top right corner.", Toast.LENGTH_LONG).show();
+                    }
                     Intent intent = new Intent(getApplicationContext(), ResultActivity.class);
                     intent.putExtra("Restaurants", new Gson().toJson(restaurants));
                     startActivity(intent);

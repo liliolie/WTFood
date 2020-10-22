@@ -26,12 +26,16 @@ public class MyTokenizer extends Tokenizer {
         }
 
         String current;
-        if (buffer.charAt(0) != '<' && buffer.charAt(0) != '>' && buffer.charAt(0) != '=' && buffer.charAt(0) != ';') {
+        if (Character.isAlphabetic(buffer.charAt(0))) {
             current = getAttribute(buffer);
         } else if (buffer.charAt(0) == '<' || buffer.charAt(0) == '>' || buffer.charAt(0) == '=') {
             current = getComparator(buffer);
-        } else {
+        } else if (Character.isDigit(buffer.charAt(0))) {
+            current = getValue(buffer);
+        } else if (buffer.charAt(0) == ';') {
             current = getEND(buffer);
+        } else {
+            current = getSpecial(buffer);
         }
 
         // Lower case the inputs.
@@ -73,6 +77,7 @@ public class MyTokenizer extends Tokenizer {
 
     /**
      * Get the string before operator or ;.
+     *
      * @param currentBuffer String, The string from user and didn't be tokenized yet.
      */
     public String getAttribute(String currentBuffer) {
@@ -88,6 +93,7 @@ public class MyTokenizer extends Tokenizer {
 
     /**
      * Get the string of operator.
+     *
      * @param currentBuffer String, The string from user and didn't be tokenized yet.
      */
     public String getComparator(String currentBuffer) {
@@ -105,11 +111,12 @@ public class MyTokenizer extends Tokenizer {
 
     /**
      * Get the string before the number value.
+     *
      * @param currentBuffer String, The string from user and didn't be tokenized yet.
      */
     public String getValue(String currentBuffer) {
         int i = 0;
-        while (Character.isDigit(currentBuffer.charAt(0))) {
+        while (Character.isDigit(currentBuffer.charAt(i))) {
             i++;
             if (i == currentBuffer.length()) {
                 return currentBuffer.substring(0, i);
@@ -121,11 +128,28 @@ public class MyTokenizer extends Tokenizer {
 
     /**
      * Get the string of ;.
+     *
      * @param currentBuffer String, The string from user and didn't be tokenized yet.
      */
     public String getEND(String currentBuffer) {
         int i = 0;
         while (currentBuffer.charAt(i) == ';') {
+            i++;
+            if (i == currentBuffer.length()) {
+                return currentBuffer.substring(0, i);
+            }
+        }
+        return currentBuffer.substring(0, i);
+    }
+
+    /**
+     * Get the string of some special symbol.
+     *
+     * @param currentBuffer String, The string from user and didn't be tokenized yet.
+     */
+    public String getSpecial(String currentBuffer) {
+        int i = 0;
+        while (!Character.isAlphabetic(currentBuffer.charAt(i)) && !Character.isDigit(currentBuffer.charAt(i))) {
             i++;
             if (i == currentBuffer.length()) {
                 return currentBuffer.substring(0, i);
