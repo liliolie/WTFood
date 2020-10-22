@@ -29,8 +29,12 @@ assets:
   - comment: Logos designed in Placeit
     url: https://placeit.net/
     licence: Placeit License - https://placeit.net/#license
+  - comment: Restaurant Names
+    url: https://data.world/adamhelsinger/austin-restaurant-inspections
+    licence: Public Domain
 
-# sign *your* name and uid here
+
+  # sign *your* name and uid here
 - name: Chan Xu
   uid: u7076870
 - name: Junliang Liu
