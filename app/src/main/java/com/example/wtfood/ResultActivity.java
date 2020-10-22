@@ -152,7 +152,6 @@ public class ResultActivity extends AppCompatActivity {
 
                         }
                     }
-
                 }
 
                 // Count = 0 means that there's no wrong query.

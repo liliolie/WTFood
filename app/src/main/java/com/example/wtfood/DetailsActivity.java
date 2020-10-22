@@ -31,7 +31,7 @@ public class DetailsActivity extends AppCompatActivity {
         Restaurant restaurant = new Gson().fromJson(bookJson, Restaurant.class);
 
         detailText = (TextView) findViewById(R.id.detailText);
-        detailText.setText(details);
+        detailText.setText(bookJson);
 
 
         // set the ImageView
