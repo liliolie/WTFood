@@ -5,6 +5,9 @@ import com.example.wtfood.model.Restaurant;
 import com.example.wtfood.model.Type;
 
 import org.junit.Test;
+
+import java.math.BigDecimal;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
@@ -22,6 +25,7 @@ public class RestaurantTest {
         assertEquals(50, r.getPrice());
         assertEquals("99 A St.", r.getAddress());
         assertEquals("01234", r.getPhone());
+        assertEquals(new BigDecimal(0.0), new BigDecimal(r.getDistance()));
     }
 
     @Test
@@ -41,5 +45,7 @@ public class RestaurantTest {
         assertEquals(2, r.getRating());
         r.setPhone("3213414");
         assertEquals("3213414", r.getPhone());
+        r.setDistance(1.0);
+        assertEquals(new BigDecimal(1.0), new BigDecimal(r.getDistance()));
     }
 }

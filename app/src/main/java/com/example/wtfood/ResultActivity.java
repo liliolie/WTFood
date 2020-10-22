@@ -22,6 +22,8 @@ import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -66,6 +68,8 @@ public class ResultActivity extends AppCompatActivity {
         Set<Restaurant> r = new Gson().fromJson(bookJson, new TypeToken<Set<Restaurant>>() {
         }.getType());
         restaurants = new ArrayList<>(r);
+        restaurants.sort(Comparator.comparing(Restaurant::getDistance));
+        Collections.reverse(restaurants);
 
         aa = new ArrayAdapter(this, android.R.layout.simple_list_item_1, restaurants);
         result.setAdapter(aa);
@@ -154,6 +158,8 @@ public class ResultActivity extends AppCompatActivity {
                     for (Restaurant r : restaurantsSet) {
                         restaurants.add(r);
                     }
+                    restaurants.sort(Comparator.comparing(Restaurant::getDistance));
+                    Collections.reverse(restaurants);
 
                     // Notify the data have changed.
                     aa.notifyDataSetChanged();
