@@ -60,8 +60,6 @@ public class ResultActivity extends AppCompatActivity {
         TextView headline = (TextView) findViewById(R.id.headlineText);
         headline.setText("Results are Sorted by Distance from Low to High");
 
-
-
         priceTree = new RBTree("price");
         raringTree = new RBTree("rating");
 
