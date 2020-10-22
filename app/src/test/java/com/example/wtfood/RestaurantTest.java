@@ -16,12 +16,12 @@ public class RestaurantTest {
 
     @Test
     public void testGetters() {
-        Restaurant r = new Restaurant(2, "abc", true, new Location(10.0, 10.0), Type.chinesefood, 50, "99 A St.", "01234");
+        Restaurant r = new Restaurant(2, "abc", true, new Location(10.0, 10.0), Type.chineseFood, 50, "99 A St.", "01234");
         assertEquals(2, r.getRating());
         assertEquals("abc", r.getName());
         assertTrue(r.isDeliveryService());
         assertEquals(new Location(10.0, 10.0), r.getLocation());
-        assertEquals(Type.chinesefood, r.getType());
+        assertEquals(Type.chineseFood, r.getType());
         assertEquals(50, r.getPrice());
         assertEquals("99 A St.", r.getAddress());
         assertEquals("01234", r.getPhone());

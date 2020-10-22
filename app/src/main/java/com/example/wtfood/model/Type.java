@@ -1,5 +1,5 @@
 package com.example.wtfood.model;
 
 public enum Type {
-    fastfood, chinesefood, japanesefood
+    chineseFood, japaneseFood, indianFood, malaysianFood, thaiFood, italianFood, frenchFood, americanFood, koreanFood, mexicanFood, turkishFood
 }
