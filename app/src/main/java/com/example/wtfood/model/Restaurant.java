@@ -1,7 +1,5 @@
 package com.example.wtfood.model;
 
-import com.example.wtfood.LocationActivity;
-
 import java.io.Serializable;
 import java.util.Random;
 
@@ -176,11 +174,11 @@ public class Restaurant implements Serializable {
 
         String distance = "";
         if (this.distance != 0.0) {
-            distance += this.distance;
+            distance += this.distance + " m";
         }
 
-        return name + "\n " + address + " | " + phone + "\n " + "Rating: " + rating + "\n " + "Price: " +
-                price + " AUD/person" + "\n " + delivery + "\n " + "Food Type: " + type + "\n" + "Distance: " + LocationActivity.getDistance(LocationActivity.Latitude, LocationActivity.Longitude, location.getLatitude(), location.getLongitude()) + " m";
+        return name + " \n " + address + " | " + phone + " \n " + "Rating: " + rating + " \n " + "Price: " +
+                price + " AUD/person" + " \n " + delivery + " \n " + "Food Type: " + type + "\n" + distance;
     }
 
 }
