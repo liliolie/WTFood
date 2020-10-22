@@ -65,7 +65,8 @@ public class ResultActivity extends AppCompatActivity {
 
         result = (ListView) findViewById(R.id.result_lv);
         String bookJson = getIntent().getStringExtra("Restaurants");
-        Set<Restaurant> r = new Gson().fromJson(bookJson, new TypeToken<Set<Restaurant>>() {}.getType());
+        Set<Restaurant> r = new Gson().fromJson(bookJson, new TypeToken<Set<Restaurant>>() {
+        }.getType());
         restaurants = new ArrayList<>(r);
         restaurants.sort(Comparator.comparing(Restaurant::getDistance));
         Collections.reverse(restaurants);
@@ -117,7 +118,7 @@ public class ResultActivity extends AppCompatActivity {
                     if (p.totalQuery.get(i).getCompareAttribute().equals("*") || p.totalQuery.get(i).getSign().equals("*") || p.totalQuery.get(i).getValue().equals("*")) {
                         Toast.makeText(getApplicationContext(), "Wrong type query!! \nThe instruction is at the top right concern. \nGo & Check it out!!", Toast.LENGTH_SHORT).show();
                         count++;
-                        break;
+                        continue;
                     } else {
 
                         // If it's valid. Search in the relative tree and add it to restaurants set.
@@ -155,8 +156,11 @@ public class ResultActivity extends AppCompatActivity {
                 }
 
                 // Count = 0 means that there's no wrong query.
-                if (count == 0) {
+                if (restaurantsSet != null) {
                     // Make the list empty.
+                    if (count != 0) {
+                        Toast.makeText(getApplicationContext(), "Some part of the query are invalid!! \nCheck out our query instruction at the top right corner.", Toast.LENGTH_LONG).show();
+                    }
                     restaurants.clear();
                     // Add new restaurant which satisfied the requirement from set to the list.
                     for (Restaurant r : restaurantsSet) {
