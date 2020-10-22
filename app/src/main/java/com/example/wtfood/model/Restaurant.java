@@ -171,8 +171,13 @@ public class Restaurant implements Serializable {
             type = "Japanese Food!";
         }
 
+        String distance = "";
+        if (this.distance != 0.0) {
+            distance += this.distance;
+        }
+
         return name + " \n " + address + " | " + phone + " \n " + "Rating: " + rating + " \n " + "Price: " +
-                price + " AUD/person" + " \n " + delivery + " \n " + "Food Type: " + type;
+                price + " AUD/person" + " \n " + delivery + " \n " + "Food Type: " + type + "\n" + distance + " m";
     }
 
 }
