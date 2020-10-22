@@ -25,7 +25,7 @@ public class MyTokenizer extends Tokenizer {
             return;
         }
 
-        String current = "";
+        String current;
         if (buffer.charAt(0) != '<' && buffer.charAt(0) != '>' && buffer.charAt(0) != '=' && buffer.charAt(0) != ';') {
             current = getAttribute(buffer);
         } else if (buffer.charAt(0) == '<' || buffer.charAt(0) == '>' || buffer.charAt(0) == '=') {
@@ -61,7 +61,6 @@ public class MyTokenizer extends Tokenizer {
         } else if (current.equals("delivery")) {
             currentToken = new Token("delivery", Token.Attribute.DELIVERY);
         } else if (current.equals("y") || current.equals("n")) {
-
             currentToken = new Token(current, Token.Attribute.DELIVERYValue);
         } else {
             currentToken = new Token(current, Token.Attribute.UNKNOWN);
@@ -74,7 +73,6 @@ public class MyTokenizer extends Tokenizer {
 
     /**
      * Get the string before operator or ;.
-     *
      * @param currentBuffer String, The string from user and didn't be tokenized yet.
      */
     public String getAttribute(String currentBuffer) {
@@ -90,7 +88,6 @@ public class MyTokenizer extends Tokenizer {
 
     /**
      * Get the string of operator.
-     *
      * @param currentBuffer String, The string from user and didn't be tokenized yet.
      */
     public String getComparator(String currentBuffer) {
@@ -108,7 +105,6 @@ public class MyTokenizer extends Tokenizer {
 
     /**
      * Get the string before the number value.
-     *
      * @param currentBuffer String, The string from user and didn't be tokenized yet.
      */
     public String getValue(String currentBuffer) {
@@ -125,7 +121,6 @@ public class MyTokenizer extends Tokenizer {
 
     /**
      * Get the string of ;.
-     *
      * @param currentBuffer String, The string from user and didn't be tokenized yet.
      */
     public String getEND(String currentBuffer) {

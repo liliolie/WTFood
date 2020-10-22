@@ -275,6 +275,7 @@ public class RBTree {
 	}
 
 	private Set<Restaurant> result;
+
 	/**
 	 * Return the List of Restaurants satisfy the requirement in the comparing attribute.
 	 *
@@ -287,12 +288,20 @@ public class RBTree {
 		return result;
 	}
 
+	/**
+	 * get all the Restaurants stored in the tree.
+	 * @return List of Restaurants stored in the tree.
+	 */
 	public Set<Restaurant> getAllNodes() {
 		result = new HashSet<>();
 		dfs(root);
 		return result;
 	}
 
+	/**
+	 * Depth First Search of Nodes.
+	 * @param node the Node to search.
+	 */
 	private void dfs(Node node) {
 		if (node.restaurant == null) {
 			return;
@@ -304,6 +313,10 @@ public class RBTree {
 		dfs(node.right);
 	}
 
+	/**
+	 * Depth First Search of Nodes, and add the Node satisfy the requirement to the List.
+	 * @param node the Node to search.
+	 */
 	private void dfs(Node node, String sign, int requirement) {
 		if (node.restaurant == null) {
 			return;
@@ -312,7 +325,7 @@ public class RBTree {
 		if (node.satisfy(sign, requirement)) {
 			result.add(node.restaurant);
 		}
-		//TODO: cutting branch
+		// cutting branch
 		int cmp = 0;
 		switch (comparingAttribute) {
 			case "price":
@@ -332,14 +345,23 @@ public class RBTree {
 		}
 	}
 
+	/**
+	 * @return the size of Nodes in the tree.
+	 */
 	public int size() {
 		return size;
 	}
 
+	/**
+	 * @return the pre-order result of tree in price.
+	 */
 	public String pricePreOrder() {
 		return pricePreOrder(root);
 	}
 
+	/**
+	 * @return the pre-order result of tree in price of the Node.
+	 */
 	private String pricePreOrder(Node root) {
 		if (root != null && root.restaurant != null) {
 			String leftStr = pricePreOrder(root.left);
@@ -351,10 +373,17 @@ public class RBTree {
 		return "";
 	}
 
+	/**
+	 * @return the in-order result of tree in price.
+	 */
 	public String priceInOrder() {
 		return priceInOrder(root);
 	}
 
+	/**
+	 * the in order result of tree.
+	 * @return the in order result of tree.
+	 */
 	private String priceInOrder(Node root) {
 		if (root != null && root.restaurant != null) {
 			String leftStr = priceInOrder(root.left);
@@ -366,10 +395,16 @@ public class RBTree {
 		return "";
 	}
 
+	/**
+	 * @return the in-order result of tree in rating.
+	 */
 	public String ratingInOrder() {
 		return ratingInOrder(root);
 	}
 
+	/**
+	 * @return the in-order result of tree in rating of the Node.
+	 */
 	private String ratingInOrder(Node root) {
 		if (root != null && root.restaurant != null) {
 			String leftStr = ratingInOrder(root.left);
@@ -381,10 +416,16 @@ public class RBTree {
 		return "";
 	}
 
+	/**
+	 * @return the pre-order result of tree in rating.
+	 */
 	public String ratingPreOrder() {
 		return ratingPreOrder(root);
 	}
 
+	/**
+	 * @return the pre-order result of tree in rating of the Node.
+	 */
 	private String ratingPreOrder(Node root) {
 		if (root != null && root.restaurant != null) {
 			String leftStr = ratingPreOrder(root.left);

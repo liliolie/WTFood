@@ -118,8 +118,13 @@ public class Restaurant implements Serializable {
         return price;
     }
 
+    /**
+     * the Object is equals to this Restaurant
+     * @param obj another Object
+     * @return true if the class of Object is Restaurant and their name, location and address are equal.
+     */
     @Override
-    public boolean equals( Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
