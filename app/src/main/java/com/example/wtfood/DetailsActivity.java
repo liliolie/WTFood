@@ -23,8 +23,9 @@ public class DetailsActivity extends AppCompatActivity {
 
         // get the information and show [Lili]
         Intent intent = getIntent();
-        String bookJson = getIntent().getStringExtra("Restaurants");
-        Restaurant restaurant = new Gson().fromJson(bookJson, Restaurant.class);
+        String restaurantJSON = getIntent().getStringExtra("Restaurant");
+        Restaurant restaurant = new Gson().fromJson(restaurantJSON, Restaurant.class);
+        System.out.println(restaurant);
 
 
         // set the ImageView
