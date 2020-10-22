@@ -28,7 +28,6 @@ public class LoginActivity extends AppCompatActivity {
     ImageButton loginButton;
     ProgressBar progress;
     FirebaseAuth fAuth;
-    NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +38,6 @@ public class LoginActivity extends AppCompatActivity {
         lPassword = findViewById(R.id.lPassword);
         goToSignUp = findViewById(R.id.goToSignUpButton);
         loginButton = findViewById(R.id.loginButton);
-        navigationView = findViewById(R.id.nav_view);
 
         fAuth = FirebaseAuth.getInstance();
         progress = findViewById(R.id.progressBar);

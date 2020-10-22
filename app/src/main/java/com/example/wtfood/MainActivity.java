@@ -2,24 +2,14 @@ package com.example.wtfood;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -28,7 +18,6 @@ import com.example.wtfood.fileprocess.FileProcess;
 import com.example.wtfood.model.Restaurant;
 import com.example.wtfood.parser.MyTokenizer;
 import com.example.wtfood.parser.Parser;
-import com.example.wtfood.parser.Query;
 import com.example.wtfood.rbtree.RBTree;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -36,9 +25,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.Gson;
 
 import java.io.IOException;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -46,12 +32,10 @@ import java.util.Set;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private RBTree priceTree;
-    private RBTree raringTree;
+    private RBTree ratingTree;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     FirebaseAuth fAuth;
-    LocationManager locationManager;
-    LocationListener locationListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,44 +45,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
 
-        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-
-        locationListener = new LocationListener() {
-            //detect the change of the location
-            //set the text to the current location
-            //show the distance from current location
-            @Override
-            public void onLocationChanged(Location location) {
-
-            }
-
-            @Override
-            public void onStatusChanged(String provider, int status, Bundle extras) {
-
-            }
-
-            @Override
-            public void onProviderEnabled(String provider) {
-
-            }
-
-            //if the location services are lost, it will bring up the setting panel
-            @Override
-            public void onProviderDisabled(String provider) {
-                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                startActivity(intent);
-            }
-        };
-
-
-        // set up the permission
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                    || checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                    || checkSelfPermission(Manifest.permission.INTERNET) != PackageManager.PERMISSION_GRANTED) {
-                requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.INTERNET}, 10);
-            }
-        }
 
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
@@ -118,31 +64,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
 
         priceTree = new RBTree("price");
-        raringTree = new RBTree("rating");
+        ratingTree = new RBTree("rating");
 
         try {
             List<Restaurant> restaurants = new FileProcess().jsonFileRead(getAssets().open("list.json"));
             restaurants.addAll(new FileProcess().csvFileRead(getAssets().open("list.csv")));
             for (Restaurant r : restaurants) {
                 priceTree.insert(r);
-                raringTree.insert(r);
+                ratingTree.insert(r);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         ImageButton go = (ImageButton) findViewById(R.id.goButton);
-        go.setOnClickListener(l1);
+        go.setOnClickListener(search);
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-        locationManager.requestLocationUpdates("gps", 1000, 0, locationListener);
     }
 
     public void updateUI(FirebaseUser user) {
         Menu drawerMenu = navigationView.getMenu();
-        if (fAuth.getCurrentUser() != null) {
+        if (user != null) {
             drawerMenu.findItem(R.id.nav_login).setVisible(false);
             drawerMenu.findItem(R.id.nav_profile).setVisible(true);
             drawerMenu.findItem(R.id.nav_logout).setVisible(true);
@@ -207,7 +149,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      * If the query are correct, it will pass the data to the new intent(Result Activity).
      * If the query are incorrect, it will show the error messages.
      */
-    private View.OnClickListener l1 = new View.OnClickListener() {
+    private View.OnClickListener search = new View.OnClickListener() {
         public void onClick(View v) {
 
             EditText et = (EditText) findViewById(R.id.query);
@@ -243,16 +185,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                         if (p.totalQuery.get(i).getCompareAttribute().equals("rating")) {
                             if (restaurants == null) {
-                                restaurants = raringTree.searchForNodes(p.totalQuery.get(i).getSign(), Integer.parseInt(p.totalQuery.get(i).getValue()));
+                                restaurants = ratingTree.searchForNodes(p.totalQuery.get(i).getSign(), Integer.parseInt(p.totalQuery.get(i).getValue()));
                             } else {
-                                restaurants.retainAll(raringTree.searchForNodes(p.totalQuery.get(i).getSign(), Integer.parseInt(p.totalQuery.get(i).getValue())));
+                                restaurants.retainAll(ratingTree.searchForNodes(p.totalQuery.get(i).getSign(), Integer.parseInt(p.totalQuery.get(i).getValue())));
                             }
                         }
 
                         if (p.totalQuery.get(i).getCompareAttribute().equals("delivery")) {
                             boolean delivery = p.totalQuery.get(i).getValue().equals("Y");
                             if (restaurants == null) {
-                                restaurants = raringTree.getAllNodes();
+                                restaurants = ratingTree.getAllNodes();
                             }
                             Iterator<Restaurant> iterator = restaurants.iterator();
 

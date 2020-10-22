@@ -11,7 +11,6 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.location.LocationProvider;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -32,7 +31,6 @@ import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
@@ -44,9 +42,9 @@ public class ResultActivity extends AppCompatActivity {
 
 
     private RBTree priceTree;
-    private RBTree raringTree;
+    private RBTree ratingTree;
 
-    private ArrayAdapter aa;
+    private ArrayAdapter arrayAdapter;
 
     private double longitude = -360.0;
     private double latitude = -360.0;
@@ -61,14 +59,14 @@ public class ResultActivity extends AppCompatActivity {
         headline.setText("Results are Sorted by Distance from Low to High");
 
         priceTree = new RBTree("price");
-        raringTree = new RBTree("rating");
+        ratingTree = new RBTree("rating");
 
         try {
             List<Restaurant> restaurants = new FileProcess().jsonFileRead(getAssets().open("list.json"));
             restaurants.addAll(new FileProcess().csvFileRead(getAssets().open("list.csv")));
             for (Restaurant r : restaurants) {
                 priceTree.insert(r);
-                raringTree.insert(r);
+                ratingTree.insert(r);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -76,7 +74,7 @@ public class ResultActivity extends AppCompatActivity {
 
         // Set listener to button for search again.
         ImageButton search = (ImageButton) findViewById(R.id.research_search_button);
-        search.setOnClickListener(l1);
+        search.setOnClickListener(this.search);
 
 
 
@@ -131,8 +129,8 @@ public class ResultActivity extends AppCompatActivity {
             restaurants.sort(Comparator.comparing(Restaurant::getDistance));
         }
 
-        aa = new ArrayAdapter(this, android.R.layout.simple_list_item_1, restaurants);
-        result.setAdapter(aa);
+        arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, restaurants);
+        result.setAdapter(arrayAdapter);
 
 
         //set the listener to the listView items
@@ -149,7 +147,7 @@ public class ResultActivity extends AppCompatActivity {
     }
 
 
-    private View.OnClickListener l1 = new View.OnClickListener() {
+    private View.OnClickListener search = new View.OnClickListener() {
         public void onClick(View v) {
 
             EditText et = (EditText) findViewById(R.id.ResultQuery);
@@ -186,16 +184,16 @@ public class ResultActivity extends AppCompatActivity {
 
                         if (p.totalQuery.get(i).getCompareAttribute().equals("rating")) {
                             if (restaurantsSet == null) {
-                                restaurantsSet = raringTree.searchForNodes(p.totalQuery.get(i).getSign(), Integer.parseInt(p.totalQuery.get(i).getValue()));
+                                restaurantsSet = ratingTree.searchForNodes(p.totalQuery.get(i).getSign(), Integer.parseInt(p.totalQuery.get(i).getValue()));
                             } else {
-                                restaurantsSet.retainAll(raringTree.searchForNodes(p.totalQuery.get(i).getSign(), Integer.parseInt(p.totalQuery.get(i).getValue())));
+                                restaurantsSet.retainAll(ratingTree.searchForNodes(p.totalQuery.get(i).getSign(), Integer.parseInt(p.totalQuery.get(i).getValue())));
                             }
                         }
 
                         if (p.totalQuery.get(i).getCompareAttribute().equals("delivery")) {
                             boolean delivery = p.totalQuery.get(i).getValue().equals("y");
                             if (restaurantsSet == null) {
-                                restaurantsSet = raringTree.getAllNodes();
+                                restaurantsSet = ratingTree.getAllNodes();
                             }
                             Iterator<Restaurant> iterator = restaurantsSet.iterator();
 
@@ -229,8 +227,8 @@ public class ResultActivity extends AppCompatActivity {
                     }
 
                     // Notify the data have changed.
-                    aa.notifyDataSetChanged();
-                    result.setAdapter(aa);
+                    arrayAdapter.notifyDataSetChanged();
+                    result.setAdapter(arrayAdapter);
                     et.setText("");
                 } else {
                     Toast.makeText(getApplicationContext(), "Wrong type query!! \nThe instruction is at the top right concern. \nGo & Check it out!!", Toast.LENGTH_SHORT).show();
