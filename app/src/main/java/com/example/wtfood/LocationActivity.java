@@ -1,6 +1,5 @@
 package com.example.wtfood;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -21,7 +20,9 @@ public class LocationActivity extends AppCompatActivity {
 
     LocationManager locationManager;
     LocationListener locationListener;
-    TextView locationText;
+    TextView latText;
+    TextView lonText;
+    TextView distanceText;
 
 
     @Override
@@ -29,15 +30,21 @@ public class LocationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_g_p_s);
 
-        locationText = (TextView) findViewById(R.id.locationText);
+        latText = (TextView) findViewById(R.id.locationText);
+        lonText = (TextView) findViewById(R.id.latText);
+        distanceText = (TextView) findViewById(R.id.distanceT);
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
         locationListener = new LocationListener() {
 
             //detect the change of the location
             //set the text to the current location
+            //show the distance from current location
             @Override
             public void onLocationChanged(Location location) {
-                locationText.setText(location.getLatitude() + ", " + location.getLongitude());
+                latText.setText(location.getLatitude() + "");
+                lonText.setText(location.getLongitude() + "");
+                distanceText.setText(getDistance(location.getLatitude(), location.getLongitude(), 100.22, 120.33) + "");
             }
 
             @Override
@@ -55,7 +62,6 @@ public class LocationActivity extends AppCompatActivity {
             public void onProviderDisabled(String provider) {
                 Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                 startActivity(intent);
-
             }
         };
 
@@ -64,7 +70,6 @@ public class LocationActivity extends AppCompatActivity {
             if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
                     || checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                     || checkSelfPermission(Manifest.permission.INTERNET) != PackageManager.PERMISSION_GRANTED) {
-
                 requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.INTERNET}, 10);
             }
         }
@@ -82,6 +87,17 @@ public class LocationActivity extends AppCompatActivity {
             return;
         }
         locationManager.requestLocationUpdates("gps", 1000, 0, locationListener);
+
     }
 
+    //calculate distance between two locations
+    public double getDistance(double lat1, double lon1, double lat2, double lon2) {
+        float[] results = new float[1];
+        try {
+            Location.distanceBetween(lat1, lon1, lat2, lon2, results);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return results[0];
+    }
 }

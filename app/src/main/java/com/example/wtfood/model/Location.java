@@ -24,7 +24,6 @@ public class Location {
             Location location = (Location) obj;
             return this.latitude == location.latitude && this.longitude == location.longitude;
         }
-
         return false;
     }
 }
