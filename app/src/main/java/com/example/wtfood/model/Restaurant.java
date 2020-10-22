@@ -173,11 +173,11 @@ public class Restaurant implements Serializable {
 
         String distance = "";
         if (this.distance != 0.0) {
-            distance += this.distance;
+            distance += this.distance + " m";
         }
 
         return name + " \n " + address + " | " + phone + " \n " + "Rating: " + rating + " \n " + "Price: " +
-                price + " AUD/person" + " \n " + delivery + " \n " + "Food Type: " + type + "\n" + distance + " m";
+                price + " AUD/person" + " \n " + delivery + " \n " + "Food Type: " + type + "\n" + distance;
     }
 
 }

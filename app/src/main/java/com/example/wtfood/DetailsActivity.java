@@ -25,7 +25,6 @@ public class DetailsActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String restaurantJSON = getIntent().getStringExtra("Restaurant");
         Restaurant restaurant = new Gson().fromJson(restaurantJSON, Restaurant.class);
-        System.out.println(restaurant);
 
 
         // set the ImageView
