@@ -136,14 +136,18 @@ public class Parser {
      * Check whether have token after ;. If there's a token repeat all steps again.
      */
     public void parseEnd() {
+
         _tokenizer.next();
         if(_tokenizer.hasNext()) {
             if (_tokenizer.current().getToken().equals("price") || _tokenizer.current().getToken().equals("delivery") || _tokenizer.current().getToken().equals("rating")) {
                 parseAttribute();
             }
+            else if (_tokenizer.current().getToken().equals(";")){
+                parseEnd();
+            }
             else {
-                _tokenizer.next();
-                parseAttribute();
+                totalQuery.add(new Query("*", "*", "*"));
+                parseEnd();
             }
         }
 
