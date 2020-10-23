@@ -83,6 +83,17 @@ public class ResultActivity extends AppCompatActivity {
         Set<Restaurant> r = new Gson().fromJson(bookJson, new TypeToken<Set<Restaurant>>() {
         }.getType());
         restaurants = new ArrayList<>(r);
+        arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, restaurants);
+        result.setAdapter(arrayAdapter);
+        //set the listener to the listView items
+        result.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(getApplicationContext(), DetailsActivity.class);
+                intent.putExtra("Restaurant", new Gson().toJson(restaurants.get(i)));
+                startActivity(intent);
+            }
+        });
 
         LocationListener locationListener = new LocationListener() {
             @Override
@@ -103,7 +114,8 @@ public class ResultActivity extends AppCompatActivity {
             return;
         }
         
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_COARSE_LOCATION)) {
                 Toast.makeText(this, "You reject to give access to GPS.", Toast.LENGTH_SHORT).show();
             }
@@ -116,6 +128,7 @@ public class ResultActivity extends AppCompatActivity {
             latitude = location.getLatitude();
         } else {
             Toast.makeText(this, "GPS not available.", Toast.LENGTH_SHORT).show();
+            return;
         }
 
         locationManager.requestLocationUpdates(locationProvider, 3000, 1, locationListener);
@@ -127,22 +140,8 @@ public class ResultActivity extends AppCompatActivity {
                 restaurant.setDistance(result[0]);
             }
             restaurants.sort(Comparator.comparing(Restaurant::getDistance));
+            arrayAdapter.notifyDataSetChanged();
         }
-
-        arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, restaurants);
-        result.setAdapter(arrayAdapter);
-
-
-        //set the listener to the listView items
-        result.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(getApplicationContext(), DetailsActivity.class);
-                intent.putExtra("Restaurant", new Gson().toJson(restaurants.get(i)));
-                startActivity(intent);
-            }
-        });
-
 
     }
 
