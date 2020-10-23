@@ -118,22 +118,9 @@ public class ParserTest {
 
 
         assertEquals("price>100", p1.totalQuery.get(0).toString());
-        assertEquals("rating=2", p1.totalQuery.get(1).toString());
+        assertEquals("***", p1.totalQuery.get(1).toString());
+        assertEquals("rating=2", p1.totalQuery.get(2).toString());
 
-        MyTokenizer queryTokenizer2 = new MyTokenizer(testWrongCase[2]);
-        Parser p2 = new Parser(queryTokenizer2);
-        p2.parseAttribute();
-
-        assertEquals("***", p2.totalQuery.get(0).toString());
-
-
-        MyTokenizer queryTokenizer3 = new MyTokenizer(testWrongCase[3]);
-        Parser p3 = new Parser(queryTokenizer3);
-        p3.parseAttribute();
-
-
-        assertEquals("***", p3.totalQuery.get(0).toString());
-        assertEquals("rating<=4", p3.totalQuery.get(1).toString());
 
     }
 
