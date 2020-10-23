@@ -162,7 +162,7 @@ public class Restaurant implements Serializable {
         if (isDeliveryService()) {
             delivery = "Deliverable.";
         } else {
-            delivery = "Unable to for delivery.";
+            delivery = "Unable to deliver.";
         }
 
         if (getType().equals(Type.chineseFood)) {
