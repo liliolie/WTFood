@@ -3,6 +3,10 @@ package com.example.wtfood.model;
 import java.io.Serializable;
 import java.util.Random;
 
+/**
+ * model for a restaurant
+ * Junliang Liu
+ */
 public class Restaurant implements Serializable {
     private final String[] preDefinedStreets = {
             "A",

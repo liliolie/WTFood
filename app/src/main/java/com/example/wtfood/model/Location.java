@@ -1,6 +1,10 @@
 package com.example.wtfood.model;
 
 
+/**
+ * model for a location
+ * Junliang Liu
+ */
 public class Location {
     private double latitude;
     private double longitude;
