@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fAuth = FirebaseAuth.getInstance();
         updateUI(fAuth.getCurrentUser());
 
+        //Bring the items of the navigation drawer menu to the front so that they are clickable
         navigationView.bringToFront();
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -82,6 +83,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+    //Update the navigation drawer menu content based on the user's login status
     public void updateUI(FirebaseUser user) {
         Menu drawerMenu = navigationView.getMenu();
         if (user != null) {
