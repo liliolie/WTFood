@@ -131,7 +131,7 @@ public class ResultActivity extends AppCompatActivity {
             return;
         }
 
-        locationManager.requestLocationUpdates(locationProvider, 3000, 1, locationListener);
+        locationManager.requestLocationUpdates(locationProvider, 1000, 1, locationListener);
 
         if (longitude != -360.0 && latitude != -360.0) {
             for (Restaurant restaurant : restaurants) {
