@@ -17,7 +17,7 @@ code:
     licence: The Australian National University
   - comment: the code of GPS in ResultActivity is based on the code from CSDN.
     url: https://blog.csdn.net/fahaia/article/details/81982161
-    licence: CC 4.0 BY-SA
+    licence: CC 4.0 BY-SA (https://creativecommons.org/licenses/by-sa/4.0/)
 
 
 # add as many "url+licence+comment" entries as necessary
