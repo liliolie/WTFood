@@ -192,7 +192,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         }
 
                         if (p.totalQuery.get(i).getCompareAttribute().equals("delivery")) {
-                            boolean delivery = p.totalQuery.get(i).getValue().equals("Y");
+                            boolean delivery = p.totalQuery.get(i).getValue().equals("y");
                             if (restaurants == null) {
                                 restaurants = ratingTree.getAllNodes();
                             }
@@ -205,6 +205,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             }
 
                         }
+
                     }
 
                 }
