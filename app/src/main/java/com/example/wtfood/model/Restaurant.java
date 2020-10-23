@@ -205,7 +205,7 @@ public class Restaurant implements Serializable {
         }
 
         return name + " \n " + address + " | " + phone + " \n " + "Rating: " + rating + " \n " + "Price: " +
-                price + " AUD/person" + " \n " + delivery + " \n " + "Food Type: " + type + "\n" + distance;
+                price + " AUD/person" + " \n " + delivery + " \n " + "Food Type: " + type + "\n " + distance;
     }
 
 }
