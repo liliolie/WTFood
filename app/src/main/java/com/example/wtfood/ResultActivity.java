@@ -167,7 +167,7 @@ public class ResultActivity extends AppCompatActivity {
                 for (int i = 0; i < p.totalQuery.size(); i++) {
                     // If it's not valid. Toast and show instruction information.
                     if (p.totalQuery.get(i).getCompareAttribute().equals("*") || p.totalQuery.get(i).getSign().equals("*") || p.totalQuery.get(i).getValue().equals("*")) {
-                        Toast.makeText(getApplicationContext(), "Wrong type query!! \nThe instruction is at the top right concern. \nGo & Check it out!!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Invalid query! \nCheck out our query instruction at the top right corner in the main page.", Toast.LENGTH_SHORT).show();
                         count++;
                         continue;
                     } else {
@@ -209,7 +209,7 @@ public class ResultActivity extends AppCompatActivity {
                 // Count = 0 means that there's no wrong query.
                 if (restaurantsSet != null) {
                     if (count != 0) {
-                        Toast.makeText(getApplicationContext(), "Some part of the query are invalid!! \nCheck out our query instruction at the top right corner.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Some part of the query are invalid!! \nCheck out our query instruction at the top right corner in the main page.", Toast.LENGTH_LONG).show();
                     }
                     // Make the list empty.
                     restaurants.clear();
@@ -230,12 +230,12 @@ public class ResultActivity extends AppCompatActivity {
                     result.setAdapter(arrayAdapter);
                     et.setText("");
                 } else {
-                    Toast.makeText(getApplicationContext(), "Wrong type query!! \nThe instruction is at the top right concern. \nGo & Check it out!!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Invalid query! \nCheck out our query instruction at the top right corner in the main page.", Toast.LENGTH_SHORT).show();
                 }
             }
             // Toast if input is empty.
             else {
-                Toast.makeText(getApplicationContext(), "Enter something!! \nWe want to know what are you looking for!\nTop right have our query instruction!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Empty query! \nCheck out our query instruction at the top right corner in the main page.", Toast.LENGTH_SHORT).show();
             }
         }
     };
