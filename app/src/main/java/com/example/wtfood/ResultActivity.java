@@ -209,7 +209,7 @@ public class ResultActivity extends AppCompatActivity {
                 // Count = 0 means that there's no wrong query.
                 if (restaurantsSet != null) {
                     if (count != 0) {
-                        Toast.makeText(getApplicationContext(), "Some part of the query are invalid!! \nCheck out our query instruction at the top right corner in the main page.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Some parts of the query are invalid! \nCheck out our query instruction at the top right corner in the main page.", Toast.LENGTH_LONG).show();
                     }
                     // Make the list empty.
                     restaurants.clear();

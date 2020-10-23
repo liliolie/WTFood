@@ -258,7 +258,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 if (restaurants != null) {
                     // Passing restaurant data to the new intent.
                     if (count != 0) {
-                        Toast.makeText(getApplicationContext(), "Some part of the query are invalid!! \nCheck out our query instruction at the top right corner.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Some parts of the query are invalid! \nCheck out our query instruction at the top right corner.", Toast.LENGTH_LONG).show();
                     }
                     Intent intent = new Intent(getApplicationContext(), ResultActivity.class);
                     intent.putExtra("Restaurants", new Gson().toJson(restaurants));
