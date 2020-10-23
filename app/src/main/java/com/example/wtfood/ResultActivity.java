@@ -83,7 +83,7 @@ public class ResultActivity extends AppCompatActivity {
         Set<Restaurant> r = new Gson().fromJson(bookJson, new TypeToken<Set<Restaurant>>() {
         }.getType());
         restaurants = new ArrayList<>(r);
-        arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, restaurants);
+        arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_activated_1, restaurants);
         result.setAdapter(arrayAdapter);
         //set the listener to the listView items
         result.setOnItemClickListener(new AdapterView.OnItemClickListener() {

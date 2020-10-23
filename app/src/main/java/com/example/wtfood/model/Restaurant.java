@@ -279,7 +279,7 @@ public class Restaurant implements Serializable {
             distance += (int) this.distance + " m";
         }
 
-        return name + " \n " + address + " | " + phone + " \n " + "Rating: " + rating + " \n " + "Price: " +
+        return name + " \n " + address + " \n " + phone + " \n " + "Rating: " + rating + " \n " + "Price: " +
                 price + " AUD/person" + " \n " + delivery + " \n " + "Food Type: " + type + "\n " + distance;
     }
 
