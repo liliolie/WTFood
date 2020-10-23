@@ -9,84 +9,10 @@ import java.util.Random;
  */
 public class Restaurant implements Serializable {
     private final String[] preDefinedStreets = {
-            "Ainslie Avenue",
-            "Ainslie Place",
-            "Akuna Street",
-            "Alinga Street",
-            "Allara Street",
-            "Allsop Street",
-            "Baldessin Crescent",
-            "Ballumbir Street",
-            "Barry Drive",
-            "Bible Lane",
-            "Binara Street",
-            "Bunda Street",
-            "Childers Street",
-            "Canberra Walk",
-            "Commonwealth Avenue",
-            "Constitution Avenue",
-            "Cooyong Street",
-            "Cooyong Street",
-            "Coranderrk Street",
-            "Darwin Place",
-            "East Row",
-            "Edinburgh Avenue",
-            "Ellery Crescent",
-            "Farrell Place",
-            "Garema Place",
-            "Genge Street",
-            "Gordon Street",
-            "Hales Street",
-            "Hillside Lane",
-            "Hobart Place",
-            "Hutton Street",
-            "Kendall Lane",
-            "Kingsley Street",
-            "Knowles Place",
-            "Latin American Plaza",
-            "London Circuit",
-            "Marcus Clarke Street",
-            "Mccoy Circuit",
-            "Moore Street",
-            "Mort Street",
-            "Mulwala Lane",
-            "Murden Street",
-            "Murulla Lane",
-            "Nangari Street",
-            "Narellan Place",
-            "Narellan Street",
-            "Northbourne Avenue",
-            "Odgers Lane",
-            "Parkes Way",
-            "Petrie Plaza",
-            "Petrie Street",
-            "Phillip Law Street",
-            "Rabaul Lane",
-            "Repertory Lane",
-            "Rimmer Street",
-            "Riverside Lane",
-            "Rudd Street",
-            "Scotts Crossing",
-            "The Mews",
-            "Theatre Lane",
-            "Tocumwal Lane",
-            "University Avenue",
-            "Verity Lane",
-            "Vernon Circle",
-            "West Row",
-            "Wilden Street",
-            "William Clemens Street",
-            "William Herbert Place"
+            "A",
+            "B"
     };
 
-    private final String[] Suburbs = {
-            "Bruce","Braddon","Tuggeranong","Comma",
-            "Gungahlin","Coree","Woden","Barton",
-            "Yarralumla","Majura","Cook","Latham",
-            "Kaleen","Holt","Page","Melba","Evatt",
-            "Spence","Scullin","Ainslie","Campell",
-            "Downer","Reid"
-    };
 
     private int rating;
     private String name;
@@ -118,7 +44,7 @@ public class Restaurant implements Serializable {
         this.rating = random.nextInt(5) + 1;
         this.name = name;
         this.deliveryService = random.nextBoolean();
-        this.location = new Location(random.nextDouble() * (-35.134039 + 35.439450) + (-35.439450), random.nextDouble() * (149.252717 - 148.951315) + 148.951315);
+        this.location = new Location(random.nextDouble() * 20 + 25, random.nextDouble() * 20 + 25);
         int type = random.nextInt(Type.values().length);
         this.type = Type.values()[type];
         this.price = random.nextInt(291) + 10;
@@ -126,8 +52,8 @@ public class Restaurant implements Serializable {
         for (int i = 0; i < 8; i++) {
             this.phone += String.valueOf(random.nextInt(10));
         }
-        this.address = String.valueOf(random.nextInt(999) + 1);
-        this.address += "/" + random.nextInt(11) + " " + preDefinedStreets[random.nextInt(preDefinedStreets.length)] + " " + Suburbs[random.nextInt(Suburbs.length)] + " ACT";
+        this.address = String.valueOf(random.nextInt(99) + 1);
+        this.address += "/" + preDefinedStreets[random.nextInt(preDefinedStreets.length)] + " St.";
     }
 
     /**
